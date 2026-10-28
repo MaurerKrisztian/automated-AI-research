@@ -1,0 +1,23 @@
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | fp32 | TF32 off
+batch 8 x heads 8 x seq 2048, head dim 128, ridge 0.25
+closed-form backward vs autograd (float64): dK rel err 1.6e-15, dQ rel err 5.1e-16
+
+=== chunk 64: 32 chunks per sequence ===
+method                                   fwd ms  fwd+bwd ms  peak GB  max rel err
+parallel (per-chunk d x d Cholesky)       19.93       68.65     1.39      1.3e-06
+carry (carried inverse)                    8.52       67.83     0.88      8.7e-07
+carry + closed-form backward               9.62       21.51     1.14      8.7e-07
+CG 5                                      37.01      123.53     2.06      5.1e-01
+CG 10                                     66.19      223.09     3.17      1.0e-01
+CG 30                                    182.92      621.44     7.60      1.1e-04
+
+=== chunk 128: 16 chunks per sequence ===
+method                                   fwd ms  fwd+bwd ms  peak GB  max rel err
+parallel (per-chunk d x d Cholesky)       19.62       65.24     1.21      2.1e-06
+carry (carried inverse)                   10.28       52.47     0.87      9.4e-07
+carry + closed-form backward              10.99       21.76     0.96      9.4e-07
+CG 5                                      37.54      121.10     2.10      4.9e-01
+CG 10                                     68.27      221.80     3.36      1.1e-01
+CG 30                                    191.27      624.61     8.42      1.3e-04
+
+saved results_carry/carry_fp32_speed_20261026_013432.json

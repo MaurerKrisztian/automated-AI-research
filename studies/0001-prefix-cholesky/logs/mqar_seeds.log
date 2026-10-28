@@ -1,0 +1,108 @@
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | d_model 64, 2 heads (head dim 32), 2 layers, chunk 64
+self-test (fp64): DeltaNet chunk vs token-by-token 3.3e-16 | Mesa exact chunk vs token-by-token 6.3e-16 | Mesa CG-60 5.8e-12
+      linear N= 64 step  1000  loss 6.126  recall   1.2%    15.8 ms/step
+      linear N= 64 step  2000  loss 0.654  recall  86.8%    15.8 ms/step
+      linear N= 64 step  3000  loss 0.467  recall  89.4%    15.8 ms/step
+    deltanet N= 64 step  1000  loss 6.213  recall   1.1%    16.8 ms/step
+    deltanet N= 64 step  2000  loss 5.998  recall   1.8%    16.8 ms/step
+    deltanet N= 64 step  3000  loss 5.964  recall   1.8%    16.8 ms/step
+  mesa_exact N= 64 step  1000  loss 6.202  recall   1.2%    33.9 ms/step
+  mesa_exact N= 64 step  2000  loss 4.020  recall  30.2%    33.9 ms/step
+  mesa_exact N= 64 step  3000  loss 2.636  recall  50.1%    33.9 ms/step
+    mesa_cg5 N= 64 step  1000  loss 6.220  recall   0.9%    31.7 ms/step
+    mesa_cg5 N= 64 step  2000  loss 5.997  recall   1.8%    31.8 ms/step
+    mesa_cg5 N= 64 step  3000  loss 5.962  recall   1.9%    31.7 ms/step
+speed probe mesa_exact N=64:   33.9 ms per training step
+
+| Memory layer | N=64 recall | ms/step (largest N) |
+|---|---|---|
+| linear | 89.4% | 15.8 |
+| deltanet | 1.8% | 16.8 |
+| mesa_exact | 50.1% | 33.9 |
+| mesa_cg5 | 1.9% | 31.7 |
+saved results_seeds/lr1e-3_s1/mqar_20261026_004431.json
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | d_model 64, 2 heads (head dim 32), 2 layers, chunk 64
+self-test (fp64): DeltaNet chunk vs token-by-token 3.3e-16 | Mesa exact chunk vs token-by-token 6.3e-16 | Mesa CG-60 5.8e-12
+      linear N= 64 step  1000  loss 5.860  recall   3.1%    15.8 ms/step
+      linear N= 64 step  2000  loss 0.630  recall  88.7%    15.8 ms/step
+      linear N= 64 step  3000  loss 0.499  recall  90.8%    15.8 ms/step
+    deltanet N= 64 step  1000  loss 6.210  recall   1.2%    16.8 ms/step
+    deltanet N= 64 step  2000  loss 4.090  recall  33.3%    16.8 ms/step
+    deltanet N= 64 step  3000  loss 3.041  recall  45.2%    16.8 ms/step
+  mesa_exact N= 64 step  1000  loss 6.200  recall   1.1%    33.7 ms/step
+  mesa_exact N= 64 step  2000  loss 3.773  recall  40.5%    33.7 ms/step
+  mesa_exact N= 64 step  3000  loss 2.351  recall  60.1%    33.7 ms/step
+    mesa_cg5 N= 64 step  1000  loss 6.196  recall   1.2%    31.3 ms/step
+    mesa_cg5 N= 64 step  2000  loss 3.174  recall  49.6%    31.2 ms/step
+    mesa_cg5 N= 64 step  3000  loss 1.798  recall  69.9%    31.2 ms/step
+speed probe mesa_exact N=64:   33.9 ms per training step
+
+| Memory layer | N=64 recall | ms/step (largest N) |
+|---|---|---|
+| linear | 90.8% | 15.8 |
+| deltanet | 45.2% | 16.8 |
+| mesa_exact | 60.1% | 33.7 |
+| mesa_cg5 | 69.9% | 31.2 |
+saved results_seeds/lr1e-3_s2/mqar_20261026_004935.json
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | d_model 64, 2 heads (head dim 32), 2 layers, chunk 64
+self-test (fp64): DeltaNet chunk vs token-by-token 3.3e-16 | Mesa exact chunk vs token-by-token 6.3e-16 | Mesa CG-60 5.8e-12
+      linear N= 64 step  1000  loss 0.673  recall  87.9%    15.8 ms/step
+      linear N= 64 step  2000  loss 0.123  recall  96.6%    15.8 ms/step
+      linear N= 64 step  3000  loss 0.103  recall  97.1%    15.8 ms/step
+    deltanet N= 64 step  1000  loss 6.052  recall   1.7%    16.8 ms/step
+    deltanet N= 64 step  2000  loss 5.859  recall   2.0%    16.8 ms/step
+    deltanet N= 64 step  3000  loss 5.837  recall   2.1%    16.8 ms/step
+  mesa_exact N= 64 step  1000  loss 3.982  recall  39.8%    33.8 ms/step
+  mesa_exact N= 64 step  2000  loss 0.064  recall  98.4%    33.8 ms/step
+  mesa_exact N= 64 step  3000  loss 0.043  recall  98.9%    33.8 ms/step
+    mesa_cg5 N= 64 step  1000  loss 3.743  recall  44.4%    31.3 ms/step
+    mesa_cg5 N= 64 step  2000  loss 0.054  recall  98.7%    31.3 ms/step
+    mesa_cg5 N= 64 step  3000  loss 0.036  recall  99.1%    31.3 ms/step
+speed probe mesa_exact N=64:   34.2 ms per training step
+
+| Memory layer | N=64 recall | ms/step (largest N) |
+|---|---|---|
+| linear | 97.1% | 15.8 |
+| deltanet | 2.1% | 16.8 |
+| mesa_exact | 98.9% | 33.8 |
+| mesa_cg5 | 99.1% | 31.3 |
+saved results_seeds/lr2e-3_s1/mqar_20261026_005440.json
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | d_model 64, 2 heads (head dim 32), 2 layers, chunk 64
+self-test (fp64): DeltaNet chunk vs token-by-token 3.3e-16 | Mesa exact chunk vs token-by-token 6.3e-16 | Mesa CG-60 5.8e-12
+      linear N= 64 step  1000  loss 0.490  recall  91.8%    15.8 ms/step
+      linear N= 64 step  2000  loss 0.085  recall  97.8%    15.8 ms/step
+      linear N= 64 step  3000  loss 0.068  recall  98.2%    15.8 ms/step
+    deltanet N= 64 step  1000  loss 6.041  recall   2.0%    16.8 ms/step
+    deltanet N= 64 step  2000  loss 1.373  recall  67.2%    16.8 ms/step
+    deltanet N= 64 step  3000  loss 0.890  recall  77.6%    16.8 ms/step
+  mesa_exact N= 64 step  1000  loss 3.163  recall  61.7%    34.0 ms/step
+  mesa_exact N= 64 step  2000  loss 0.031  recall  99.3%    34.0 ms/step
+  mesa_exact N= 64 step  3000  loss 0.022  recall  99.5%    34.0 ms/step
+    mesa_cg5 N= 64 step  1000  loss 3.157  recall  58.9%    31.5 ms/step
+    mesa_cg5 N= 64 step  2000  loss 0.026  recall  99.4%    31.6 ms/step
+    mesa_cg5 N= 64 step  3000  loss 0.018  recall  99.6%    31.6 ms/step
+speed probe mesa_exact N=64:   34.5 ms per training step
+
+| Memory layer | N=64 recall | ms/step (largest N) |
+|---|---|---|
+| linear | 98.2% | 15.8 |
+| deltanet | 77.6% | 16.8 |
+| mesa_exact | 99.5% | 34.0 |
+| mesa_cg5 | 99.6% | 31.6 |
+saved results_seeds/lr2e-3_s2/mqar_20261026_005946.json
+| Memory layer | Learning rate | Runs (seed: recall) | Mean recall |
+|---|---|---|---|
+| deltanet | 0.001 | s1: 1.8%, s2: 45.2% | 23.5% |
+| deltanet | 0.002 | s0: 2.1%, s1: 2.1%, s2: 77.6% | 27.2% |
+| linear | 0.001 | s1: 89.4%, s2: 90.8% | 90.1% |
+| linear | 0.002 | s0: 90.4%, s1: 97.1%, s2: 98.2% | 95.2% |
+| mesa_cg5 | 0.001 | s1: 1.9%, s2: 69.9% | 35.9% |
+| mesa_cg5 | 0.002 | s0: 79.3%, s1: 99.1%, s2: 99.6% | 92.7% |
+| mesa_exact | 0.001 | s1: 50.1%, s2: 60.1% | 55.1% |
+| mesa_exact | 0.002 | s0: 69.5%, s1: 98.9%, s2: 99.5% | 89.3% |
+
+Best learning rate per layer (mean over seeds):
+      linear:  95.2%  (lr 0.002, range 90.4-98.2%)
+    mesa_cg5:  92.7%  (lr 0.002, range 79.3-99.6%)
+  mesa_exact:  89.3%  (lr 0.002, range 69.5-99.5%)
+    deltanet:  27.2%  (lr 0.002, range 2.1-77.6%)

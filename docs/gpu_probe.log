@@ -1,0 +1,6 @@
+NVIDIA GeForce RTX 5060 Ti | 15.5 GiB (15.3 free now) | 36 SMs | torch 2.11.0+cu128 CUDA 12.8 | 2026-10-29T00:05:56+0100
+matmul 8192x8192 fp32:   63.49 ms    17.3 TFLOPS
+matmul 8192x8192 tf32:   43.51 ms    25.3 TFLOPS
+matmul 8192x8192 bf16:   21.72 ms    50.6 TFLOPS
+matmul 8192x8192 fp16:   22.44 ms    49.0 TFLOPS
+copy 1 GiB on device: 5.57 ms  386 GB/s (read + write)

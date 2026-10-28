@@ -1,0 +1,222 @@
+Prefix-Cholesky: exact chunkwise least-squares memory
+Oct 26, 2026 · @Krisztian
+Summary
+Prefix-Cholesky gives every token in a chunk its exact least-squares memory readout from one small Cholesky factorization, replacing MesaNet's iterative conjugate-gradient (CG) solver. On an RTX 5060 Ti the solver ran up to 10.6× faster than 30 CG steps, and a full training step 2–3.7× faster.
+• Exact: matches token-by-token solves to 1e-14 in float64 and 1e-6 in float32 (30 CG steps: 1e-4).
+• Faster solver: 16.8 ms vs 178.8 ms for 30 CG steps (chunk 64, head dim 128). On MesaNet's own model with forget gates it acts as a preconditioner: 3–4.4× faster for long-memory heads, no gain for fast-forgetting heads.
+• Faster training: a tiny recall model trained at 71 ms per step, vs 140 ms with 15 CG steps and 262 ms with 30. Five CG steps were slightly faster and just as accurate on this task.
+• Quality: least-squares memory recalled 99% of 64 key–value pairs, vs 97.7% for linear attention and 40% for DeltaNet. Exactness itself added nothing over 5 CG steps.
+• Novelty: no prior publication found as of October 2026. The building blocks are textbook linear algebra.
+Verdict: a real and probably new speedup for one family of memory layers, not a general breakthrough.
+Problem
+Mesa-style layers keep a matrix memory of key–value pairs and read it by solving a ridge regression at every token. At token t the readout is:
+o_t = G_t\,(H_t + \Lambda)^{-1} q_t, \qquad H_t = \sum_{i \le t} \beta_i\, k_i k_i^\top, \qquad G_t = \sum_{i \le t} \beta_i\, v_i k_i^\top
+MesaNet also multiplies both sums by forget gates. The matrix H_t + Λ changes at every token, so every token needs its own d×d linear solve. Fast-memory layers differ mainly in how they handle that solve:
+Layer
+How it handles (H_t + Λ)^-1
+Cost per token
+Linear attention
+ignores it: adds v kᵀ
+one matrix–vector product
+DeltaNet, Gated DeltaNet, KDA
+one gradient step toward the least-squares fit
+about one product
+Preconditioned DeltaNet and KDA
+gradient step with a diagonal approximation of the inverse
+about one product
+Gated KalmaNet
+iterative solve (Chebyshev)
+several products
+MesaNet
+exact solve by conjugate gradient
+up to 30 CG steps
+Prefix-Cholesky (this note)
+exact solve in closed form per chunk
+one small Cholesky per chunk
+MesaNet's authors report lower perplexity than earlier recurrent layers, especially on long-context tasks, paid for with extra compute. That solver cost is what Prefix-Cholesky targets.
+Method
+One C×C Cholesky factorization per chunk gives the exact solve for every prefix of the chunk, because the Cholesky factor of a matrix's leading block is the leading block of its Cholesky factor.
+Setup. At a chunk start the memory holds B = Λ + H (d×d, positive definite). The chunk brings C keys K (rows scaled by √β) and C queries Q. Token τ needs x_τ = (B + K_{≤τ}ᵀ K_{≤τ})^-1 q_τ, where K_{≤τ} is the first τ rows of K.
+Identity.
+A = I_C + K B^{-1} K^\top = L L^\top, \qquad U = B^{-1} K^\top L^{-\top}
+x_\tau = \Big(B^{-1} - \sum_{i \le \tau} u_i u_i^\top\Big)\, q_\tau \ \text{ for every } \tau, \qquad \text{i.e.} \quad X = Q B^{-1} - \operatorname{tril}(Q U)\, U^\top
+Woodbury writes each prefix inverse through the leading τ×τ block of A. That block's Cholesky factor is the leading block of L, so only the first τ columns of U appear. Column u_i is the normalized recursive-least-squares (RLS) gain P_{i−1} k_i / L_ii, where P_{i−1} is the inverse after the chunk's first i−1 tokens and L_ii = √(1 + k_iᵀ P_{i−1} k_i). One factorization performs all C sequential RLS updates at once.
+Per chunk, as benchmarked:
+1. Factor B (d×d Cholesky) and solve for B^-1 Kᵀ and B^-1 Qᵀ.
+2. Form A = I + K B^-1 Kᵀ (C×C) and factor it.
+3. Two C×C triangular solves with a triangular mask give all C solutions.
+4. Read out O = X G_0ᵀ + tril(X Kᵀ) V, the usual causal chunk products.
+5. Update H ← H + KᵀK and G ← G + VᵀK.
+Each chunk's B is a prefix sum of the earlier chunks' KᵀK, so all chunks can run in parallel.
+Variants.
+Variant
+Exact?
+How
+Check (float64)
+No forgetting (original Mesa)
+yes
+the identity as is
+3e-15
+Forget gates, ridge decays with the gates and resets to λ every period ("Mesa-P")
+yes
+keys scaled by √(β_i / a_i), a_i = cumulative gate
+3e-14
+Sliding-window Mesa
+yes
+dropped tokens enter as negative rows; LDLᵀ without pivoting
+7e-15
+Exactly preconditioned DeltaNet
+yes, without forgetting
+write keys P_τ k_τ = u_τ / L_ττ
+8e-15
+MesaNet as published (forget gates, fixed ridge)
+no: used as a preconditioner
+exact solve at ridge λ/ā, ā = √(a_1 a_C); condition number ≤ √(a_1/a_C); used when that bound is ≤ 2.5, else plain CG
+see Results
+Backward pass. Each P_τ is symmetric, so the gradient with respect to q_τ is P_τ times the incoming gradient: the same structure with new right-hand sides, reusing the factors. MesaNet's implicit-function backward runs CG again instead. All timings below use plain PyTorch autograd, which does not exploit this.
+Cost per chunk and head (head dim d = 128, chunk C = 64):
+Method
+Work
+Main operations
+Prefix-Cholesky
+≈ 9 MFLOP
+d×d Cholesky, d×d triangular solves, C×C Cholesky
+CG, 5 steps
+≈ 25 MFLOP
+matrix products
+CG, 30 steps
+≈ 130 MFLOP
+matrix products
+On a GPU, factorizations and triangular solves run several times slower per FLOP than matrix products, so wall-clock gains are smaller than these ratios.
+Results
+Every check confirmed the method is exact, and on an RTX 5060 Ti it beat MesaNet-style CG on both speed and accuracy.
+Exactness.
+Check
+Precision
+Max relative error
+Identity vs token-by-token solves (CPU, head dim 64–128, chunk 16–64)
+float64
+3.1e-15
+Same
+float32
+8.8e-7
+Mesa-P, sliding-window Mesa, exactly preconditioned DeltaNet (CPU)
+float64
+2.8e-14
+Chunked training layer vs token-by-token recurrence
+float64
+6.3e-16
+GPU benchmark vs float64 reference
+float32
+1.0e-6
+Solver speed.
+Five CG steps take twice as long as the exact solve and still leave 47% error. With forget gates near 1, one preconditioned step reaches 2.5e-5 in 49.5 ms, 4.4× faster than 30 CG steps (3.0× at chunk 16). With fast forgetting (gate 0.9, chunk 64) the preconditioner's bound rises to 47, so those heads fall back to plain CG, where 10 steps already reach 3e-5.
+Training. A small multi-query associative recall (MQAR) model learned key–value lookups with each memory layer: d_model 64, 2 heads of dim 32, 2 layers, chunk 64.
+Memory layer
+Recall, 64 pairs (3000 steps, mean of 2 seeds)
+Recall, 128 pairs (2000 steps, 1 seed)
+ms per training step, 128 pairs
+Mesa, 5 CG steps
+99.4% (99.1–99.6)
+1.3%
+64.0
+Mesa, exact (Prefix-Cholesky)
+99.2% (98.9–99.5)
+1.2%
+69.7
+Linear attention
+97.7% (97.1–98.2)
+60.5%
+41.6
+DeltaNet
+39.8% (2.1–77.6)
+11.6%
+36.5
+Softmax attention recalled 100% at every size. A separate speed probe at 128 pairs timed the exact solve at 71.1 ms per step, vs 140.0 ms with 15 CG steps and 261.5 ms with 30.
+Two findings temper the speed result. Five CG steps trained as well as the exact solve here, although at head dim 128 they leave 47% error, so the model tolerated or adapted to inexact solves. And above the memory's capacity (128 pairs vs 2 heads of dim 32), Mesa collapsed to about 1% while linear attention kept 60%.
+Novelty check
+As of October 2026 no published method computes exact least-squares memory chunk by chunk. The closest work solves it sequentially, approximately or iteratively.
+Work
+What it does
+Difference
+Original Mesa layer (2023)
+exact recursive least squares with Sherman–Morrison updates
+token by token; its authors note it is not parallelizable across time
+MesaNet (ICLR 2026)
+exact solve per token by CG: 30 steps in training, about 9 with early stopping
+iterative; FLOPs grow with the step count
+Preconditioned DeltaNet (April 2026)
+delta rule with a diagonal approximation of the inverse
+approximate; describes exact inverse recurrences as hard to parallelize
+Gated KalmaNet (November 2025)
+regularized solve by Chebyshev iteration
+iterative
+Kalman Linear Attention (ICML 2026)
+exact Kalman-style filter via a parallel scan
+diagonal covariance only
+Depth Memory (October 2026)
+exact recursive least squares
+across layers, one step at a time
+GradLev and DeltaTTT (September–October 2026)
+cite MesaNet's CG as the exact approach
+no exact chunkwise solve
+The ingredients are textbook: Woodbury's identity, the leading-block property of Cholesky factors, and the batch form of sequential Kalman and RLS updates. What appears new is combining them into a chunk-parallel exact layer. A web search cannot rule out unpublished or concurrent work.
+Limitations
+The speedups are real but were measured in plain PyTorch at small scale, and MesaNet's published model is covered only through a preconditioner.
+• No optimized baseline. All timings are plain PyTorch on one RTX 5060 Ti. MesaNet's own kernels in flash-linear-attention were not compared, and fused kernels could narrow the gap, since CG is all matrix products.
+• Forgetting. With MesaNet's fixed ridge plus forget gates the method is exact only through the Mesa-P variant, whose language-modeling quality is untested. As a preconditioner it helps only slowly forgetting heads.
+• Tiny quality test. Recall was tested on a 2-layer MQAR model with d_model 64. There, exactness gave no gain over 5 CG steps.
+• Backward pass. Gradients came from PyTorch autograd, not a custom backward that reuses the factors.
+• Capacity. Least-squares memory collapsed to about 1% recall above its capacity (128 pairs, 2 heads of dim 32), where linear attention degraded gracefully to 60%. The ridge and forgetting may matter more than the solver there.
+• Decoding latency. Decoding is memory-bound, so fewer FLOPs may not cut per-token latency at small batch; MesaNet's authors already report competitive decode speed.
+Improvements
+Two changes made the exact solver's training pass 3.2× faster and more accurate in float32: carrying the inverse across chunks, and a closed-form backward pass. In the recall model the exact layer now trains as fast as DeltaNet.
+1. Carry the inverse. Keep P = (Λ + H)^-1 as the recurrent state instead of refactoring B every chunk. The gain form gives the chunk update directly, P ← P − U Uᵀ, so a chunk needs only the C×C Cholesky plus matrix products. This is block recursive least squares: a chunk-parallel form of the original Mesa layer's token-by-token update.
+2. Closed-form backward. The gradient of an exact least-squares readout needs no differentiation through the factorizations:
+\frac{\partial \ell}{\partial q_t} = g_t = P_t \frac{\partial \ell}{\partial x_t}, \qquad \frac{\partial \ell}{\partial k_i} = -\sum_{t \ge i} \left( g_t x_t^\top + x_t g_t^\top \right) k_i, \qquad \frac{\partial \ell}{\partial \lambda} = -\sum_t g_t^\top x_t
+Here g_t is the same chunk solve applied to the incoming gradient, and the key gradient is a suffix sum, so the backward pass handles all chunks at once with matrix products. It matches autograd to 1.6e-15, including the gradient of a learnable ridge.
+Solver speed (chunk 64, 64 sequences of 2048 tokens, head dim 128, float32):
+Method
+Forward ms
+Forward + backward ms
+Peak memory GB
+Max relative error
+Carried inverse + closed-form backward
+9.6
+21.5
+1.14
+8.7e-7
+Carried inverse, autograd backward
+8.5
+67.8
+0.88
+8.7e-7
+Per-chunk Cholesky (first version), autograd
+19.9
+68.7
+1.39
+1.3e-6
+CG, 5 steps
+37.0
+123.5
+2.06
+0.51
+CG, 10 steps
+66.2
+223.1
+3.17
+0.10
+CG, 30 steps
+182.9
+621.4
+7.60
+1.1e-4
+The improved solver's training pass is 3.2× faster than the first version's and 29× faster than 30 CG steps. CG's memory is inflated because autograd stores every step; MesaNet's implicit backward avoids that. Chunk 128 gave the same training time (21.8 ms).
+The improved layer computes the same function: recall at 64 pairs was 99.0% and 99.6% for seeds 1 and 2, against 98.9% and 99.5% for the first version.
+3. No float32 drift.
+Refactoring every chunk loses accuracy as the memory's condition number grows, and fixed-step CG breaks down: 30 steps reach 0.57 error at condition 1e5, and 10 steps exceed 1. Symmetrizing P changed nothing, and refreshing P from H every 64 chunks made errors worse, so neither is needed.
+Tried, not worth it. TF32 matrix products raised errors from about 1e-6 to about 1e-3 for at most 1.3× speed on this GPU. Chunks of 32 slowed the sequential loop; 64–128 worked best.
+Next, not yet tested.
+• Fused Triton kernel: one program per head that keeps P and the value memory on chip, replacing the many small kernel launches per chunk in plain PyTorch.
+• Exact forgetting with the carried inverse: per-token gates enter as key scalings inside a chunk and a 1/a_C rescale of P at its end. Resetting the ridge to λ (Mesa-P) costs one d×d inverse, so reset every few chunks.
+• Per-head policy: carried inverse for heads with gates near 1, which MesaNet's authors report are common, and CG for fast-forgetting heads.

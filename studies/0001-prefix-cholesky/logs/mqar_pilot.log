@@ -1,0 +1,28 @@
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | d_model 128, 2 heads (head dim 64), 2 layers, chunk 64
+self-test (fp64): DeltaNet chunk vs token-by-token 3.3e-16 | Mesa exact chunk vs token-by-token 6.3e-16 | Mesa CG-60 5.8e-12
+        attn N= 32 step   250  loss 6.263  recall   0.2%     9.5 ms/step
+        attn N= 32 step   500  loss 0.052  recall  99.8%     9.5 ms/step
+        attn N= 32 step   750  loss 0.002  recall 100.0%     9.5 ms/step
+        attn N= 32 step  1000  loss 0.000  recall 100.0%     9.5 ms/step
+        attn N= 32 step  1250  loss 0.000  recall 100.0%     9.5 ms/step
+        attn N= 32 step  1500  loss 0.000  recall 100.0%     9.5 ms/step
+    deltanet N= 32 step   250  loss 6.262  recall   0.2%    13.9 ms/step
+    deltanet N= 32 step   500  loss 4.707  recall  38.1%    13.9 ms/step
+    deltanet N= 32 step   750  loss 0.037  recall  99.8%    13.9 ms/step
+    deltanet N= 32 step  1000  loss 0.006  recall 100.0%    13.9 ms/step
+    deltanet N= 32 step  1250  loss 0.003  recall 100.0%    14.0 ms/step
+    deltanet N= 32 step  1500  loss 0.002  recall 100.0%    14.0 ms/step
+  mesa_exact N= 32 step   250  loss 6.262  recall   0.2%    29.8 ms/step
+  mesa_exact N= 32 step   500  loss 0.275  recall  99.9%    29.2 ms/step
+  mesa_exact N= 32 step   750  loss 0.004  recall 100.0%    29.2 ms/step
+  mesa_exact N= 32 step  1000  loss 0.001  recall 100.0%    29.2 ms/step
+  mesa_exact N= 32 step  1250  loss 0.000  recall 100.0%    29.2 ms/step
+  mesa_exact N= 32 step  1500  loss 0.000  recall 100.0%    29.2 ms/step
+speed probe mesa_exact N=32:   29.0 ms per training step
+
+| Memory layer | N=32 recall | ms/step (largest N) |
+|---|---|---|
+| attn | 100.0% | 9.5 |
+| deltanet | 100.0% | 14.0 |
+| mesa_exact | 100.0% | 29.2 |
+saved results_pilot/mqar_20261026_002403.json

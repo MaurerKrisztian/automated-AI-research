@@ -1,0 +1,140 @@
+{
+ "env": {
+  "torch": "2.11.0+cu128",
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "tf32": false
+ },
+ "args": {
+  "device": "cuda",
+  "batch": 8,
+  "heads": 8,
+  "seq": 2048,
+  "d": 128,
+  "chunks": [
+   64,
+   128
+  ],
+  "lam": 0.25,
+  "cg_iters": [
+   5,
+   10,
+   30
+  ],
+  "ref_seqs": 2,
+  "drift_seq": 65536,
+  "drift_heads": 4,
+  "drift_chunk": 64,
+  "refresh": 64,
+  "drift_alpha": 1.0,
+  "skip_speed": false,
+  "skip_drift": true,
+  "warmup": 3,
+  "reps": 10,
+  "tf32": false,
+  "seed": 0,
+  "out": "results_carry"
+ },
+ "speed": [
+  {
+   "chunk": 64,
+   "method": "parallel (per-chunk d x d Cholesky)",
+   "fwd_ms": 19.932596504077082,
+   "fwd_bwd_ms": 68.64546200085897,
+   "peak_gb": 1.3948378562927246,
+   "err": 1.2861819044507046e-06
+  },
+  {
+   "chunk": 64,
+   "method": "carry (carried inverse)",
+   "fwd_ms": 8.515397996234242,
+   "fwd_bwd_ms": 67.82985149766319,
+   "peak_gb": 0.8831191062927246,
+   "err": 8.662724676872552e-07
+  },
+  {
+   "chunk": 64,
+   "method": "carry + closed-form backward",
+   "fwd_ms": 9.61801600351464,
+   "fwd_bwd_ms": 21.51201349988696,
+   "peak_gb": 1.1448378562927246,
+   "err": 8.662724676872552e-07
+  },
+  {
+   "chunk": 64,
+   "method": "CG 5",
+   "fwd_ms": 37.006539499998325,
+   "fwd_bwd_ms": 123.52829449810088,
+   "peak_gb": 2.0608534812927246,
+   "err": 0.5074541648486556
+  },
+  {
+   "chunk": 64,
+   "method": "CG 10",
+   "fwd_ms": 66.19404549928731,
+   "fwd_bwd_ms": 223.08727499694214,
+   "peak_gb": 3.1692519187927246,
+   "err": 0.10354740053276486
+  },
+  {
+   "chunk": 64,
+   "method": "CG 30",
+   "fwd_ms": 182.9154525003105,
+   "fwd_bwd_ms": 621.438477501215,
+   "peak_gb": 7.602845668792725,
+   "err": 0.00010530632971995224
+  },
+  {
+   "chunk": 128,
+   "method": "parallel (per-chunk d x d Cholesky)",
+   "fwd_ms": 19.61659649896319,
+   "fwd_bwd_ms": 65.24108550001984,
+   "peak_gb": 1.2073378562927246,
+   "err": 2.137062471831331e-06
+  },
+  {
+   "chunk": 128,
+   "method": "carry (carried inverse)",
+   "fwd_ms": 10.284261999913724,
+   "fwd_bwd_ms": 52.467631499894196,
+   "peak_gb": 0.8674941062927246,
+   "err": 9.438143631600049e-07
+  },
+  {
+   "chunk": 128,
+   "method": "carry + closed-form backward",
+   "fwd_ms": 10.990096503519453,
+   "fwd_bwd_ms": 21.75744849955663,
+   "peak_gb": 0.9573378562927246,
+   "err": 9.438143631600049e-07
+  },
+  {
+   "chunk": 128,
+   "method": "CG 5",
+   "fwd_ms": 37.542109996138606,
+   "fwd_bwd_ms": 121.09698350104736,
+   "peak_gb": 2.0950331687927246,
+   "err": 0.48647698353234525
+  },
+  {
+   "chunk": 128,
+   "method": "CG 10",
+   "fwd_ms": 68.27379099922837,
+   "fwd_bwd_ms": 221.79937349937973,
+   "peak_gb": 3.3596816062927246,
+   "err": 0.11252770220850718
+  },
+  {
+   "chunk": 128,
+   "method": "CG 30",
+   "fwd_ms": 191.26714449885185,
+   "fwd_bwd_ms": 624.6059895020153,
+   "peak_gb": 8.418275356292725,
+   "err": 0.00012634688541496403
+  }
+ ],
+ "drift": {},
+ "grad_check": {
+  "dK": 1.5593585589362526e-15,
+  "dQ": 5.121742248676032e-16
+ }
+}

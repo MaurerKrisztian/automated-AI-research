@@ -1,0 +1,23 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Data, checkpoints and experiment trackers: too large for git
+data/
+checkpoints/
+*.pt
+*.ckpt
+*.safetensors
+wandb/
+
+# Website: dependencies, build output, generated content
+site/node_modules/
+site/dist/
+site/public/content/
+
+# Local and editor settings
+.claude/settings.local.json
+.idea/
+.vscode/
+.DS_Store

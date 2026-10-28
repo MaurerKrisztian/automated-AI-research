@@ -1,0 +1,86 @@
+Using CPython 3.11.15
+Creating virtual environment at: .venv
+Activate with: source .venv/bin/activate
+Resolved 29 packages in 1.56s
+Downloading setuptools (1.2MiB)
+Downloading nvidia-cuda-nvrtc-cu12 (84.0MiB)
+Downloading cuda-bindings (7.3MiB)
+Downloading sympy (6.0MiB)
+Downloading networkx (2.0MiB)
+ Downloaded setuptools
+Downloading nvidia-nccl-cu12 (283.0MiB)
+Downloading nvidia-cusparse-cu12 (274.9MiB)
+Downloading nvidia-cublas-cu12 (566.8MiB)
+Downloading nvidia-cufile-cu12 (1.1MiB)
+Downloading nvidia-cusparselt-cu12 (273.9MiB)
+Downloading nvidia-nvjitlink-cu12 (37.4MiB)
+Downloading nvidia-cudnn-cu12 (627.4MiB)
+Downloading triton (179.5MiB)
+Downloading nvidia-cufft-cu12 (184.2MiB)
+Downloading nvidia-nvshmem-cu12 (132.7MiB)
+Downloading nvidia-cuda-cupti-cu12 (9.8MiB)
+Downloading nvidia-cusolver-cu12 (255.1MiB)
+Downloading nvidia-curand-cu12 (60.7MiB)
+Downloading torch (782.2MiB)
+ Downloaded networkx
+ Downloaded nvidia-cufile-cu12
+ Downloaded cuda-bindings
+ Downloaded sympy
+ Downloaded nvidia-cuda-cupti-cu12
+ Downloaded triton
+ Downloaded nvidia-nvjitlink-cu12
+ Downloaded nvidia-cuda-nvrtc-cu12
+ Downloaded nvidia-curand-cu12
+ Downloaded nvidia-nccl-cu12
+ Downloaded nvidia-nvshmem-cu12
+ Downloaded nvidia-cusparse-cu12
+ Downloaded nvidia-cufft-cu12
+ Downloaded nvidia-cusparselt-cu12
+ Downloaded torch
+ Downloaded nvidia-cusolver-cu12
+ Downloaded nvidia-cublas-cu12
+ Downloaded nvidia-cudnn-cu12
+Prepared 29 packages in 36.44s
+warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.
+         If the cache and target directories are on different filesystems, hardlinking may not be supported.
+         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+Installed 29 packages in 27.52s
+ + cuda-bindings==12.9.7
+ + cuda-pathfinder==1.6.0
+ + cuda-toolkit==12.8.1
+ + filelock==3.32.3
+ + fsspec==2026.7.0
+ + jinja2==3.1.6
+ + markupsafe==3.0.3
+ + mpmath==1.3.0
+ + networkx==3.6.1
+ + nvidia-cublas-cu12==12.8.4.1
+ + nvidia-cuda-cupti-cu12==12.8.90
+ + nvidia-cuda-nvrtc-cu12==12.8.93
+ + nvidia-cuda-runtime-cu12==12.8.90
+ + nvidia-cudnn-cu12==9.19.0.56
+ + nvidia-cufft-cu12==11.3.3.83
+ + nvidia-cufile-cu12==1.13.1.3
+ + nvidia-curand-cu12==10.3.9.90
+ + nvidia-cusolver-cu12==11.7.3.90
+ + nvidia-cusparse-cu12==12.5.8.93
+ + nvidia-cusparselt-cu12==0.7.1
+ + nvidia-nccl-cu12==2.28.9
+ + nvidia-nvjitlink-cu12==12.8.93
+ + nvidia-nvshmem-cu12==3.4.5
+ + nvidia-nvtx-cu12==12.8.90
+ + setuptools==78.1.0
+ + sympy==1.14.0
+ + torch==2.11.0+cu128
+ + triton==3.6.0
+ + typing-extensions==4.16.0
+Resolved 1 package in 361ms
+Downloading numpy (16.1MiB)
+ Downloaded numpy
+Prepared 1 package in 325ms
+warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.
+         If the cache and target directories are on different filesystems, hardlinking may not be supported.
+         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+Installed 1 package in 194ms
+ + numpy==2.4.6
+torch 2.11.0+cu128 | CUDA available: True | NVIDIA GeForce RTX 5060 Ti

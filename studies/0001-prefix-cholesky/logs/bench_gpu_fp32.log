@@ -1,0 +1,46 @@
+torch 2.11.0+cu128 | device NVIDIA GeForce RTX 5060 Ti | fp32 | TF32 off
+batch 8 x heads 8 x seq 2048, head dim 128, ridge 0.25
+
+=== chunk 16: 8192 chunk instances ===
+[A] exact one pass:    27.95 ms  (d x d Cholesky alone 11.79 ms)  max rel err 1.0e-06  peak mem 1.95 GB
+[A] CG  5 iters  :    39.45 ms  max rel err 4.8e-01  -> exact is   1.4x faster
+[A] CG 10 iters  :    74.08 ms  max rel err 1.1e-01  -> exact is   2.7x faster
+[A] CG 15 iters  :   108.73 ms  max rel err 1.7e-02  -> exact is   3.9x faster
+[A] CG 30 iters  :   212.59 ms  max rel err 1.2e-04  -> exact is   7.6x faster
+[B] gate ~0.999: condition-number bound for preconditioned CG = 1.01
+[B]   MesaNet CG  5 iters :    46.68 ms  max rel err 4.2e-01
+[B]   MesaNet CG 10 iters :    87.33 ms  max rel err 7.9e-02
+[B]   MesaNet CG 15 iters :   127.97 ms  max rel err 1.2e-02
+[B]   MesaNet CG 30 iters :   249.93 ms  max rel err 6.3e-05
+[B]   exact-chunk PCG 1 iter:    83.45 ms  max rel err 2.5e-06
+[B]   exact-chunk PCG 2 iter:   105.16 ms  max rel err 1.2e-06
+[B] gate ~0.9: condition-number bound for preconditioned CG = 2.94
+[B]   MesaNet CG  5 iters :    46.68 ms  max rel err 7.5e-03
+[B]   MesaNet CG 10 iters :    87.37 ms  max rel err 2.3e-05
+[B]   MesaNet CG 15 iters :   128.05 ms  max rel err 8.1e-07
+[B]   MesaNet CG 30 iters :   250.02 ms  max rel err 8.1e-07
+[B]   exact-chunk PCG 1 iter:    83.54 ms  max rel err 9.9e-02
+[B]   exact-chunk PCG 2 iter:   105.12 ms  max rel err 1.7e-02
+
+=== chunk 64: 2048 chunk instances ===
+[A] exact one pass:    16.83 ms  (d x d Cholesky alone 2.75 ms)  max rel err 1.0e-06  peak mem 0.89 GB
+[A] CG  5 iters  :    32.86 ms  max rel err 4.7e-01  -> exact is   2.0x faster
+[A] CG 10 iters  :    62.07 ms  max rel err 1.0e-01  -> exact is   3.7x faster
+[A] CG 15 iters  :    91.22 ms  max rel err 2.0e-02  -> exact is   5.4x faster
+[A] CG 30 iters  :   178.80 ms  max rel err 1.1e-04  -> exact is  10.6x faster
+[B] gate ~0.999: condition-number bound for preconditioned CG = 1.04
+[B]   MesaNet CG  5 iters :    40.10 ms  max rel err 4.1e-01
+[B]   MesaNet CG 10 iters :    75.31 ms  max rel err 8.8e-02
+[B]   MesaNet CG 15 iters :   110.48 ms  max rel err 1.3e-02
+[B]   MesaNet CG 30 iters :   216.02 ms  max rel err 6.0e-05
+[B]   exact-chunk PCG 1 iter:    49.51 ms  max rel err 2.5e-05
+[B]   exact-chunk PCG 2 iter:    65.86 ms  max rel err 1.8e-06
+[B] gate ~0.9: condition-number bound for preconditioned CG = 47.15
+[B]   MesaNet CG  5 iters :    40.10 ms  max rel err 1.1e-02
+[B]   MesaNet CG 10 iters :    75.27 ms  max rel err 3.1e-05
+[B]   MesaNet CG 15 iters :   110.51 ms  max rel err 1.5e-06
+[B]   MesaNet CG 30 iters :   216.05 ms  max rel err 1.5e-06
+[B]   exact-chunk PCG 1 iter:    49.35 ms  max rel err 4.4e+00
+[B]   exact-chunk PCG 2 iter:    65.75 ms  max rel err 1.9e+00
+
+saved results/bench_NVIDIA_GeForce_RTX_5060_Ti_20261026_001350.json

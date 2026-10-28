@@ -1,0 +1,73 @@
+{
+ "env": {
+  "torch": "2.11.0+cu128",
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "tf32": false
+ },
+ "args": {
+  "device": "cuda",
+  "batch": 1,
+  "heads": 2,
+  "seq": 512,
+  "d": 128,
+  "chunks": [
+   64
+  ],
+  "lam": 0.25,
+  "cg_iters": [
+   5
+  ],
+  "ref_seqs": 2,
+  "drift_seq": 65536,
+  "drift_heads": 4,
+  "drift_chunk": 64,
+  "refresh": 64,
+  "drift_alpha": 1.0,
+  "skip_speed": false,
+  "skip_drift": true,
+  "warmup": 1,
+  "reps": 2,
+  "tf32": false,
+  "seed": 0,
+  "out": "results_smoke"
+ },
+ "speed": [
+  {
+   "chunk": 64,
+   "method": "parallel (per-chunk d x d Cholesky)",
+   "fwd_ms": 1.3383129989961162,
+   "fwd_bwd_ms": 3.566353498172248,
+   "peak_gb": 0.02765035629272461,
+   "err": 9.926469110187174e-07
+  },
+  {
+   "chunk": 64,
+   "method": "carry (carried inverse)",
+   "fwd_ms": 1.6930539968598168,
+   "fwd_bwd_ms": 6.632213498960482,
+   "peak_gb": 0.02337789535522461,
+   "err": 6.924248759428686e-07
+  },
+  {
+   "chunk": 64,
+   "method": "carry + closed-form backward",
+   "fwd_ms": 1.6031609993660823,
+   "fwd_bwd_ms": 2.2092784965934698,
+   "peak_gb": 0.02569723129272461,
+   "err": 6.924248759428686e-07
+  },
+  {
+   "chunk": 64,
+   "method": "CG 5",
+   "fwd_ms": 1.0104904977197293,
+   "fwd_bwd_ms": 3.9498605001426768,
+   "peak_gb": 0.03285360336303711,
+   "err": 0.4461304285376777
+  }
+ ],
+ "drift": {},
+ "grad_check": {
+  "dK": 1.5593585589362526e-15,
+  "dQ": 5.121742248676032e-16
+ }
+}

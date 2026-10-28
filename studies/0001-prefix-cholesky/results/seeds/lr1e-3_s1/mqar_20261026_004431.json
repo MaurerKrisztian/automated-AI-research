@@ -1,0 +1,75 @@
+{
+ "args": {
+  "kinds": [
+   "linear",
+   "deltanet",
+   "mesa_exact",
+   "mesa_cg5"
+  ],
+  "pairs": [
+   64
+  ],
+  "speed_kinds": [
+   "mesa_exact"
+  ],
+  "d": 64,
+  "heads": 2,
+  "layers": 2,
+  "chunk": 64,
+  "vocab": 1024,
+  "batch": 128,
+  "steps": 3000,
+  "lr": 0.001,
+  "log_every": 1000,
+  "eval_batches": 16,
+  "seed": 1,
+  "quick": false,
+  "out": "results_seeds/lr1e-3_s1"
+ },
+ "device": "NVIDIA GeForce RTX 5060 Ti",
+ "runs": [
+  {
+   "kind": "linear",
+   "pairs": 64,
+   "seq_len": 192,
+   "recall": 0.8939208984375,
+   "final_loss": 0.4667332673072815,
+   "ms_per_step": 15.779112000018358,
+   "params": 232196
+  },
+  {
+   "kind": "deltanet",
+   "pairs": 64,
+   "seq_len": 192,
+   "recall": 0.01812744140625,
+   "final_loss": 5.964131746292114,
+   "ms_per_step": 16.830241998832207,
+   "params": 232196
+  },
+  {
+   "kind": "mesa_exact",
+   "pairs": 64,
+   "seq_len": 192,
+   "recall": 0.5009613037109375,
+   "final_loss": 2.635560464859009,
+   "ms_per_step": 33.88250099669676,
+   "params": 232200
+  },
+  {
+   "kind": "mesa_cg5",
+   "pairs": 64,
+   "seq_len": 192,
+   "recall": 0.01902008056640625,
+   "final_loss": 5.962096271514892,
+   "ms_per_step": 31.729383001220413,
+   "params": 232200
+  }
+ ],
+ "speed": [
+  {
+   "kind": "mesa_exact",
+   "pairs": 64,
+   "ms_per_step": 33.85040250213933
+  }
+ ]
+}

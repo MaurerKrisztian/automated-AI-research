@@ -1,0 +1,189 @@
+{
+ "args": {
+  "kinds": [
+   "attn",
+   "linear",
+   "deltanet",
+   "mesa_exact",
+   "mesa_cg5"
+  ],
+  "pairs": [
+   32,
+   64,
+   128
+  ],
+  "speed_kinds": [
+   "mesa_exact",
+   "mesa_cg15",
+   "mesa_cg30"
+  ],
+  "d": 64,
+  "heads": 2,
+  "layers": 2,
+  "chunk": 64,
+  "vocab": 1024,
+  "batch": 128,
+  "steps": 2000,
+  "lr": 0.002,
+  "log_every": 500,
+  "eval_batches": 16,
+  "seed": 0,
+  "quick": false,
+  "out": "results"
+ },
+ "device": "NVIDIA GeForce RTX 5060 Ti",
+ "runs": [
+  {
+   "kind": "attn",
+   "pairs": 32,
+   "seq_len": 96,
+   "recall": 1.0,
+   "final_loss": 2.6135921507375316e-05,
+   "ms_per_step": 5.2344040013849735,
+   "params": 231872
+  },
+  {
+   "kind": "linear",
+   "pairs": 32,
+   "seq_len": 96,
+   "recall": 0.990936279296875,
+   "final_loss": 0.060544966608285906,
+   "ms_per_step": 6.336749996989965,
+   "params": 232196
+  },
+  {
+   "kind": "deltanet",
+   "pairs": 32,
+   "seq_len": 96,
+   "recall": 0.0370025634765625,
+   "final_loss": 5.603930139541626,
+   "ms_per_step": 8.611668999947142,
+   "params": 232196
+  },
+  {
+   "kind": "mesa_exact",
+   "pairs": 32,
+   "seq_len": 96,
+   "recall": 0.9951324462890625,
+   "final_loss": 0.08751142293214798,
+   "ms_per_step": 18.643541006895248,
+   "params": 232200
+  },
+  {
+   "kind": "mesa_cg5",
+   "pairs": 32,
+   "seq_len": 96,
+   "recall": 0.994659423828125,
+   "final_loss": 0.059426928460597994,
+   "ms_per_step": 21.272236001095735,
+   "params": 232200
+  },
+  {
+   "kind": "attn",
+   "pairs": 64,
+   "seq_len": 192,
+   "recall": 1.0,
+   "final_loss": 3.430214303079992e-05,
+   "ms_per_step": 13.38159500301117,
+   "params": 231872
+  },
+  {
+   "kind": "linear",
+   "pairs": 64,
+   "seq_len": 192,
+   "recall": 0.9036636352539062,
+   "final_loss": 0.42973616600036624,
+   "ms_per_step": 15.772070000821259,
+   "params": 232196
+  },
+  {
+   "kind": "deltanet",
+   "pairs": 64,
+   "seq_len": 192,
+   "recall": 0.02083587646484375,
+   "final_loss": 5.924208507537842,
+   "ms_per_step": 16.87026600120589,
+   "params": 232196
+  },
+  {
+   "kind": "mesa_exact",
+   "pairs": 64,
+   "seq_len": 192,
+   "recall": 0.6948928833007812,
+   "final_loss": 1.5785609912872314,
+   "ms_per_step": 33.941376001166645,
+   "params": 232200
+  },
+  {
+   "kind": "mesa_cg5",
+   "pairs": 64,
+   "seq_len": 192,
+   "recall": 0.7925338745117188,
+   "final_loss": 0.9950292205810547,
+   "ms_per_step": 31.160942002316006,
+   "params": 232200
+  },
+  {
+   "kind": "attn",
+   "pairs": 128,
+   "seq_len": 384,
+   "recall": 1.0,
+   "final_loss": 1.8690518154471646e-05,
+   "ms_per_step": 36.058867000974715,
+   "params": 231872
+  },
+  {
+   "kind": "linear",
+   "pairs": 128,
+   "seq_len": 384,
+   "recall": 0.604888916015625,
+   "final_loss": 1.6491076803207398,
+   "ms_per_step": 41.64744800073095,
+   "params": 232196
+  },
+  {
+   "kind": "deltanet",
+   "pairs": 128,
+   "seq_len": 384,
+   "recall": 0.11562347412109375,
+   "final_loss": 5.484244556427002,
+   "ms_per_step": 36.503595001704525,
+   "params": 232196
+  },
+  {
+   "kind": "mesa_exact",
+   "pairs": 128,
+   "seq_len": 384,
+   "recall": 0.012371063232421875,
+   "final_loss": 6.078016357421875,
+   "ms_per_step": 69.74583099508891,
+   "params": 232200
+  },
+  {
+   "kind": "mesa_cg5",
+   "pairs": 128,
+   "seq_len": 384,
+   "recall": 0.01261138916015625,
+   "final_loss": 6.08370677947998,
+   "ms_per_step": 64.04570000449894,
+   "params": 232200
+  }
+ ],
+ "speed": [
+  {
+   "kind": "mesa_exact",
+   "pairs": 128,
+   "ms_per_step": 71.06355399810127
+  },
+  {
+   "kind": "mesa_cg15",
+   "pairs": 128,
+   "ms_per_step": 139.97654049671837
+  },
+  {
+   "kind": "mesa_cg30",
+   "pairs": 128,
+   "ms_per_step": 261.4722170001187
+  }
+ ]
+}

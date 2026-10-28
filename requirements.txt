@@ -1,0 +1,2 @@
+# Python packages for .venv besides PyTorch, which scripts/setup_env.sh installs from the CUDA 12.8 index.
+numpy>=2.0

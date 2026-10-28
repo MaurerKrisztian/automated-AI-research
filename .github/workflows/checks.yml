@@ -1,0 +1,42 @@
+# Runs on every pull request: the study checks, the unit tests for lab/ on CPU, and a website build.
+name: Checks
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  studies-and-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check studies
+        run: python tools/studies.py check
+      - name: Install CPU PyTorch and requirements
+        run: |
+          python -m pip install "torch==2.11.0" --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r requirements.txt
+      - name: Unit tests
+        run: PYTHONPATH=. python -m unittest discover -s tests
+
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - name: Install
+        working-directory: site
+        run: npm ci
+      - name: Build
+        working-directory: site
+        run: npm run build
