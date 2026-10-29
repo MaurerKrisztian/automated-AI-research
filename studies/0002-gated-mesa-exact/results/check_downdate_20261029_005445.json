@@ -1,0 +1,193 @@
+{
+ "env": {
+  "time": "2026-10-29T00:54:45+0000",
+  "python": "3.13.17",
+  "numpy": "2.5.3",
+  "machine": "x86_64",
+  "processor": "x86_64",
+  "git_commit": "f7f1959",
+  "git_dirty": true
+ },
+ "rows": [
+  {
+   "gates": "0.99-1",
+   "policy": "two",
+   "kappa_max": 1.0,
+   "end_tokens": 4,
+   "mean_m": 31.5,
+   "max_rho_used": 1.0,
+   "f64_err_x": 1.0811059071520982e-15,
+   "f32_err_o": 7.024169751059445e-07
+  },
+  {
+   "gates": "0.99-1",
+   "policy": "two",
+   "kappa_max": 10.0,
+   "end_tokens": 128,
+   "mean_m": 16.0,
+   "max_rho_used": 1.1785487675152182,
+   "f64_err_x": 6.529879679198673e-15,
+   "f32_err_o": 6.003730302934502e-07
+  },
+  {
+   "gates": "0.99-1",
+   "policy": "two",
+   "kappa_max": 100.0,
+   "end_tokens": 128,
+   "mean_m": 16.0,
+   "max_rho_used": 1.1785487675152182,
+   "f64_err_x": 6.529879679198673e-15,
+   "f32_err_o": 6.003730302934502e-07
+  },
+  {
+   "gates": "0.99-1",
+   "policy": "two",
+   "kappa_max": 10000.0,
+   "end_tokens": 128,
+   "mean_m": 16.0,
+   "max_rho_used": 1.1785487675152182,
+   "f64_err_x": 6.529879679198673e-15,
+   "f32_err_o": 6.003730302934502e-07
+  },
+  {
+   "gates": "0.99-1",
+   "policy": "two",
+   "kappa_max": null,
+   "end_tokens": 128,
+   "mean_m": 16.0,
+   "max_rho_used": 1.1785487675152182,
+   "f64_err_x": 6.529879679198673e-15,
+   "f32_err_o": 6.003730302934502e-07
+  },
+  {
+   "gates": "0.99-1",
+   "policy": "end",
+   "kappa_max": null,
+   "end_tokens": 256,
+   "mean_m": 31.5,
+   "max_rho_used": 1.4016378314360658,
+   "f64_err_x": 3.275674883411761e-14,
+   "f32_err_o": 1.3249843498518425e-06
+  },
+  {
+   "gates": "0.9-1",
+   "policy": "two",
+   "kappa_max": 1.0,
+   "end_tokens": 4,
+   "mean_m": 31.5,
+   "max_rho_used": 1.0,
+   "f64_err_x": 1.6379059394930602e-15,
+   "f32_err_o": 5.870126957325547e-07
+  },
+  {
+   "gates": "0.9-1",
+   "policy": "two",
+   "kappa_max": 10.0,
+   "end_tokens": 128,
+   "mean_m": 16.0,
+   "max_rho_used": 6.772248863106392,
+   "f64_err_x": 1.3970374189793747e-14,
+   "f32_err_o": 1.850798420842505e-06
+  },
+  {
+   "gates": "0.9-1",
+   "policy": "two",
+   "kappa_max": 100.0,
+   "end_tokens": 128,
+   "mean_m": 16.0,
+   "max_rho_used": 6.772248863106392,
+   "f64_err_x": 1.3970374189793747e-14,
+   "f32_err_o": 1.850798420842505e-06
+  },
+  {
+   "gates": "0.9-1",
+   "policy": "two",
+   "kappa_max": 10000.0,
+   "end_tokens": 128,
+   "mean_m": 16.0,
+   "max_rho_used": 6.772248863106392,
+   "f64_err_x": 1.3970374189793747e-14,
+   "f32_err_o": 1.850798420842505e-06
+  },
+  {
+   "gates": "0.9-1",
+   "policy": "two",
+   "kappa_max": null,
+   "end_tokens": 128,
+   "mean_m": 16.0,
+   "max_rho_used": 6.772248863106392,
+   "f64_err_x": 1.3970374189793747e-14,
+   "f32_err_o": 1.850798420842505e-06
+  },
+  {
+   "gates": "0.9-1",
+   "policy": "end",
+   "kappa_max": null,
+   "end_tokens": 256,
+   "mean_m": 31.5,
+   "max_rho_used": 37.29176120398484,
+   "f64_err_x": 9.905717906125309e-14,
+   "f32_err_o": 1.132717219097776e-05
+  },
+  {
+   "gates": "0.5-1",
+   "policy": "two",
+   "kappa_max": 1.0,
+   "end_tokens": 4,
+   "mean_m": 31.5,
+   "max_rho_used": 1.0,
+   "f64_err_x": 1.0379731720958687e-15,
+   "f32_err_o": 7.192908348779909e-07
+  },
+  {
+   "gates": "0.5-1",
+   "policy": "two",
+   "kappa_max": 10.0,
+   "end_tokens": 34,
+   "mean_m": 25.0390625,
+   "max_rho_used": 9.172974309352425,
+   "f64_err_x": 5.755190534567271e-15,
+   "f32_err_o": 2.209082023905562e-06
+  },
+  {
+   "gates": "0.5-1",
+   "policy": "two",
+   "kappa_max": 100.0,
+   "end_tokens": 70,
+   "mean_m": 19.5546875,
+   "max_rho_used": 92.0365086601398,
+   "f64_err_x": 5.45491972406811e-14,
+   "f32_err_o": 1.8193824040845563e-05
+  },
+  {
+   "gates": "0.5-1",
+   "policy": "two",
+   "kappa_max": 10000.0,
+   "end_tokens": 125,
+   "mean_m": 16.046875,
+   "max_rho_used": 9895.452511850306,
+   "f64_err_x": 7.64917647464356e-12,
+   "f32_err_o": 0.0026397993397104954
+  },
+  {
+   "gates": "0.5-1",
+   "policy": "two",
+   "kappa_max": null,
+   "end_tokens": 128,
+   "mean_m": 16.0,
+   "max_rho_used": 30818.77743909798,
+   "f64_err_x": 7.64917647464356e-12,
+   "f32_err_o": 0.0026397993397104954
+  },
+  {
+   "gates": "0.5-1",
+   "policy": "end",
+   "kappa_max": null,
+   "end_tokens": 256,
+   "mean_m": 31.5,
+   "max_rho_used": 1387631135.4630315,
+   "f64_err_x": 4.368540660858295e-07,
+   "f32_err_o": null
+  }
+ ]
+}
