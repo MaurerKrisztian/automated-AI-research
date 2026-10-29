@@ -1,0 +1,45 @@
+Forward FLOPs per token and head (e = d). Ratios are CG or reference over the Kalman layer.
+   d    C    kalman       cg30      cg10   carried      gla  cg30/k  cg10/k k/carried  k/gla
+  64   32     75093     418432    158592     49493    20480    5.57    2.11      1.52   3.67
+  64   64    103765     545408    203648     62805    24576    5.26    1.96      1.65   4.22
+  64  128    169301     799360    293760     91477    32768    4.72    1.74      1.85   5.17
+ 128   32    247125    1377536    530176    172373    73728    5.57    2.15      1.43   3.35
+ 128   64    300373    1631488    620288    197973    81920    5.43    2.07      1.52   3.67
+ 128  128    415061    2139392    800512    251221    98304    5.15    1.93      1.65   4.22
+ 256   32    886101    4917760   1912320    639317   278528    5.55    2.16      1.39   3.18
+ 256   64    988501    5425664   2092544    689493   294912    5.49    2.12      1.43   3.35
+ 256  128   1201493    6441472   2452992    791893   327680    5.36    2.04      1.52   3.67
+
+Kalman chunk form against the Bayesian Layer's sequential chunk algorithm, per token and head (e = d):
+total forward FLOPs, and the part done inside order-dependent steps over the chunk's positions.
+   d    C    kalman        bl   k/bl  seq_kalman    seq_bl  bl/k seq
+  64   32     75093     49152   1.53        5461     32768      6.00
+  64   64    103765     53248   1.95       13653     36864      2.70
+  64  128    169301     61440   2.76       38229     45056      1.18
+ 128   32    247125    188416   1.31        9557    122880     12.86
+ 128   64    300373    196608   1.53       21845    131072      6.00
+ 128  128    415061    212992   1.95       54613    147456      2.70
+ 256   32    886101    737280   1.20       17749    475136     26.77
+ 256   64    988501    753664   1.31       38229    491520     12.86
+ 256  128   1201493    786432   1.53       87381    524288      6.00
+
+Version 3. Order-dependent work per token and head (e = d), split into the part that scales with d or e
+and the part on C x C matrices only. kalman_inv forms L^-1 explicitly; bl_wy is BL's gain loop with a WY mean.
+   d    C  kalman_inv  inv/bl  k_dep   k_CxC   bl_dep  bl_wy_dep  bl_wy_CxC  bl_wy/k
+  64   32       80555    1.64      0     683    32768       4096        341     6.50
+  64   64      117419    2.21      0    2731    36864       8192       1365     3.50
+  64  128      207531    3.38      0   10923    45056      16384       5461     2.00
+ 128   32      256683    1.36      0     683   122880       8192        341    12.50
+ 128   64      322219    1.64      0    2731   131072      16384       1365     6.50
+ 128  128      469675    2.21      0   10923   147456      32768       5461     3.50
+ 256   32      903851    1.23      0     683   475136      16384        341    24.50
+ 256   64     1026731    1.36      0    2731   491520      32768       1365    12.50
+ 256  128     1288875    1.64      0   10923   524288      65536       5461     6.50
+
+Decoding FLOPs per token and head (e = d): exact Kalman recursion against MesaNet with 9 or 30 CG steps.
+   d   kalman      cg9      cg30  cg9/k  cg30/k
+  64    49408   104640    291456   2.12    5.90
+ 128   197120   405888   1123584   2.06    5.70
+ 256   787456  1598208   4409856   2.03    5.60
+
+saved results/flop_model_20261029_211403.json

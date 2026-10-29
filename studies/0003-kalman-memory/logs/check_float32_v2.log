@@ -1,0 +1,103 @@
+Part E1. float32 against float64 over long sequences (d = e = C = 64, stationary noise).
+Per eighth of the sequence: max|o32 - o64| / max|o64|. P: smallest/largest eigenvalue at the worst chunk boundary; final asymmetry.
+scalar gates 0.99-1  (T = 65536; largest cond(K) over the chunks, in float64: 5.97e+00)
+       chunk, triangular solves: 5.0e-07 4.1e-07 4.1e-07 4.8e-07 5.1e-07 4.0e-07 4.8e-07 4.4e-07   P err 1.7e-07, eig min/max (worst boundary) 2.2e-01, asym 0.0e+00
+           chunk, explicit L^-1: 4.1e-07 3.7e-07 4.0e-07 3.7e-07 3.6e-07 3.5e-07 3.9e-07 3.8e-07   P err 1.8e-07, eig min/max (worst boundary) 2.2e-01, asym 0.0e+00
+            chunk, matmul Grams: 4.3e-07 4.9e-07 4.3e-07 4.1e-07 4.0e-07 3.7e-07 4.3e-07 4.2e-07   P err 1.9e-07, eig min/max (worst boundary) 2.2e-01, asym 0.0e+00
+  chunk, C x C stage in float64: 4.5e-07 3.4e-07 3.7e-07 4.1e-07 3.4e-07 3.7e-07 4.1e-07 3.9e-07   P err 2.0e-07, eig min/max (worst boundary) 2.2e-01, asym 0.0e+00
+     chunk, K formed in float64: 4.2e-07 3.4e-07 3.9e-07 3.8e-07 3.4e-07 3.7e-07 5.0e-07 3.9e-07   P err 1.9e-07, eig min/max (worst boundary) 2.2e-01, asym 0.0e+00
+          token-by-token filter: 6.0e-07 4.8e-07 4.5e-07 4.9e-07 4.5e-07 5.5e-07 5.9e-07 5.3e-07   P err 6.9e-07, eig min/max (worst boundary) 2.2e-01, asym 0.0e+00
+              float64 reference: final P eig min/max 3.4e-01
+  (24.4 s)
+scalar gates 0.9-1  (T = 65536; largest cond(K) over the chunks, in float64: 4.32e+00)
+       chunk, triangular solves: 4.6e-07 5.1e-07 4.0e-07 4.4e-07 5.1e-07 4.2e-07 4.6e-07 4.7e-07   P err 6.5e-08, eig min/max (worst boundary) 2.6e-01, asym 0.0e+00
+           chunk, explicit L^-1: 3.6e-07 3.7e-07 3.5e-07 4.5e-07 3.2e-07 4.6e-07 2.8e-07 3.3e-07   P err 6.8e-08, eig min/max (worst boundary) 2.6e-01, asym 0.0e+00
+            chunk, matmul Grams: 4.2e-07 4.4e-07 5.6e-07 4.7e-07 4.3e-07 4.1e-07 4.1e-07 5.2e-07   P err 6.5e-08, eig min/max (worst boundary) 2.6e-01, asym 0.0e+00
+  chunk, C x C stage in float64: 3.0e-07 3.3e-07 3.0e-07 3.3e-07 2.9e-07 4.2e-07 2.6e-07 2.6e-07   P err 6.8e-08, eig min/max (worst boundary) 2.6e-01, asym 0.0e+00
+     chunk, K formed in float64: 3.1e-07 3.0e-07 3.1e-07 3.2e-07 3.1e-07 3.7e-07 2.7e-07 2.9e-07   P err 6.6e-08, eig min/max (worst boundary) 2.6e-01, asym 0.0e+00
+          token-by-token filter: 2.5e-07 2.7e-07 2.3e-07 2.9e-07 2.7e-07 2.5e-07 2.2e-07 2.1e-07   P err 2.7e-07, eig min/max (worst boundary) 2.6e-01, asym 0.0e+00
+              float64 reference: final P eig min/max 5.1e-01
+  (25.0 s)
+per-channel gates 0.95-1  (T = 16384; largest cond(K) over the chunks, in float64: 5.18e+00)
+       chunk, triangular solves: 4.2e-07 3.8e-07 3.4e-07 3.8e-07 3.8e-07 3.3e-07 4.1e-07 3.7e-07   P err 1.8e-07, eig min/max (worst boundary) 2.7e-01, asym 4.0e-09
+           chunk, explicit L^-1: 2.8e-07 3.4e-07 2.4e-07 3.4e-07 3.5e-07 2.8e-07 2.9e-07 3.2e-07   P err 1.8e-07, eig min/max (worst boundary) 2.7e-01, asym 2.0e-09
+            chunk, matmul Grams: 3.2e-07 3.5e-07 4.3e-07 4.3e-07 4.4e-07 3.3e-07 3.3e-07 4.0e-07   P err 1.8e-07, eig min/max (worst boundary) 2.7e-01, asym 2.0e-09
+  chunk, C x C stage in float64: 2.7e-07 3.1e-07 2.6e-07 3.0e-07 3.0e-07 3.6e-07 3.0e-07 3.0e-07   P err 1.8e-07, eig min/max (worst boundary) 2.7e-01, asym 2.0e-09
+     chunk, K formed in float64: 2.3e-07 3.1e-07 2.8e-07 3.1e-07 2.7e-07 3.1e-07 2.9e-07 2.9e-07   P err 1.8e-07, eig min/max (worst boundary) 2.7e-01, asym 4.0e-09
+          token-by-token filter: 2.3e-07 3.1e-07 2.3e-07 2.5e-07 2.3e-07 2.2e-07 2.8e-07 2.7e-07   P err 3.9e-07, eig min/max (worst boundary) 2.7e-01, asym 2.0e-08
+              float64 reference: final P eig min/max 4.2e-01
+  (6.0 s)
+strong writes: beta 50, ridge 1e-2, gates 0.999-1  (T = 16384; largest cond(K) over the chunks, in float64: 4.30e+02)
+       chunk, triangular solves: 8.2e-06 1.3e-06 1.7e-06 1.4e-06 1.2e-06 1.2e-06 1.5e-06 1.3e-06   P err 5.7e-07, eig min/max (worst boundary) 1.7e-04, asym 0.0e+00
+           chunk, explicit L^-1: 9.0e-06 1.4e-06 1.4e-06 1.3e-06 1.9e-06 1.5e-06 1.9e-06 1.3e-06   P err 5.6e-07, eig min/max (worst boundary) 1.7e-04, asym 0.0e+00
+            chunk, matmul Grams: 6.9e-06 1.6e-06 1.4e-06 1.3e-06 1.2e-06 1.4e-06 1.5e-06 1.3e-06   P err 7.0e-07, eig min/max (worst boundary) 1.7e-04, asym 0.0e+00
+  chunk, C x C stage in float64: 6.5e-06 1.0e-06 1.0e-06 1.2e-06 1.3e-06 9.8e-07 1.2e-06 1.1e-06   P err 5.6e-07, eig min/max (worst boundary) 1.7e-04, asym 0.0e+00
+     chunk, K formed in float64: 1.5e-06 7.3e-07 6.7e-07 7.8e-07 8.1e-07 6.6e-07 8.9e-07 7.1e-07   P err 3.3e-07, eig min/max (worst boundary) 1.7e-04, asym 0.0e+00
+          token-by-token filter: 3.9e-06 5.9e-07 6.2e-07 6.7e-07 5.1e-07 4.3e-07 8.2e-07 5.6e-07   P err 5.4e-07, eig min/max (worst boundary) 1.7e-04, asym 0.0e+00
+              float64 reference: final P eig min/max 1.8e-03
+  (6.2 s)
+decaying key spectrum, beta 10, ridge 1e-2  (T = 16384; largest cond(K) over the chunks, in float64: 2.71e+03)
+       chunk, triangular solves: 1.5e-05 7.1e-06 7.9e-06 5.6e-06 8.4e-06 8.5e-06 6.9e-06 8.7e-06   P err 8.9e-07, eig min/max (worst boundary) 5.0e-04, asym 0.0e+00
+           chunk, explicit L^-1: 1.5e-05 7.5e-06 8.5e-06 6.0e-06 9.0e-06 1.2e-05 7.2e-06 7.8e-06   P err 8.1e-07, eig min/max (worst boundary) 5.0e-04, asym 0.0e+00
+            chunk, matmul Grams: 1.5e-05 7.5e-06 6.2e-06 6.1e-06 8.5e-06 1.3e-05 8.1e-06 1.1e-05   P err 7.7e-07, eig min/max (worst boundary) 5.0e-04, asym 0.0e+00
+  chunk, C x C stage in float64: 1.4e-05 6.3e-06 6.7e-06 5.9e-06 8.4e-06 9.2e-06 6.4e-06 7.4e-06   P err 6.1e-07, eig min/max (worst boundary) 5.0e-04, asym 0.0e+00
+     chunk, K formed in float64: 1.4e-06 8.6e-07 1.2e-06 1.1e-06 1.5e-06 1.1e-06 1.2e-06 1.2e-06   P err 1.9e-07, eig min/max (worst boundary) 5.0e-04, asym 0.0e+00
+          token-by-token filter: 5.6e-07 4.8e-07 4.3e-07 5.5e-07 5.5e-07 5.1e-07 5.0e-07 6.1e-07   P err 7.3e-07, eig min/max (worst boundary) 5.0e-04, asym 0.0e+00
+              float64 reference: final P eig min/max 7.6e-03
+  (6.0 s)
+per-channel gates 0.1-0.3 (fast; log decay over a chunk about -105)  (T = 4096; largest cond(K) over the chunks, in float64: 3.17e+00)
+       chunk, triangular solves: 6.6e-07 6.9e-07 6.0e-07 4.9e-07 6.1e-07 8.3e-07 8.4e-07 4.2e-07   P err 7.3e-08, eig min/max (worst boundary) 3.1e-01, asym 0.0e+00
+           chunk, explicit L^-1: 6.6e-07 6.9e-07 6.0e-07 4.9e-07 6.1e-07 8.4e-07 7.4e-07 4.0e-07   P err 7.3e-08, eig min/max (worst boundary) 3.1e-01, asym 0.0e+00
+            chunk, matmul Grams: error: linalg.cholesky: The factorization could not be compl   P err nan, eig min/max (worst boundary) nan, asym nan
+  chunk, C x C stage in float64: 6.6e-07 6.9e-07 6.0e-07 4.9e-07 6.0e-07 8.3e-07 6.9e-07 4.0e-07   P err 7.3e-08, eig min/max (worst boundary) 3.1e-01, asym 0.0e+00
+     chunk, K formed in float64: 6.6e-07 7.0e-07 5.7e-07 4.9e-07 6.0e-07 8.3e-07 7.4e-07 4.0e-07   P err 7.3e-08, eig min/max (worst boundary) 3.1e-01, asym 0.0e+00
+          token-by-token filter: 1.8e-07 1.7e-07 1.8e-07 2.4e-07 1.8e-07 1.7e-07 1.5e-07 1.4e-07   P err 6.3e-08, eig min/max (worst boundary) 3.1e-01, asym 9.3e-10
+              float64 reference: final P eig min/max 5.4e-01
+  (1.7 s)
+no forgetting (gates = 1), beta 0.5-2, ridge 1  (T = 65536; largest cond(K) over the chunks, in float64: 6.72e+00)
+       chunk, triangular solves: 4.5e-07 4.7e-07 5.4e-07 5.7e-07 6.5e-07 7.4e-07 7.6e-07 7.9e-07   P err 1.3e-06, eig min/max (worst boundary) 1.6e-01, asym 0.0e+00
+           chunk, explicit L^-1: 4.0e-07 4.9e-07 5.5e-07 5.8e-07 6.0e-07 7.2e-07 7.9e-07 7.4e-07   P err 1.3e-06, eig min/max (worst boundary) 1.6e-01, asym 0.0e+00
+            chunk, matmul Grams: 4.5e-07 4.7e-07 5.4e-07 5.7e-07 6.5e-07 7.4e-07 7.6e-07 7.9e-07   P err 1.3e-06, eig min/max (worst boundary) 1.6e-01, asym 0.0e+00
+  chunk, C x C stage in float64: 4.2e-07 4.7e-07 5.9e-07 5.9e-07 6.9e-07 6.4e-07 7.4e-07 8.3e-07   P err 1.3e-06, eig min/max (worst boundary) 1.6e-01, asym 0.0e+00
+     chunk, K formed in float64: 3.0e-07 4.4e-07 5.3e-07 5.8e-07 7.4e-07 7.3e-07 7.4e-07 9.3e-07   P err 1.3e-06, eig min/max (worst boundary) 1.6e-01, asym 0.0e+00
+          token-by-token filter: 4.6e-07 2.3e-06 3.0e-06 3.6e-06 4.8e-06 5.4e-06 6.2e-06 6.8e-06   P err 1.6e-05, eig min/max (worst boundary) 1.6e-01, asym 0.0e+00
+              float64 reference: final P eig min/max 8.8e-01
+  (25.5 s)
+no forgetting, strong writes: beta 50, ridge 1e-2  (T = 65536; largest cond(K) over the chunks, in float64: 1.29e+04)
+       chunk, triangular solves: 1.7e-04 1.9e-04 1.2e-04 1.2e-04 9.1e-05 9.2e-05 7.5e-05 7.4e-05   P err 5.5e-06, eig min/max (worst boundary) 7.7e-05, asym 0.0e+00
+           chunk, explicit L^-1: 2.6e-04 3.0e-04 2.0e-04 1.8e-04 1.4e-04 1.4e-04 1.2e-04 1.2e-04   P err 2.7e-06, eig min/max (worst boundary) 7.7e-05, asym 0.0e+00
+            chunk, matmul Grams: 1.7e-04 1.9e-04 1.2e-04 1.2e-04 9.1e-05 9.2e-05 7.5e-05 7.4e-05   P err 5.5e-06, eig min/max (worst boundary) 7.7e-05, asym 0.0e+00
+  chunk, C x C stage in float64: 1.3e-04 1.4e-04 1.1e-04 8.9e-05 6.4e-05 5.8e-05 6.0e-05 5.6e-05   P err 2.1e-06, eig min/max (worst boundary) 7.7e-05, asym 0.0e+00
+     chunk, K formed in float64: 4.4e-05 9.4e-05 7.3e-05 6.4e-05 4.8e-05 4.5e-05 4.0e-05 4.6e-05   P err 1.7e-06, eig min/max (worst boundary) 7.7e-05, asym 0.0e+00
+          token-by-token filter: 6.6e-05 4.0e-05 3.0e-05 2.5e-05 2.0e-05 1.9e-05 1.8e-05 1.8e-05   P err 1.7e-05, eig min/max (worst boundary) 7.7e-05, asym 0.0e+00
+              float64 reference: final P eig min/max 8.9e-01
+  (25.8 s)
+no forgetting, decaying key spectrum, beta 10, ridge 1e-2  (T = 65536; largest cond(K) over the chunks, in float64: 1.35e+04)
+       chunk, triangular solves: 1.8e-04 4.9e-05 3.5e-05 3.0e-05 2.4e-05 2.3e-05 1.8e-05 1.9e-05   P err 6.2e-07, eig min/max (worst boundary) 7.4e-05, asym 0.0e+00
+           chunk, explicit L^-1: 3.7e-04 5.6e-05 5.2e-05 4.1e-05 3.5e-05 3.7e-05 2.5e-05 2.9e-05   P err 6.2e-07, eig min/max (worst boundary) 7.4e-05, asym 0.0e+00
+            chunk, matmul Grams: 1.8e-04 4.9e-05 3.5e-05 3.0e-05 2.4e-05 2.3e-05 1.8e-05 1.9e-05   P err 6.2e-07, eig min/max (worst boundary) 7.4e-05, asym 0.0e+00
+  chunk, C x C stage in float64: 2.1e-04 5.7e-05 4.1e-05 3.4e-05 2.4e-05 2.5e-05 2.3e-05 2.2e-05   P err 6.2e-07, eig min/max (worst boundary) 7.4e-05, asym 0.0e+00
+     chunk, K formed in float64: 7.2e-05 2.6e-05 2.2e-05 1.7e-05 1.4e-05 1.5e-05 1.1e-05 1.2e-05   P err 6.2e-07, eig min/max (worst boundary) 7.4e-05, asym 0.0e+00
+          token-by-token filter: 4.2e-06 2.2e-06 3.1e-06 3.5e-06 4.6e-06 5.3e-06 5.3e-06 6.5e-06   P err 1.1e-05, eig min/max (worst boundary) 7.4e-05, asym 0.0e+00
+              float64 reference: final P eig min/max 2.4e-04
+  (26.3 s)
+gates 0.9999-1, strong writes: beta 50, ridge 1e-2  (T = 65536; largest cond(K) over the chunks, in float64: 2.03e+03)
+       chunk, triangular solves: 5.3e-05 1.3e-06 1.2e-06 1.1e-06 1.4e-06 1.1e-06 1.1e-06 1.2e-06   P err 4.9e-07, eig min/max (worst boundary) 1.9e-04, asym 0.0e+00
+           chunk, explicit L^-1: 6.5e-05 1.2e-06 1.3e-06 9.9e-07 1.4e-06 1.2e-06 1.2e-06 1.3e-06   P err 6.4e-07, eig min/max (worst boundary) 1.9e-04, asym 0.0e+00
+            chunk, matmul Grams: 4.6e-05 1.3e-06 1.2e-06 1.0e-06 1.4e-06 1.1e-06 1.3e-06 1.2e-06   P err 5.6e-07, eig min/max (worst boundary) 1.9e-04, asym 0.0e+00
+  chunk, C x C stage in float64: 3.5e-05 9.9e-07 9.9e-07 8.4e-07 1.1e-06 1.1e-06 1.0e-06 1.1e-06   P err 4.9e-07, eig min/max (worst boundary) 1.9e-04, asym 0.0e+00
+     chunk, K formed in float64: 1.4e-05 7.9e-07 7.6e-07 6.1e-07 8.1e-07 6.7e-07 8.3e-07 7.3e-07   P err 5.0e-07, eig min/max (worst boundary) 1.9e-04, asym 0.0e+00
+          token-by-token filter: 1.9e-05 7.1e-07 5.8e-07 5.0e-07 7.5e-07 5.9e-07 5.4e-07 5.8e-07   P err 7.8e-07, eig min/max (worst boundary) 1.9e-04, asym 0.0e+00
+              float64 reference: final P eig min/max 1.3e-02
+  (26.1 s)
+
+Part E2. Chunk covariance in float32: the sum of PSD terms against the 'P_0 - Lambda^-1' form.
+Boundary covariance from a float64 history; error is max|K32 - K64| / lambda_min(K64).
+gates 0.5-1.0, beta  1.0: lambda_min(K) 1.48e+00, largest eig of P_0 1.00e+00; error, PSD sum 2.7e-07, P_0 - Lambda^-1 form 1.8e-07
+gates 0.5-1.0, beta 50.0: lambda_min(K) 5.05e-01, largest eig of P_0 1.00e+00; error, PSD sum 5.7e-07, P_0 - Lambda^-1 form 5.0e-07
+gates 0.99-1.0, beta  1.0: lambda_min(K) 1.05e+00, largest eig of P_0 8.55e-01; error, PSD sum 2.4e-07, P_0 - Lambda^-1 form 2.8e-07
+gates 0.99-1.0, beta 50.0: lambda_min(K) 5.97e-02, largest eig of P_0 6.81e-01; error, PSD sum 2.6e-06, P_0 - Lambda^-1 form 5.6e-06
+gates 0.9999-1.0, beta  1.0: lambda_min(K) 1.00e+00, largest eig of P_0 1.03e-01; error, PSD sum 7.5e-08, P_0 - Lambda^-1 form 4.0e-07
+gates 0.9999-1.0, beta 50.0: lambda_min(K) 2.06e-02, largest eig of P_0 2.45e-02; error, PSD sum 3.3e-07, P_0 - Lambda^-1 form 1.7e-05
+
+saved results/check_float32_20261029_222118.json

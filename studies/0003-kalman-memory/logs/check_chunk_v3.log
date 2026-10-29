@@ -1,0 +1,70 @@
+Part A. Chunk forward pass against the extended-precision token-by-token filter (float64 inputs).
+Errors are max|x - x_ref| / max|x_ref|; 'seq64' is the float64 token-by-token filter, for scale.
+                                    case   C cond(K) max    solve explicit   matmul   prefix    seq64      M_T      P_T
+                      scalar gates 0.5-1   8    5.02e+00  3.1e-16  2.5e-16  2.3e-16  2.5e-16  2.3e-16  5.7e-16  1.9e-16
+                 per-channel gates 0.5-1   8    4.51e+00  6.2e-16  4.2e-16  5.4e-16  4.2e-16  2.6e-16  1.5e-16  1.2e-16
+                     scalar gates 0.01-1   8    4.18e+00  2.1e-16  2.1e-16  2.6e-16  2.2e-16  2.1e-16  8.2e-16  1.2e-16
+                per-channel gates 0.01-1   8    4.53e+00  3.2e-16  3.0e-16  2.8e-16  4.0e-16  3.3e-16  3.7e-16  1.5e-16
+                    scalar gates 0.999-1   8    6.95e+00  3.8e-16  3.8e-16  4.0e-16  3.8e-16  4.6e-16  4.7e-16  5.5e-16
+               per-channel gates 0.999-1   8    6.25e+00  5.6e-16  3.5e-16  5.6e-16  5.9e-16  4.1e-16  4.0e-16  2.7e-16
+               no forgetting (gates = 1)   8    7.16e+00  6.2e-16  4.6e-16  6.2e-16  5.7e-16  4.8e-16  5.1e-16  1.9e-16
+        near resets (gates 1e-6 to 1e-3)   8    3.54e+00  6.4e-16  5.0e-16  6.4e-16  6.4e-16  1.4e-16  1.8e-16  1.4e-16
+                            chunk size 1   1    1.00e+00  1.8e-16  1.8e-16  1.4e-16  2.2e-16  2.3e-16  1.5e-16  1.1e-16
+                  one chunk (C = T = 33)  33    7.22e+00  7.5e-16  5.7e-16  5.7e-16  1.2e-15  4.4e-16  4.3e-16  3.3e-16
+     C does not divide T (T = 37, C = 8)   8    4.27e+00  6.7e-16  5.5e-16  3.9e-16  3.0e-16  3.7e-16  1.5e-16  1.2e-16
+                                   T = 1   8    1.00e+00  6.0e-17  6.0e-17  6.0e-17  7.5e-17  1.2e-16  1.2e-16  7.6e-17
+                          d = 4 < C = 32  32    2.17e+01  5.3e-16  4.9e-16  5.0e-16  5.0e-16  3.1e-16  3.2e-16  2.5e-16
+                          d = 48 > C = 8   8    3.18e+00  6.3e-16  7.2e-16  3.8e-16  5.0e-16  2.1e-16  4.6e-16  1.4e-16
+                                   e = 1   8    4.24e+00  3.5e-16  3.7e-16  3.0e-16  6.0e-16  3.7e-16  2.0e-16  2.7e-16
+      tiny write strengths (beta = 1e-3)   8    1.00e+00  8.9e-16  7.4e-16  5.9e-16  7.4e-16  3.3e-16  1.7e-16  1.9e-16
+       large write strengths (beta = 50)   8    1.05e+01  5.8e-16  5.8e-16  7.8e-16  5.8e-16  2.8e-16  3.4e-16  1.1e-16
+                   mixed beta 1e-3 to 50   8    6.07e+02  3.2e-16  2.6e-16  2.8e-16  2.8e-16  4.6e-16  2.5e-16  1.3e-16
+                  mixed ridge 1e-3 to 10   8    2.54e+01  3.3e-16  2.8e-16  4.4e-16  2.7e-16  1.8e-16  4.8e-16  4.2e-16
+                               unit keys   8    3.17e+00  5.0e-16  2.6e-16  5.0e-16  3.2e-16  3.0e-16  2.1e-16  1.9e-16
+            decaying key spectrum (i^-2)   8    2.19e+02  7.6e-16  5.4e-16  8.0e-16  5.0e-16  2.1e-16  4.8e-16  1.1e-16
+                     near-collinear keys   8    4.38e+01  6.5e-16  6.5e-16  8.6e-16  6.7e-16  4.4e-16  3.0e-15  1.8e-16
+  free isotropic noise, P_init = 3I (BL)   8    5.52e+00  6.7e-16  6.1e-16  4.4e-16  3.7e-16  2.2e-16  2.4e-16  1.9e-16
+       free diagonal noise, dense P_init   8    5.10e+00  3.0e-16  2.3e-16  3.0e-16  2.6e-16  2.5e-16  4.4e-16  1.6e-16
+                      nonzero prior mean   8    4.65e+00  3.3e-16  3.1e-16  3.3e-16  5.1e-16  2.5e-16  2.0e-16  1.6e-16
+           long: T = 513, d = 32, C = 64  64    1.23e+01  5.4e-16  4.7e-16  5.1e-16  1.2e-15  2.6e-16  4.0e-16  3.1e-16
+worst over all cases: solve 8.9e-16, explicit 7.4e-16, matmul 8.6e-16, prefix 1.2e-15, seq64 4.8e-16, M_T 3.0e-15, P_T 5.5e-16
+worst over the 26 cases with cond(K) <= 1e4: solve 8.9e-16, explicit 7.4e-16, matmul 8.6e-16, prefix 1.2e-15, seq64 4.8e-16
+
+Part A2. Conditioning sweep: strong writes (beta = 50) against ever smaller ridges, scalar gates 0.99-1.
+unit and decay: d = C = 16; rank4: d = 4 keys in chunks of C = 32, so each chunk's key block has rank 4.
+    keys   ridge cond(K) max    solve explicit   matmul    seq64      P_T
+    unit   1e+00    6.39e+01  2.0e-15  1.9e-15  1.8e-15  8.2e-16  3.2e-16
+    unit   1e-02    1.04e+02  3.4e-15  3.5e-15  4.0e-15  9.0e-16  6.0e-16
+    unit   1e-04    1.04e+02  3.4e-15  4.5e-15  3.2e-15  1.1e-15  3.9e-16
+    unit   1e-06    1.04e+02  4.1e-15  4.2e-15  3.5e-15  8.3e-16  5.6e-16
+   decay   1e+00    6.39e+02  7.3e-15  7.0e-15  7.6e-15  5.8e-16  3.6e-16
+   decay   1e-02    7.80e+03  4.8e-14  4.9e-14  4.6e-14  1.7e-15  1.1e-15
+   decay   1e-04    8.79e+03  7.1e-14  7.4e-14  7.0e-14  2.2e-15  2.6e-15
+   decay   1e-06    8.80e+03  3.3e-14  3.6e-14  3.9e-14  2.1e-15  2.2e-15
+   rank4   1e+00    4.73e+02  1.4e-14  7.3e-15  1.3e-14  1.1e-15  1.3e-15
+   rank4   1e-02    8.10e+03  2.3e-14  4.3e-14  3.7e-14  7.0e-16  4.4e-15
+   rank4   1e-04    9.66e+03  3.3e-14  2.3e-14  1.4e-14  1.2e-15  1.1e-14
+   rank4   1e-06    9.68e+03  4.4e-14  2.9e-14  1.3e-14  4.6e-16  8.1e-15
+
+Part B. Special cases.
+B1  gates = 1, stationary noise: chunk readout vs Mesa G_t (H_t + Lambda)^-1 q_t, 3 inputs: 2.9e-15
+B2  one stored pair, 20 draws of gate, ridge, beta and age 0-29 (Proposition 1d): Kalman formula 1.8e-15, MesaNet formula 2.2e-14
+B3  Kalman mean with covariance p_t I vs the Gated DeltaNet (scalar) and KDA (per-channel) recurrence: 7.2e-16; max b_t |k_t|^2 = 0.9193 (< 1)
+B4  directional-noise Gram, direct triple sum vs B diag(psi) B^T, scalar and per-channel gates: 1.5e-16
+B5  phi by recursion and by (I - A^2)/lambda with expm1, vs extended precision, gates down to 1 - 1e-10: 3.8e-16
+
+Part C. Bounds of Proposition 4(b), stationary noise, on random histories.
+120 chunks (histories of 0-200 tokens, C = 4-64, d = 4-16, gates from 0.5-1 to 0.99-1, beta 0.1-10); violations: lmin 0, lmax_F 0, lmax_trace 0, cond_unit 0, P_le_prior 0
+unit-key condition bound: cond(K)/bound between 0.018 and 0.413 over 40 chunks
+
+Part D. Gradients.
+D1  Proposition 6 against autograd (C = 9, 17, 33): dl/dX 0.0e+00, dl/dR 5.8e-16, symmetrized dl/dK 5.5e-16.
+    Unsymmetrized, for the readout written as kappa^T K^-1 R: -W A^T matches to 8.4e-16; the earlier -A W^T is off by 1.4e+00 (relative).
+D2  stationary, scalar gates: chunk-form gradients vs token-by-token autograd, worst over inputs K 5.6e-16, V 3.1e-16, Q 7.7e-16, log_beta 5.3e-16, logD 8.0e-16, log_lam 5.2e-16
+D3  stationary, scalar gates: directional derivative, central differences on the reference -7.8376849721e+00, autograd through the chunk form -7.8376849829e+00, relative gap 1.4e-09
+D2  stationary, per-channel gates: chunk-form gradients vs token-by-token autograd, worst over inputs K 2.7e-16, V 6.3e-16, Q 2.8e-16, log_beta 7.2e-16, logD 1.0e-15, log_lam 6.0e-16
+D3  stationary, per-channel gates: directional derivative, central differences on the reference -4.6385965863e+00, autograd through the chunk form -4.6385965898e+00, relative gap 7.6e-10
+D2  free diagonal noise, per-channel: chunk-form gradients vs token-by-token autograd, worst over inputs K 6.3e-16, V 5.1e-16, Q 5.3e-16, log_beta 1.3e-15, logD 6.8e-16, log_Psi 4.0e-16
+D3  free diagonal noise, per-channel: directional derivative, central differences on the reference -5.7710655384e+00, autograd through the chunk form -5.7710655294e+00, relative gap 1.6e-09
+
+saved results/check_chunk_20261029_215514.json
