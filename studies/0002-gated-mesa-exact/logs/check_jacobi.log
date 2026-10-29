@@ -1,0 +1,119 @@
+Part A: accuracy against sweeps (worst over the batch). torch.linalg.eigh rows use the same dtype.
+  n= 64 gaussian symmetric         float64 torch eigh: rec 1.8e-15 orth 1.2e-14 eig 0.0e+00
+                                           jacobi  2:  rec 3.6e-01 orth 1.8e-14 eig 1.2e-01
+                                           jacobi  4:  rec 4.2e-02 orth 2.6e-14 eig 1.8e-02
+                                           jacobi  6:  rec 1.1e-04 orth 8.2e-14 eig 1.0e-06
+                                           jacobi  8:  rec 2.3e-14 orth 8.7e-14 eig 1.7e-14
+                                           jacobi 10:  rec 2.3e-14 orth 8.7e-14 eig 1.7e-14
+                                           jacobi 12:  rec 2.3e-14 orth 8.7e-14 eig 1.7e-14
+  n= 64 gaussian symmetric         float32 torch eigh: rec 2.2e-05 orth 8.5e-05 eig 1.4e-05
+                                           jacobi  2:  rec 3.6e-01 orth 4.3e-05 eig 1.2e-01
+                                           jacobi  4:  rec 4.2e-02 orth 8.9e-05 eig 1.8e-02
+                                           jacobi  6:  rec 1.1e-04 orth 1.2e-04 eig 1.6e-05
+                                           jacobi  8:  rec 2.8e-05 orth 1.2e-04 eig 1.6e-05
+                                           jacobi 10:  rec 2.8e-05 orth 1.2e-04 eig 1.6e-05
+                                           jacobi 12:  rec 2.8e-05 orth 1.2e-04 eig 1.6e-05
+  n= 64 SPD, cond 1e3              float64 torch eigh: rec 2.0e-15 orth 1.2e-14 eig 0.0e+00
+                                           jacobi  2:  rec 2.8e-01 orth 1.8e-14 eig 8.3e-02
+                                           jacobi  4:  rec 3.4e-02 orth 2.5e-14 eig 9.1e-03
+                                           jacobi  6:  rec 1.4e-03 orth 6.4e-14 eig 5.4e-04
+                                           jacobi  8:  rec 1.6e-05 orth 1.1e-13 eig 1.0e-06
+                                           jacobi 10:  rec 1.3e-12 orth 1.1e-13 eig 2.1e-14
+                                           jacobi 12:  rec 3.3e-14 orth 1.1e-13 eig 2.1e-14
+  n= 64 SPD, cond 1e3              float32 torch eigh: rec 2.9e-05 orth 1.1e-04 eig 1.6e-05
+                                           jacobi  2:  rec 2.8e-01 orth 4.3e-05 eig 8.3e-02
+                                           jacobi  4:  rec 3.3e-02 orth 8.7e-05 eig 9.1e-03
+                                           jacobi  6:  rec 1.4e-03 orth 1.2e-04 eig 5.4e-04
+                                           jacobi  8:  rec 2.8e-05 orth 1.3e-04 eig 1.5e-05
+                                           jacobi 10:  rec 2.8e-05 orth 1.3e-04 eig 1.5e-05
+                                           jacobi 12:  rec 2.8e-05 orth 1.3e-04 eig 1.5e-05
+  n= 64 S H0 S, ridge 0.05-1       float64 torch eigh: rec 2.2e-15 orth 1.2e-14 eig 0.0e+00
+                                           jacobi  2:  rec 2.2e-01 orth 1.8e-14 eig 6.2e-02
+                                           jacobi  4:  rec 1.8e-02 orth 2.7e-14 eig 4.8e-03
+                                           jacobi  6:  rec 2.2e-04 orth 6.9e-14 eig 1.5e-05
+                                           jacobi  8:  rec 3.1e-08 orth 9.9e-14 eig 8.1e-14
+                                           jacobi 10:  rec 2.2e-11 orth 1.0e-13 eig 2.0e-14
+                                           jacobi 12:  rec 4.8e-13 orth 1.0e-13 eig 2.0e-14
+  n= 64 S H0 S, ridge 0.05-1       float32 torch eigh: rec 2.8e-05 orth 1.0e-04 eig 1.6e-05
+                                           jacobi  2:  rec 2.2e-01 orth 4.3e-05 eig 6.2e-02
+                                           jacobi  4:  rec 1.8e-02 orth 8.9e-05 eig 4.8e-03
+                                           jacobi  6:  rec 2.3e-04 orth 1.2e-04 eig 1.5e-05
+                                           jacobi  8:  rec 2.8e-05 orth 1.3e-04 eig 1.5e-05
+                                           jacobi 10:  rec 2.8e-05 orth 1.4e-04 eig 1.5e-05
+                                           jacobi 12:  rec 2.8e-05 orth 1.4e-04 eig 1.5e-05
+  n= 64 S H0 S, ridge 0.001-0.01   float64 torch eigh: rec 1.9e-15 orth 1.2e-14 eig 0.0e+00
+                                           jacobi  2:  rec 2.2e-01 orth 1.8e-14 eig 7.1e-02
+                                           jacobi  4:  rec 2.1e-02 orth 2.5e-14 eig 4.9e-03
+                                           jacobi  6:  rec 3.9e-04 orth 6.6e-14 eig 8.6e-05
+                                           jacobi  8:  rec 1.5e-06 orth 1.0e-13 eig 1.8e-07
+                                           jacobi 10:  rec 1.3e-10 orth 1.1e-13 eig 2.0e-14
+                                           jacobi 12:  rec 1.2e-11 orth 1.1e-13 eig 2.0e-14
+  n= 64 S H0 S, ridge 0.001-0.01   float32 torch eigh: rec 2.8e-05 orth 1.0e-04 eig 1.5e-05
+                                           jacobi  2:  rec 2.2e-01 orth 4.3e-05 eig 7.1e-02
+                                           jacobi  4:  rec 2.1e-02 orth 8.7e-05 eig 4.9e-03
+                                           jacobi  6:  rec 3.9e-04 orth 1.2e-04 eig 8.3e-05
+                                           jacobi  8:  rec 2.9e-05 orth 1.3e-04 eig 1.6e-05
+                                           jacobi 10:  rec 2.9e-05 orth 1.4e-04 eig 1.6e-05
+                                           jacobi 12:  rec 2.9e-05 orth 1.4e-04 eig 1.6e-05
+  n=128 gaussian symmetric         float64 torch eigh: rec 2.0e-15 orth 2.0e-14 eig 0.0e+00
+                                           jacobi  2:  rec 4.1e-01 orth 3.4e-14 eig 1.1e-01
+                                           jacobi  4:  rec 7.7e-02 orth 4.8e-14 eig 2.5e-02
+                                           jacobi  6:  rec 1.6e-03 orth 1.7e-13 eig 3.5e-04
+                                           jacobi  8:  rec 6.6e-09 orth 2.6e-13 eig 5.2e-14
+                                           jacobi 10:  rec 4.7e-14 orth 2.6e-13 eig 3.4e-14
+                                           jacobi 12:  rec 4.7e-14 orth 2.6e-13 eig 3.4e-14
+  n=128 gaussian symmetric         float32 torch eigh: rec 6.7e-05 orth 3.8e-04 eig 3.6e-05
+                                           jacobi  2:  rec 4.1e-01 orth 1.2e-04 eig 1.1e-01
+                                           jacobi  4:  rec 7.9e-02 orth 2.5e-04 eig 2.4e-02
+                                           jacobi  6:  rec 1.6e-03 orth 3.6e-04 eig 5.5e-04
+                                           jacobi  8:  rec 6.3e-05 orth 3.7e-04 eig 3.3e-05
+                                           jacobi 10:  rec 6.3e-05 orth 3.7e-04 eig 3.3e-05
+                                           jacobi 12:  rec 6.3e-05 orth 3.7e-04 eig 3.3e-05
+  n=128 SPD, cond 1e3              float64 torch eigh: rec 1.9e-15 orth 1.9e-14 eig 0.0e+00
+                                           jacobi  2:  rec 3.0e-01 orth 3.5e-14 eig 9.0e-02
+                                           jacobi  4:  rec 4.9e-02 orth 5.0e-14 eig 1.0e-02
+                                           jacobi  6:  rec 4.7e-03 orth 1.5e-13 eig 6.8e-04
+                                           jacobi  8:  rec 1.3e-04 orth 2.7e-13 eig 2.1e-05
+                                           jacobi 10:  rec 6.2e-09 orth 3.1e-13 eig 2.7e-13
+                                           jacobi 12:  rec 6.6e-14 orth 3.1e-13 eig 4.1e-14
+  n=128 SPD, cond 1e3              float32 torch eigh: rec 7.7e-05 orth 4.5e-04 eig 4.4e-05
+                                           jacobi  2:  rec 3.0e-01 orth 1.2e-04 eig 9.0e-02
+                                           jacobi  4:  rec 4.9e-02 orth 2.5e-04 eig 9.2e-03
+                                           jacobi  6:  rec 4.1e-03 orth 3.6e-04 eig 5.6e-04
+                                           jacobi  8:  rec 1.3e-04 orth 4.1e-04 eig 3.1e-05
+                                           jacobi 10:  rec 6.0e-05 orth 4.2e-04 eig 3.1e-05
+                                           jacobi 12:  rec 6.0e-05 orth 4.2e-04 eig 3.1e-05
+  n=128 S H0 S, ridge 0.05-1       float64 torch eigh: rec 2.2e-15 orth 1.8e-14 eig 0.0e+00
+                                           jacobi  2:  rec 2.9e-01 orth 3.4e-14 eig 7.4e-02
+                                           jacobi  4:  rec 4.2e-02 orth 9.5e-14 eig 5.1e-03
+                                           jacobi  6:  rec 2.9e-03 orth 2.3e-13 eig 5.8e-04
+                                           jacobi  8:  rec 2.0e-04 orth 2.7e-13 eig 8.6e-06
+                                           jacobi 10:  rec 1.7e-06 orth 3.0e-13 eig 1.0e-07
+                                           jacobi 12:  rec 7.3e-10 orth 3.1e-13 eig 4.1e-14
+  n=128 S H0 S, ridge 0.05-1       float32 torch eigh: rec 8.1e-05 orth 5.0e-04 eig 4.7e-05
+                                           jacobi  2:  rec 2.9e-01 orth 1.2e-04 eig 7.4e-02
+                                           jacobi  4:  rec 4.2e-02 orth 2.5e-04 eig 8.1e-03
+                                           jacobi  6:  rec 3.0e-03 orth 3.7e-04 eig 3.7e-04
+                                           jacobi  8:  rec 1.9e-04 orth 4.3e-04 eig 3.4e-05
+                                           jacobi 10:  rec 5.9e-05 orth 4.5e-04 eig 3.4e-05
+                                           jacobi 12:  rec 5.9e-05 orth 5.1e-04 eig 3.4e-05
+  n=128 S H0 S, ridge 0.001-0.01   float64 torch eigh: rec 2.2e-15 orth 1.8e-14 eig 0.0e+00
+                                           jacobi  2:  rec 3.1e-01 orth 3.4e-14 eig 1.2e-01
+                                           jacobi  4:  rec 4.1e-02 orth 8.0e-14 eig 9.2e-03
+                                           jacobi  6:  rec 3.4e-03 orth 2.0e-13 eig 6.0e-04
+                                           jacobi  8:  rec 1.4e-04 orth 2.6e-13 eig 2.0e-05
+                                           jacobi 10:  rec 2.2e-06 orth 3.0e-13 eig 1.9e-07
+                                           jacobi 12:  rec 1.1e-09 orth 3.1e-13 eig 4.5e-14
+  n=128 S H0 S, ridge 0.001-0.01   float32 torch eigh: rec 8.1e-05 orth 5.0e-04 eig 5.0e-05
+                                           jacobi  2:  rec 3.1e-01 orth 1.2e-04 eig 1.2e-01
+                                           jacobi  4:  rec 4.2e-02 orth 2.5e-04 eig 7.8e-03
+                                           jacobi  6:  rec 3.4e-03 orth 3.6e-04 eig 6.9e-04
+                                           jacobi  8:  rec 1.4e-04 orth 4.3e-04 eig 3.3e-05
+                                           jacobi 10:  rec 5.8e-05 orth 4.6e-04 eig 3.3e-05
+                                           jacobi 12:  rec 5.8e-05 orth 5.1e-04 eig 3.3e-05
+
+Part B: float32 time for a batch of 1024 (median ms, warmup 2, reps 5)
+  n= 64  default 652.66  cpu 124.09  jacobi2 7.31  jacobi4 14.52  jacobi6 21.62  jacobi8 28.74  jacobi10 35.95  jacobi12 43.15
+  n=128  default 1553.05  cpu 428.27  jacobi2 60.10  jacobi4 119.72  jacobi6 179.39  jacobi8 238.88  jacobi10 298.66  jacobi12 358.20
+
+saved results/check_jacobi_20261029_184807.json

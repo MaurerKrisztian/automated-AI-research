@@ -1,13 +1,47 @@
 # Review of 0002
 
+Reviewer: @MaurerKrisztian with the `reviewer` subagent (Claude Opus 5.5) · Date: 2026-10-29 · Reviewed: README as of 2026-10-29 (after the GPU benchmark, claim 9)
+
+This review covers what changed with the GPU micro-benchmark: `gpu_bench.py`, its logs and results, claim 9, the GPU table, and the edited Summary, Verdict, front matter, Limitations, Next steps and NOTEBOOK entry. The earlier Summary and Claims were spot-checked again. It was run in the same session that wrote the benchmark, so it is a self-check (docs/PROTOCOL.md, section 8).
+
+## Verdict
+**Revise.** The PyTorch port is correct, the timing method is fair, and the qualitative result holds: in plain PyTorch on this GPU, the exact forward solve is slower than 30-step CG in every cell. The headline overstates the gap, though. The quoted ratios are miscomputed. Most of the gap comes from PyTorch's default cuSOLVER `eigh`, while a MAGMA backend that ships in the installed PyTorch, or CPU `eigh`, is several times faster and was not tried.
+
+## Issues
+| # | Severity | Issue | Evidence | Resolution |
+|---|---|---|---|---|
+| 1 | major | The ratios are wrong. The README says the exact solver is "16–45×" slower than CG30 and "5–14×" slower than CG100. The per-cell ratios are **15.6–51.3×** and **4.8–16.5×**. The wrong figures appear in the front matter, Summary, Verdict, claim 9, the GPU table text, STUDIES.md and the NOTEBOOK | `results/gpu_bench_20261029_175912.json`, recomputed per cell (checked by the session too). Max: d = 64, C = 32, gates 0.5–1: 877.95 / 17.11 = 51.3×. Min: d = 128, C = 64, gates 0.99–1: 678.12 / 43.39 = 15.6× | fixed: all ratios now come from `aggregate_gpu_bench.py` (`logs/aggregate_gpu_bench_v3.log`); v2 gives 15.5–50.8× (default `eigh`) and 4.4–11.8× (best backend) against CG30, corrected in front matter, Summary, Verdict, claim 9, GPU table and NOTEBOOK; STUDIES.md regenerated |
+| 2 | major | The size of the gap reflects the default `eigh` backend, not the method, and the README says no faster `eigh` "exists here". With `torch.backends.cuda.preferred_linalg_library('magma')` or CPU `eigh`, the reviewer's rerun (stdout only) cut `eigh` 4–10×. That puts the exact solver at about 5–7× slower than CG30 and about 1.7–2× slower than CG100, with `eigh` at 64–85% of the time | Reviewer rerun on the same H₀, e.g. d = 64, C = 32, gates 0.5–1: cuSOLVER 866 ms, MAGMA 103, CPU 88. Session check (scratch, not saved): 512 batched matrices, cuSOLVER vs MAGMA 330 vs 69 ms (n = 64) and 785 vs 212 ms (n = 128). README Limitations concede CPU `eigh` was not tried | fixed: `gpu_bench.py` v2 runs default, MAGMA and CPU `eigh` (`logs/gpu_bench_v2.log`). The headline now uses the best backend (4.4–11.8× slower than CG30, `eigh` 61–97% of the time), the default is one column, and "neither exists here" is gone |
+| 3 | minor | CG100 is called "the CG budget needed to match" the exact solver's accuracy at condition ~1e3. In 6 of 12 ill-conditioned cells CG100 is less accurate, by up to 10× at d = 128 with gates 0.99–1 (1.58e-3 vs 1.48e-4) | `logs/gpu_bench.log`, ridge 1e-3–1e-2 cells | fixed: CG at 200 steps added; the aggregator finds the steps each cell needs to match the exact error (100–200 at condition ~1e3) and reports time at matched error (0.84–2.62× plain CG, 0.61–2.43× Jacobi) |
+| 4 | minor | Jacobi PCG degrades after convergence in more than one cell: 20.8 in the flagged cell (one token), and jac100 90× worse than jac30 at d = 64, C = 32, gates 0.5–1, ridge 0.05–1 (1.14e-4 vs 1.25e-6). The CG guard (`rz > 0 & pMp > 0`) has no residual threshold, so plain CG carries the same latent risk | `gpu_bench.py` CG loop; `logs/gpu_bench.log` | fixed: CG freezes a token at relative residual 1e-6 (`--cg-tol`); in v2 the largest error at 100 or 200 steps is 1.9e-3 and no Jacobi breakdown remains |
+| 5 | minor | Untraceable or slightly wrong numbers. "eigh batches only for n ≤ 32" and "slower than the CPU" come from an unsaved scratch check (Rule 1). The capacitance cell for d = 64, C = 32 says 10.8–10.9 ms; the log max is 11.04. The "99.8%" `eigh` share divides a separately timed `eigh` by a total smaller than its stage sum; against the stage sum the range is 89.0–99.2% | `logs/gpu_bench.log`; recomputed from the JSON | fixed: `eigh` scaling is Part C of `logs/gpu_bench_v2.log`; the share is taken over the stage sum; the table is regenerated from the v2 JSON |
+| 6 | minor | Peak memory is not reported: the exact solver peaks at 0.62–2.24 GB against 0.12–0.33 GB for CG, from the three-operand einsum forming the capacitance Gram | `logs/gpu_bench.log` peak columns | fixed: peak memory in claim 9 and the GPU results (0.62–2.24 GB vs 0.12–0.33 GB) |
+| 7 | minor | Front matter moved to E3, but the headline claims (identity, backward) are E2; the only E3 claim is a negative forward benchmark against plain-PyTorch CG | README front matter; PROTOCOL section 2 | fixed: front-matter evidence back to E2; claim 9 alone is E3 |
+
+## What holds up
+- Port correctness: float64 port vs `gated_mesa.chunk_solve` ≤ 8.7e-15, vs a dense solve ≤ 1.5e-14, outputs ≤ 3.9e-15 (`logs/gpu_bench.log`, part A). Padding is sound: zero weights for i > t give A = I on padded rows and zero right-hand sides there.
+- Timing: 3 warmups, CUDA sync, median of 10; every method pays for H₀; readout untimed for all; TF32 off. The smoke-test bug (plain CG ran 0 steps) is correctly diagnosed, fixed and marked superseded in NOTEBOOK.md.
+- Every GPU table cell matches the log, apart from the 10.9 in issue 5. All error ranges were recomputed from the JSON.
+- The capacitance stage costs 0.30–1.84× CG30; "cheaper at C = 32, at C = 64 only at d = 128" is right.
+- The exact solver is slower than CG30 in every cell, even with the faster `eigh` backends, and less accurate than CG30 at condition ~30. The README says both.
+- The earlier Summary and Claims were spot-checked again against `logs/check_forward_v2.log` and `logs/check_backward.log` and still match.
+- Limitations correctly state the run is forward-only, without fla's Triton kernels, without the two-anchor policy and with flat random keys.
+
+## After the fixes
+All seven issues are fixed in `gpu_bench.py` v2, `aggregate_gpu_bench.py` and the README (logs `gpu_bench_v2.log`, `aggregate_gpu_bench_v3.log`). The qualitative result stands; the gap is smaller than first written, and at condition ~1e3 the exact solver is faster in four cells where CG needs 200 steps. This was a same-session self-check, so the study stays in `review` until a different contributor reviews it.
+
+## Earlier reviews
+
+### Review 1 (2026-10-29, morning)
+
 Reviewer: @MaurerKrisztian with the `reviewer` subagent (Claude Opus 5.5) · Date: 2026-10-29 · Reviewed: README as of 2026-10-29 (first draft, before the fixes below)
 
 This review was run in the same session that wrote the study, so it is a self-check (docs/PROTOCOL.md, section 8). `validated` needs a review by a different contributor.
 
-## Verdict
+### Verdict
 **Revise.** The math is correct and the code implements it: Propositions 1–3, the downdate eigenvalue bound and the gate-gradient identity were checked by hand. Every number in the Summary, Claims and Results matches its log, and all four scripts reproduced their logs bit-for-bit with NumPy only. The claims reach too far, though. The cost headline is a best case on several axes. The CG baseline leaves out MesaNet's published initial guess. The float32 and "backward stable" wording go beyond the tested range.
 
-## Issues
+### Issues
 | # | Severity | Issue | Evidence | Resolution |
 |---|---|---|---|---|
 | 1 | major | The cost headline ("≈ 4–10 CG steps", "2–7×") is a best case on four counts. (a) `capacitance_sizes` lets every token downdate, ignoring the ρ ≤ 10 cap. With fast-forgetting gates the cost sits near the start-anchor column: 6.8–19.0 CG-equivalent steps at the best chunk sizes. (b) CG is costed at the exact solver's chunk size, though CG's per-step cost 2d² + 2Cd + 11d falls as C shrinks. (c) Capacitance sizes vary per token, while a batched GPU implementation would pad them. (d) Against the 30 training steps the ratio is 3.0–7.3×, not 2–7×. | `gated_mesa.py` `capacitance_sizes`; `cost_and_cg.py` part B; `logs/check_downdate_v2.log` (gates 0.5–1, κ = 10: 34 of 256 tokens downdate). Recomputed: start-anchor 6.8–10.0 (d = 64, C = 32), 8.9–12.2 (d = 128, C = 64), 11.2–19.0 (d = 256, C = 64) | fixed: `cost_and_cg.py` v2 applies the ρ cap (`policy_sizes`), padding and CG at chunks 64 and 16, and adds the training pass (`solver_flops`). README Claim 8 and the FLOP table now give 3.8–19.0 forward CG-step equivalents and 7.7–15.9 per training pass against 60 (3.8–7.8×) (`logs/cost_and_cg_v2.log`, part B) |
@@ -20,7 +54,7 @@ This review was run in the same session that wrote the study, so it is a self-ch
 | 8 | minor | Backward and training-pass FLOPs are not modeled, although the README argues the gain is mainly in training. fla runs 30 more CG steps in the backward pass. | README Cost, Limitations | fixed: training-pass column in the FLOP table and in Claim 8 (`logs/cost_and_cg_v2.log`, part B) |
 | 9 | minor | The novelty wording states as fact that exact classical updates cost O(d³) per step, while an unresolved APSIPA 2019 paper claims an exact solution at about standard-RLS cost. Preconditioned DeltaNet (arXiv 2604.21100) is missing from the novelty table. | README Summary, Novelty check | fixed: the O(d³) statement is hedged ("the exact updates found"; the APSIPA paper is flagged as unchecked), and Preconditioned DeltaNet is added to the novelty table, citing only its abstract (README Summary, Novelty check) |
 
-## What holds up
+### What holds up
 - Proposition 1 (unrolling), Proposition 2 (whitened form, Woodbury, A_t ⪰ I), the downdate bound λ_min ≥ 1/(1 + ρη_max), and Proposition 3, including the row-sum/column-sum split and R_t = δ·o − g·q + xᵀΛg.
 - `chunk_solve` and `backward` implement the stated formulas, and the FLOP code matches the Cost text.
 - The gradients hold beyond the study's sizes. The reviewer's directional complex-step checks at T ≤ 256, d ≤ 64 and gates 0.01–0.2 to 0.99–1 gave ≤ 8e-15 on well-conditioned inputs and ≤ 1.5e-12 with ridge 1e-6–1e-4.
@@ -28,8 +62,5 @@ This review was run in the same session that wrote the study, so it is a self-ch
 - MesaNet's and flash-linear-attention's solver settings are described correctly.
 - The evidence levels are right (E2 identities and gradients, an E1 FLOP model, no GPU claims), and the novelty wording is dated. The reviewer's own searches found no exact chunk-parallel solver for this system.
 
-## After the fixes
+### After the fixes
 All nine issues are resolved in the README and new logs. Issue 5's unpinned code version stays partly open until the study is committed. No blocker or major issue is open. This was a same-session self-check, so the study stays in `review` until a different contributor reviews it (docs/PROTOCOL.md, section 8).
-
-## Earlier reviews
-None.

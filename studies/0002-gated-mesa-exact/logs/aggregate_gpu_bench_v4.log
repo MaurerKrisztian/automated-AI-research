@@ -1,0 +1,223 @@
+source: results/gpu_bench_20261029_192644.json
+
+Per cell: exact time / CG time (per eigh backend), eigh share of the exact solver's stage sum,
+and the fewest CG steps whose error is <= the best exact variant's error (plain CG / Jacobi).
+
+d= 64 C= 32 gates 0.99-1.0 ridge 0.05  cond 3.7e+01
+    exact_default    550.14 ms  err 5.61e-06  eigh share 0.978  /cg10 77.95  /cg30 31.43  /cg100 10.14  /cg200  5.16
+    exact_magma      133.93 ms  err 2.71e-06  eigh share 0.910  /cg10 18.98  /cg30  7.65  /cg100  2.47  /cg200  1.26
+    exact_cpu        135.61 ms  err 2.71e-06  eigh share 0.911  /cg10 19.22  /cg30  7.75  /cg100  2.50  /cg200  1.27
+    exact_jacobi      37.13 ms  err 7.77e-06  eigh share 0.668  /cg10  5.26  /cg30  2.12  /cg100  0.68  /cg200  0.35
+    capacitance stage / cg30 0.63;  steps to match best exact: cg 100, jacobi 30;  fastest exact / matching CG time: cg 0.68, jacobi 1.96
+d= 64 C= 32 gates 0.99-1.0 ridge 0.001  cond 1.5e+03
+    exact_default    562.38 ms  err 9.93e-05  eigh share 0.978  /cg10 79.95  /cg30 31.65  /cg100 10.25  /cg200  5.21
+    exact_magma      146.19 ms  err 6.91e-05  eigh share 0.914  /cg10 20.78  /cg30  8.23  /cg100  2.66  /cg200  1.35
+    exact_cpu        148.09 ms  err 6.91e-05  eigh share 0.915  /cg10 21.05  /cg30  8.33  /cg100  2.70  /cg200  1.37
+    exact_jacobi      38.21 ms  err 3.74e-05  eigh share 0.663  /cg10  5.43  /cg30  2.15  /cg100  0.70  /cg200  0.35
+    capacitance stage / cg30 0.62;  steps to match best exact: cg 200, jacobi 200;  fastest exact / matching CG time: cg 0.35, jacobi 0.33
+d= 64 C= 32 gates 0.9-1.0 ridge 0.05  cond 3.1e+01
+    exact_default    658.15 ms  err 5.68e-06  eigh share 0.981  /cg10 91.80  /cg30 37.26  /cg100 11.98  /cg200  6.10
+    exact_magma      139.16 ms  err 1.30e-06  eigh share 0.905  /cg10 19.41  /cg30  7.88  /cg100  2.53  /cg200  1.29
+    exact_cpu        136.41 ms  err 1.30e-06  eigh share 0.907  /cg10 19.03  /cg30  7.72  /cg100  2.48  /cg200  1.26
+    exact_jacobi      42.71 ms  err 7.80e-06  eigh share 0.712  /cg10  5.96  /cg30  2.42  /cg100  0.78  /cg200  0.40
+    capacitance stage / cg30 0.62;  steps to match best exact: cg 100, jacobi 30;  fastest exact / matching CG time: cg 0.78, jacobi 2.25
+d= 64 C= 32 gates 0.9-1.0 ridge 0.001  cond 1.3e+03
+    exact_default    662.66 ms  err 5.52e-05  eigh share 0.982  /cg10 94.33  /cg30 37.91  /cg100 12.17  /cg200  6.18
+    exact_magma      130.05 ms  err 6.13e-05  eigh share 0.909  /cg10 18.51  /cg30  7.44  /cg100  2.39  /cg200  1.21
+    exact_cpu        131.69 ms  err 6.13e-05  eigh share 0.912  /cg10 18.75  /cg30  7.53  /cg100  2.42  /cg200  1.23
+    exact_jacobi      43.53 ms  err 3.05e-05  eigh share 0.718  /cg10  6.20  /cg30  2.49  /cg100  0.80  /cg200  0.41
+    capacitance stage / cg30 0.63;  steps to match best exact: cg 100, jacobi 100;  fastest exact / matching CG time: cg 0.80, jacobi 0.75
+d= 64 C= 32 gates 0.5-1.0 ridge 0.05  cond 3.4e+01
+    exact_default    877.80 ms  err 8.19e-06  eigh share 0.986  /cg10 124.44  /cg30 49.49  /cg100 15.96  /cg200  8.12
+    exact_magma      111.40 ms  err 1.72e-06  eigh share 0.891  /cg10 15.79  /cg30  6.28  /cg100  2.03  /cg200  1.03
+    exact_cpu        113.20 ms  err 1.72e-06  eigh share 0.893  /cg10 16.05  /cg30  6.38  /cg100  2.06  /cg200  1.05
+    exact_jacobi      53.89 ms  err 7.18e-06  eigh share 0.772  /cg10  7.64  /cg30  3.04  /cg100  0.98  /cg200  0.50
+    capacitance stage / cg30 0.62;  steps to match best exact: cg 30, jacobi >200;  fastest exact / matching CG time: cg 3.04, jacobi n/a
+d= 64 C= 32 gates 0.5-1.0 ridge 0.001  cond 1.4e+03
+    exact_default    884.36 ms  err 6.54e-05  eigh share 0.986  /cg10 125.85  /cg30 50.27  /cg100 16.23  /cg200  8.26
+    exact_magma      115.77 ms  err 7.13e-05  eigh share 0.891  /cg10 16.48  /cg30  6.58  /cg100  2.13  /cg200  1.08
+    exact_cpu        116.69 ms  err 7.13e-05  eigh share 0.895  /cg10 16.61  /cg30  6.63  /cg100  2.14  /cg200  1.09
+    exact_jacobi      54.08 ms  err 8.81e-05  eigh share 0.773  /cg10  7.70  /cg30  3.07  /cg100  0.99  /cg200  0.50
+    capacitance stage / cg30 0.62;  steps to match best exact: cg 100, jacobi 100;  fastest exact / matching CG time: cg 0.99, jacobi 0.94
+d= 64 C= 64 gates 0.99-1.0 ridge 0.05  cond 3.7e+01
+    exact_default    298.01 ms  err 5.78e-06  eigh share 0.890  /cg10 45.36  /cg30 17.01  /cg100  5.34  /cg200  2.70
+    exact_magma       92.44 ms  err 1.49e-06  eigh share 0.649  /cg10 14.07  /cg30  5.28  /cg100  1.66  /cg200  0.84
+    exact_cpu         94.21 ms  err 1.49e-06  eigh share 0.656  /cg10 14.34  /cg30  5.38  /cg100  1.69  /cg200  0.85
+    exact_jacobi      44.77 ms  err 8.08e-06  eigh share 0.269  /cg10  6.81  /cg30  2.56  /cg100  0.80  /cg200  0.41
+    capacitance stage / cg30 1.83;  steps to match best exact: cg 100, jacobi 30;  fastest exact / matching CG time: cg 0.80, jacobi 2.43
+d= 64 C= 64 gates 0.99-1.0 ridge 0.001  cond 1.5e+03
+    exact_default    304.36 ms  err 1.01e-04  eigh share 0.892  /cg10 46.31  /cg30 17.33  /cg100  5.44  /cg200  2.75
+    exact_magma       94.02 ms  err 6.93e-05  eigh share 0.657  /cg10 14.31  /cg30  5.35  /cg100  1.68  /cg200  0.85
+    exact_cpu         94.73 ms  err 6.93e-05  eigh share 0.661  /cg10 14.42  /cg30  5.40  /cg100  1.69  /cg200  0.86
+    exact_jacobi      44.89 ms  err 6.93e-05  eigh share 0.270  /cg10  6.83  /cg30  2.56  /cg100  0.80  /cg200  0.41
+    capacitance stage / cg30 1.83;  steps to match best exact: cg 200, jacobi 200;  fastest exact / matching CG time: cg 0.41, jacobi 0.39
+d= 64 C= 64 gates 0.9-1.0 ridge 0.05  cond 3.1e+01
+    exact_default    350.86 ms  err 5.51e-06  eigh share 0.906  /cg10 53.35  /cg30 19.95  /cg100  6.28  /cg200  3.18
+    exact_magma       93.19 ms  err 1.26e-06  eigh share 0.650  /cg10 14.17  /cg30  5.30  /cg100  1.67  /cg200  0.84
+    exact_cpu         95.36 ms  err 1.26e-06  eigh share 0.658  /cg10 14.50  /cg30  5.42  /cg100  1.71  /cg200  0.86
+    exact_jacobi      47.55 ms  err 7.03e-06  eigh share 0.310  /cg10  7.23  /cg30  2.70  /cg100  0.85  /cg200  0.43
+    capacitance stage / cg30 1.82;  steps to match best exact: cg 100, jacobi >200;  fastest exact / matching CG time: cg 0.85, jacobi n/a
+d= 64 C= 64 gates 0.9-1.0 ridge 0.001  cond 1.3e+03
+    exact_default    352.65 ms  err 5.37e-05  eigh share 0.907  /cg10 53.47  /cg30 20.14  /cg100  6.33  /cg200  3.20
+    exact_magma       91.69 ms  err 3.54e-05  eigh share 0.651  /cg10 13.90  /cg30  5.24  /cg100  1.65  /cg200  0.83
+    exact_cpu         93.50 ms  err 3.54e-05  eigh share 0.659  /cg10 14.18  /cg30  5.34  /cg100  1.68  /cg200  0.85
+    exact_jacobi      47.80 ms  err 3.54e-05  eigh share 0.315  /cg10  7.25  /cg30  2.73  /cg100  0.86  /cg200  0.43
+    capacitance stage / cg30 1.83;  steps to match best exact: cg 100, jacobi 100;  fastest exact / matching CG time: cg 0.86, jacobi 0.83
+d= 64 C= 64 gates 0.5-1.0 ridge 0.05  cond 3.4e+01
+    exact_default    457.48 ms  err 6.82e-06  eigh share 0.927  /cg10 69.44  /cg30 26.07  /cg100  8.19  /cg200  4.14
+    exact_magma       79.68 ms  err 1.83e-06  eigh share 0.587  /cg10 12.10  /cg30  4.54  /cg100  1.43  /cg200  0.72
+    exact_cpu         80.32 ms  err 1.83e-06  eigh share 0.603  /cg10 12.19  /cg30  4.58  /cg100  1.44  /cg200  0.73
+    exact_jacobi      52.98 ms  err 7.67e-06  eigh share 0.377  /cg10  8.04  /cg30  3.02  /cg100  0.95  /cg200  0.48
+    capacitance stage / cg30 1.83;  steps to match best exact: cg 100, jacobi >200;  fastest exact / matching CG time: cg 0.95, jacobi n/a
+d= 64 C= 64 gates 0.5-1.0 ridge 0.001  cond 1.4e+03
+    exact_default    464.91 ms  err 7.08e-05  eigh share 0.929  /cg10 70.88  /cg30 26.57  /cg100  8.33  /cg200  4.21
+    exact_magma       79.84 ms  err 5.90e-05  eigh share 0.584  /cg10 12.17  /cg30  4.56  /cg100  1.43  /cg200  0.72
+    exact_cpu         79.61 ms  err 5.90e-05  eigh share 0.588  /cg10 12.14  /cg30  4.55  /cg100  1.43  /cg200  0.72
+    exact_jacobi      53.23 ms  err 1.04e-04  eigh share 0.386  /cg10  8.12  /cg30  3.04  /cg100  0.95  /cg200  0.48
+    capacitance stage / cg30 1.83;  steps to match best exact: cg 100, jacobi 100;  fastest exact / matching CG time: cg 0.95, jacobi 0.92
+d=128 C= 32 gates 0.99-1.0 ridge 0.05  cond 3.3e+01
+    exact_default   1333.25 ms  err 1.43e-05  eigh share 0.988  /cg10 79.76  /cg30 29.51  /cg100  9.22  /cg200  4.65
+    exact_magma      453.86 ms  err 2.13e-06  eigh share 0.969  /cg10 27.15  /cg30 10.04  /cg100  3.14  /cg200  1.58
+    exact_cpu        465.74 ms  err 2.13e-06  eigh share 0.969  /cg10 27.86  /cg30 10.31  /cg100  3.22  /cg200  1.62
+    exact_jacobi     270.10 ms  err 1.42e-05  eigh share 0.943  /cg10 16.16  /cg30  5.98  /cg100  1.87  /cg200  0.94
+    capacitance stage / cg30 0.30;  steps to match best exact: cg 100, jacobi 30;  fastest exact / matching CG time: cg 1.87, jacobi 5.34
+d=128 C= 32 gates 0.99-1.0 ridge 0.001  cond 1.4e+03
+    exact_default   1344.39 ms  err 1.48e-04  eigh share 0.989  /cg10 80.62  /cg30 29.78  /cg100  9.30  /cg200  4.69
+    exact_magma      467.77 ms  err 9.87e-05  eigh share 0.967  /cg10 28.05  /cg30 10.36  /cg100  3.24  /cg200  1.63
+    exact_cpu        481.70 ms  err 9.87e-05  eigh share 0.968  /cg10 28.89  /cg30 10.67  /cg100  3.33  /cg200  1.68
+    exact_jacobi     273.46 ms  err 6.33e-05  eigh share 0.944  /cg10 16.40  /cg30  6.06  /cg100  1.89  /cg200  0.95
+    capacitance stage / cg30 0.30;  steps to match best exact: cg 200, jacobi 200;  fastest exact / matching CG time: cg 0.95, jacobi 0.86
+d=128 C= 32 gates 0.9-1.0 ridge 0.05  cond 3.1e+01
+    exact_default   1794.81 ms  err 1.84e-05  eigh share 0.991  /cg10 106.80  /cg30 39.74  /cg100 12.40  /cg200  6.26
+    exact_magma      423.13 ms  err 1.47e-06  eigh share 0.966  /cg10 25.18  /cg30  9.37  /cg100  2.92  /cg200  1.47
+    exact_cpu        434.98 ms  err 1.47e-06  eigh share 0.967  /cg10 25.88  /cg30  9.63  /cg100  3.01  /cg200  1.52
+    exact_jacobi     366.73 ms  err 1.68e-05  eigh share 0.958  /cg10 21.82  /cg30  8.12  /cg100  2.53  /cg200  1.28
+    capacitance stage / cg30 0.30;  steps to match best exact: cg 100, jacobi >200;  fastest exact / matching CG time: cg 2.53, jacobi n/a
+d=128 C= 32 gates 0.9-1.0 ridge 0.001  cond 1.2e+03
+    exact_default   1812.49 ms  err 6.75e-05  eigh share 0.992  /cg10 108.64  /cg30 40.21  /cg100 12.55  /cg200  6.32
+    exact_magma      429.50 ms  err 5.45e-05  eigh share 0.967  /cg10 25.74  /cg30  9.53  /cg100  2.97  /cg200  1.50
+    exact_cpu        438.88 ms  err 5.45e-05  eigh share 0.967  /cg10 26.31  /cg30  9.74  /cg100  3.04  /cg200  1.53
+    exact_jacobi     369.44 ms  err 4.47e-05  eigh share 0.959  /cg10 22.14  /cg30  8.20  /cg100  2.56  /cg200  1.29
+    capacitance stage / cg30 0.30;  steps to match best exact: cg 200, jacobi 200;  fastest exact / matching CG time: cg 1.29, jacobi 1.16
+d=128 C= 32 gates 0.5-1.0 ridge 0.05  cond 3.3e+01
+    exact_default   2000.95 ms  err 1.56e-05  eigh share 0.992  /cg10 119.11  /cg30 44.32  /cg100 13.83  /cg200  6.97
+    exact_magma      336.32 ms  err 2.74e-06  eigh share 0.958  /cg10 20.02  /cg30  7.45  /cg100  2.32  /cg200  1.17
+    exact_cpu        346.53 ms  err 2.74e-06  eigh share 0.958  /cg10 20.63  /cg30  7.68  /cg100  2.39  /cg200  1.21
+    exact_jacobi     397.15 ms  err 1.41e-05  eigh share 0.962  /cg10 23.64  /cg30  8.80  /cg100  2.74  /cg200  1.38
+    capacitance stage / cg30 0.30;  steps to match best exact: cg 100, jacobi >200;  fastest exact / matching CG time: cg 2.32, jacobi n/a
+d=128 C= 32 gates 0.5-1.0 ridge 0.001  cond 1.3e+03
+    exact_default   2017.56 ms  err 9.93e-05  eigh share 0.992  /cg10 120.98  /cg30 44.75  /cg100 13.95  /cg200  7.03
+    exact_magma      329.59 ms  err 9.26e-05  eigh share 0.957  /cg10 19.76  /cg30  7.31  /cg100  2.28  /cg200  1.15
+    exact_cpu        343.56 ms  err 9.26e-05  eigh share 0.958  /cg10 20.60  /cg30  7.62  /cg100  2.38  /cg200  1.20
+    exact_jacobi     397.16 ms  err 1.01e-04  eigh share 0.961  /cg10 23.81  /cg30  8.81  /cg100  2.75  /cg200  1.38
+    capacitance stage / cg30 0.31;  steps to match best exact: cg 100, jacobi 200;  fastest exact / matching CG time: cg 2.28, jacobi 1.04
+d=128 C= 64 gates 0.99-1.0 ridge 0.05  cond 3.3e+01
+    exact_default    675.62 ms  err 1.41e-05  eigh share 0.946  /cg10 43.07  /cg30 15.47  /cg100  4.78  /cg200  2.40
+    exact_magma      255.64 ms  err 2.37e-06  eigh share 0.859  /cg10 16.30  /cg30  5.86  /cg100  1.81  /cg200  0.91
+    exact_cpu        258.83 ms  err 2.37e-06  eigh share 0.861  /cg10 16.50  /cg30  5.93  /cg100  1.83  /cg200  0.92
+    exact_jacobi     164.36 ms  err 1.38e-05  eigh share 0.777  /cg10 10.48  /cg30  3.76  /cg100  1.16  /cg200  0.58
+    capacitance stage / cg30 0.82;  steps to match best exact: cg 100, jacobi 30;  fastest exact / matching CG time: cg 1.16, jacobi 3.36
+d=128 C= 64 gates 0.99-1.0 ridge 0.001  cond 1.4e+03
+    exact_default    694.56 ms  err 1.88e-04  eigh share 0.947  /cg10 44.17  /cg30 15.91  /cg100  4.91  /cg200  2.47
+    exact_magma      254.13 ms  err 8.01e-05  eigh share 0.870  /cg10 16.16  /cg30  5.82  /cg100  1.80  /cg200  0.90
+    exact_cpu        259.63 ms  err 8.01e-05  eigh share 0.864  /cg10 16.51  /cg30  5.95  /cg100  1.84  /cg200  0.92
+    exact_jacobi     166.83 ms  err 6.49e-05  eigh share 0.780  /cg10 10.61  /cg30  3.82  /cg100  1.18  /cg200  0.59
+    capacitance stage / cg30 0.82;  steps to match best exact: cg 200, jacobi 200;  fastest exact / matching CG time: cg 0.59, jacobi 0.54
+d=128 C= 64 gates 0.9-1.0 ridge 0.05  cond 3.1e+01
+    exact_default    902.14 ms  err 1.90e-05  eigh share 0.959  /cg10 55.91  /cg30 20.65  /cg100  6.38  /cg200  3.21
+    exact_magma      235.96 ms  err 1.45e-06  eigh share 0.846  /cg10 14.62  /cg30  5.40  /cg100  1.67  /cg200  0.84
+    exact_cpu        240.69 ms  err 1.45e-06  eigh share 0.852  /cg10 14.92  /cg30  5.51  /cg100  1.70  /cg200  0.86
+    exact_jacobi     212.00 ms  err 1.66e-05  eigh share 0.827  /cg10 13.14  /cg30  4.85  /cg100  1.50  /cg200  0.75
+    capacitance stage / cg30 0.82;  steps to match best exact: cg 100, jacobi >200;  fastest exact / matching CG time: cg 1.50, jacobi n/a
+d=128 C= 64 gates 0.9-1.0 ridge 0.001  cond 1.2e+03
+    exact_default    931.42 ms  err 5.47e-05  eigh share 0.960  /cg10 59.23  /cg30 21.33  /cg100  6.59  /cg200  3.31
+    exact_magma      233.13 ms  err 9.67e-05  eigh share 0.856  /cg10 14.82  /cg30  5.34  /cg100  1.65  /cg200  0.83
+    exact_cpu        238.56 ms  err 9.67e-05  eigh share 0.858  /cg10 15.17  /cg30  5.46  /cg100  1.69  /cg200  0.85
+    exact_jacobi     216.06 ms  err 4.72e-05  eigh share 0.829  /cg10 13.74  /cg30  4.95  /cg100  1.53  /cg200  0.77
+    capacitance stage / cg30 0.82;  steps to match best exact: cg 200, jacobi 200;  fastest exact / matching CG time: cg 0.77, jacobi 0.70
+d=128 C= 64 gates 0.5-1.0 ridge 0.05  cond 3.3e+01
+    exact_default   1015.78 ms  err 1.50e-05  eigh share 0.964  /cg10 64.62  /cg30 23.30  /cg100  7.18  /cg200  3.61
+    exact_magma      191.67 ms  err 2.51e-06  eigh share 0.807  /cg10 12.19  /cg30  4.40  /cg100  1.36  /cg200  0.68
+    exact_cpu        196.17 ms  err 2.51e-06  eigh share 0.813  /cg10 12.48  /cg30  4.50  /cg100  1.39  /cg200  0.70
+    exact_jacobi     229.82 ms  err 1.32e-05  eigh share 0.840  /cg10 14.62  /cg30  5.27  /cg100  1.63  /cg200  0.82
+    capacitance stage / cg30 0.82;  steps to match best exact: cg 100, jacobi >200;  fastest exact / matching CG time: cg 1.36, jacobi n/a
+d=128 C= 64 gates 0.5-1.0 ridge 0.001  cond 1.3e+03
+    exact_default   1024.74 ms  err 9.20e-05  eigh share 0.964  /cg10 65.14  /cg30 23.49  /cg100  7.25  /cg200  3.64
+    exact_magma      190.96 ms  err 1.01e-04  eigh share 0.825  /cg10 12.14  /cg30  4.38  /cg100  1.35  /cg200  0.68
+    exact_cpu        194.29 ms  err 1.01e-04  eigh share 0.824  /cg10 12.35  /cg30  4.45  /cg100  1.37  /cg200  0.69
+    exact_jacobi     229.94 ms  err 1.10e-04  eigh share 0.840  /cg10 14.62  /cg30  5.27  /cg100  1.63  /cg200  0.82
+    capacitance stage / cg30 0.82;  steps to match best exact: cg 100, jacobi 200;  fastest exact / matching CG time: cg 1.35, jacobi 0.61
+
+Ranges over all cells:
+  exact_default / cg10: 43.1–125.9x
+  exact_default / cg30: 15.5–50.3x
+  exact_default / cg100: 4.8–16.2x
+  exact_default / cg200: 2.4–8.3x
+  eigh_default share of stage sum: 89.0–99.2%   exact_default time 298–2018 ms   peak 0.62–2.24 GB
+  exact_magma / cg10: 12.1–28.1x
+  exact_magma / cg30: 4.4–10.4x
+  exact_magma / cg100: 1.4–3.2x
+  exact_magma / cg200: 0.7–1.6x
+  eigh_magma share of stage sum: 58.4–96.9%   exact_magma time 80–468 ms   peak 0.62–2.24 GB
+  exact_cpu / cg10: 12.1–28.9x
+  exact_cpu / cg30: 4.5–10.7x
+  exact_cpu / cg100: 1.4–3.3x
+  exact_cpu / cg200: 0.7–1.7x
+  eigh_cpu share of stage sum: 58.8–96.9%   exact_cpu time 80–482 ms   peak 0.62–2.24 GB
+  exact_jacobi / cg10: 5.3–23.8x
+  exact_jacobi / cg30: 2.1–8.8x
+  exact_jacobi / cg100: 0.7–2.7x
+  exact_jacobi / cg200: 0.3–1.4x
+  eigh_jacobi share of stage sum: 26.9–96.2%   exact_jacobi time 37–397 ms   peak 0.64–2.27 GB
+  capacitance stage / cg30: 0.30–1.83
+  cg10: time 6.6–16.8 ms   peak 0.12–0.31 GB
+  cg30: time 17.5–45.2 ms   peak 0.12–0.31 GB
+  cg100: time 54.2–144.7 ms   peak 0.12–0.31 GB
+  cg200: time 106.7–287.0 ms   peak 0.12–0.31 GB
+  jac10: time 7.1–19.2 ms   peak 0.13–0.33 GB
+  jac30: time 18.3–50.6 ms   peak 0.13–0.33 GB
+  jac100: time 57.6–160.6 ms   peak 0.13–0.33 GB
+  jac200: time 113.3–317.6 ms   peak 0.13–0.33 GB
+
+  errors, cond <= 1e2 (12 cells, cond 3.1e+01–3.7e+01):
+    exact_default  5.5e-06–1.9e-05
+    exact_magma    1.3e-06–2.7e-06
+    exact_cpu      1.3e-06–2.7e-06
+    exact_jacobi   7.0e-06–1.7e-05
+    cg10           1.9e-02–2.8e-02
+    jac10          1.1e-03–8.0e-03
+    cg30           1.5e-06–9.7e-06
+    jac30          1.1e-06–3.0e-06
+    cg100          1.0e-06–2.1e-06
+    jac100         1.1e-06–3.0e-06
+    cg200          1.0e-06–2.1e-06
+    jac200         1.1e-06–3.0e-06
+
+  errors, cond > 1e2 (12 cells, cond 1.2e+03–1.5e+03):
+    exact_default  5.4e-05–1.9e-04
+    exact_magma    3.5e-05–1.0e-04
+    exact_cpu      3.5e-05–1.0e-04
+    exact_jacobi   3.0e-05–1.1e-04
+    cg10           1.1e+00–3.4e+00
+    jac10          9.6e-01–3.4e+00
+    cg30           8.5e-02–2.9e-01
+    jac30          1.5e-01–4.8e-01
+    cg100          2.3e-05–1.9e-03
+    jac100         1.9e-05–1.5e-03
+    cg200          1.6e-05–3.9e-05
+    jac200         1.9e-05–4.9e-05
+  fastest exact / cg at matched error, cond <= 1e2: 0.68–3.04x (12 of 12 cells matched within 200 steps)
+  fastest exact / jacobi at matched error, cond <= 1e2: 1.96–5.34x (5 of 12 cells matched within 200 steps)
+  fastest exact / cg at matched error, cond > 1e2: 0.35–2.28x (12 of 12 cells matched within 200 steps)
+  fastest exact / jacobi at matched error, cond > 1e2: 0.33–1.16x (12 of 12 cells matched within 200 steps)
+
+Part C (eigh alone, ms per matrix):
+  n= 32 batch=   16  default 0.016  magma 0.078  cpu 0.050  jacobi 0.014
+  n= 32 batch=  256  default 0.004  magma 0.046  cpu 0.051  jacobi 0.003
+  n= 32 batch= 1024  default 0.003  magma 0.048  cpu 0.050  jacobi 0.003
+  n= 64 batch=   16  default 0.648  magma 0.129  cpu 0.124  jacobi 0.068
+  n= 64 batch=  256  default 0.636  magma 0.120  cpu 0.125  jacobi 0.032
+  n= 64 batch= 1024  default 0.638  magma 0.126  cpu 0.135  jacobi 0.031
+  n=128 batch=   16  default 1.523  magma 0.414  cpu 0.400  jacobi 0.677
+  n=128 batch=  256  default 1.516  magma 0.607  cpu 0.408  jacobi 0.335
+  n=128 batch= 1024  default 1.517  magma 0.469  cpu 0.467  jacobi 0.308

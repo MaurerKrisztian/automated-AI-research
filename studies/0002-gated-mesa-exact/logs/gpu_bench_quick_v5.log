@@ -1,0 +1,80 @@
+Part A: float64 port of the start-anchor solver against gated_mesa.chunk_solve (NumPy) and a dense solve
+  T= 128 d= 16 C= 32 gates 0.9-1.0 ridge 0.05-1  cond     25.7  x vs numpy 4.6e-16  x vs dense 6.9e-16  out vs dense 1.4e-15
+  T= 256 d= 64 C= 64 gates 0.5-1.0 ridge 0.05-1  cond     28.6  x vs numpy 1.1e-15  x vs dense 9.7e-16  out vs dense 2.0e-15
+  T= 128 d= 32 C= 16 gates 0.99-1.0 ridge 0.001-0.01  cond   1009.6  x vs numpy 8.7e-15  x vs dense 1.5e-14  out vs dense 3.6e-14
+  T= 128 d= 64 C= 64 gates 0.01-0.2 ridge 0.05-1  cond     26.0  x vs numpy 1.4e-15  x vs dense 1.0e-15  out vs dense 3.9e-15
+
+Part B: float32 forward solve on NVIDIA GeForce RTX 5060 Ti, TF32 off; N=2 heads, T=256, d_v=64; eigh backends ['default', 'cpu', 'jacobi'] (CPU threads 6); CG residual stop 1e-06. Times are medians in ms (warmup 3, reps 3), including the chunk-start states. Output error: max over seeds, float64 readout, against a dense float64 solve.
+
+  d=64 C=32 gates 0.99-1.0 ridge 0.05-1  cond max 3.43e+01
+    exact stages (ms): states 0.32  capacitance 0.70  eigh_default 8.53  eigh_cpu 1.82  eigh_jacobi 1.02
+    exact_default      9.71 ms   err 6.86e-06   peak 0.02 GB
+    exact_cpu          3.06 ms   err 1.44e-06   peak 0.02 GB
+    exact_jacobi       1.88 ms   err 5.93e-06   peak 0.02 GB
+    cg30               9.68 ms   err 2.89e-06   peak 0.01 GB
+    jac30             10.15 ms   err 7.76e-07   peak 0.01 GB
+    cg100             30.25 ms   err 8.59e-07   peak 0.01 GB
+    jac100            31.43 ms   err 7.76e-07   peak 0.01 GB
+
+  d=64 C=32 gates 0.99-1.0 ridge 0.001-0.01  cond max 1.41e+03
+    exact stages (ms): states 0.29  capacitance 0.67  eigh_default 8.72  eigh_cpu 1.91  eigh_jacobi 1.03
+    exact_default     10.01 ms   err 2.66e-05   peak 0.02 GB
+    exact_cpu          3.37 ms   err 3.96e-05   peak 0.02 GB
+    exact_jacobi       1.85 ms   err 2.66e-05   peak 0.02 GB
+    cg30               9.55 ms   err 1.44e-01   peak 0.01 GB
+    jac30              9.87 ms   err 1.28e-01   peak 0.01 GB
+    cg100             30.33 ms   err 6.67e-05   peak 0.01 GB
+    jac100            30.06 ms   err 9.12e-05   peak 0.01 GB
+
+  d=64 C=32 gates 0.9-1.0 ridge 0.05-1  cond max 3.08e+01
+    exact stages (ms): states 0.31  capacitance 0.68  eigh_default 9.41  eigh_cpu 1.72  eigh_jacobi 1.06
+    exact_default     10.82 ms   err 5.61e-06   peak 0.02 GB
+    exact_cpu          3.00 ms   err 1.03e-06   peak 0.02 GB
+    exact_jacobi       1.89 ms   err 6.68e-06   peak 0.02 GB
+    cg30               9.70 ms   err 2.08e-06   peak 0.01 GB
+    jac30              9.84 ms   err 1.08e-06   peak 0.01 GB
+    cg100             29.99 ms   err 9.17e-07   peak 0.01 GB
+    jac100            30.00 ms   err 1.08e-06   peak 0.01 GB
+
+  d=64 C=32 gates 0.9-1.0 ridge 0.001-0.01  cond max 1.23e+03
+    exact stages (ms): states 0.31  capacitance 0.65  eigh_default 9.57  eigh_cpu 1.71  eigh_jacobi 1.13
+    exact_default     10.67 ms   err 4.14e-05   peak 0.02 GB
+    exact_cpu          2.86 ms   err 4.14e-05   peak 0.02 GB
+    exact_jacobi       1.88 ms   err 4.14e-05   peak 0.02 GB
+    cg30               9.34 ms   err 9.05e-02   peak 0.01 GB
+    jac30              9.40 ms   err 1.33e-01   peak 0.01 GB
+    cg100             29.62 ms   err 3.43e-05   peak 0.01 GB
+    jac100            30.06 ms   err 3.46e-05   peak 0.01 GB
+
+  d=64 C=32 gates 0.5-1.0 ridge 0.05-1  cond max 3.04e+01
+    exact stages (ms): states 0.32  capacitance 0.70  eigh_default 12.37  eigh_cpu 1.53  eigh_jacobi 1.45
+    exact_default     13.60 ms   err 7.24e-06   peak 0.02 GB
+    exact_cpu          2.67 ms   err 3.35e-06   peak 0.02 GB
+    exact_jacobi       2.31 ms   err 7.35e-06   peak 0.02 GB
+    cg30               9.65 ms   err 1.23e-06   peak 0.01 GB
+    jac30              9.88 ms   err 1.07e-06   peak 0.01 GB
+    cg100             30.10 ms   err 1.23e-06   peak 0.01 GB
+    jac100            30.80 ms   err 1.07e-06   peak 0.01 GB
+
+  d=64 C=32 gates 0.5-1.0 ridge 0.001-0.01  cond max 1.09e+03
+    exact stages (ms): states 0.32  capacitance 0.73  eigh_default 12.41  eigh_cpu 1.55  eigh_jacobi 1.41
+    exact_default     13.64 ms   err 5.92e-05   peak 0.02 GB
+    exact_cpu          2.64 ms   err 4.62e-05   peak 0.02 GB
+    exact_jacobi       2.16 ms   err 5.79e-05   peak 0.02 GB
+    cg30               9.70 ms   err 1.11e-01   peak 0.01 GB
+    jac30              9.53 ms   err 1.31e-01   peak 0.01 GB
+    cg100             29.56 ms   err 2.42e-05   peak 0.01 GB
+    jac100            30.78 ms   err 2.86e-05   peak 0.01 GB
+
+Part C: torch.linalg.eigh, float32 SPD matrices, median ms (warmup 1, reps 3)
+  n= 32 batch=   16  default     0.25 (0.016/matrix)  cpu     0.88 (0.055/matrix)  jacobi     0.23 (0.014/matrix)
+  n= 32 batch=  256  default     1.01 (0.004/matrix)  cpu    12.13 (0.047/matrix)  jacobi     0.88 (0.003/matrix)
+  n= 32 batch= 1024  default     3.33 (0.003/matrix)  cpu    48.15 (0.047/matrix)  jacobi     3.01 (0.003/matrix)
+  n= 64 batch=   16  default    10.43 (0.652/matrix)  cpu     2.04 (0.128/matrix)  jacobi     1.10 (0.069/matrix)
+  n= 64 batch=  256  default   163.99 (0.641/matrix)  cpu    30.66 (0.120/matrix)  jacobi     8.32 (0.033/matrix)
+  n= 64 batch= 1024  default   655.45 (0.640/matrix)  cpu   121.86 (0.119/matrix)  jacobi    31.23 (0.031/matrix)
+  n=128 batch=   16  default    24.59 (1.537/matrix)  cpu     6.65 (0.415/matrix)  jacobi    10.96 (0.685/matrix)
+  n=128 batch=  256  default   389.06 (1.520/matrix)  cpu   104.39 (0.408/matrix)  jacobi    85.08 (0.332/matrix)
+  n=128 batch= 1024  default  1562.62 (1.526/matrix)  cpu   432.98 (0.423/matrix)  jacobi   317.23 (0.310/matrix)
+
+saved results/gpu_bench_quick_20261029_185339.json

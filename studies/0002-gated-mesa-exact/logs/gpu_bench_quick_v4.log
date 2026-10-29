@@ -1,0 +1,62 @@
+Part A: float64 port of the start-anchor solver against gated_mesa.chunk_solve (NumPy) and a dense solve
+  T= 128 d= 16 C= 32 gates 0.9-1.0 ridge 0.05-1  cond     25.7  x vs numpy 4.6e-16  x vs dense 6.9e-16  out vs dense 1.4e-15
+  T= 256 d= 64 C= 64 gates 0.5-1.0 ridge 0.05-1  cond     28.6  x vs numpy 1.1e-15  x vs dense 9.7e-16  out vs dense 2.0e-15
+  T= 128 d= 32 C= 16 gates 0.99-1.0 ridge 0.001-0.01  cond   1009.6  x vs numpy 8.7e-15  x vs dense 1.5e-14  out vs dense 3.6e-14
+  T= 128 d= 64 C= 64 gates 0.01-0.2 ridge 0.05-1  cond     26.0  x vs numpy 1.4e-15  x vs dense 1.0e-15  out vs dense 3.9e-15
+
+Part B: float32 forward solve on NVIDIA GeForce RTX 5060 Ti, TF32 off; N=2 heads, T=256, d_v=64; eigh backends ['default', 'jacobi'] (CPU threads 6); CG residual stop 1e-06. Times are medians in ms (warmup 3, reps 3), including the chunk-start states. Output error: max over seeds, float64 readout, against a dense float64 solve.
+
+  d=64 C=32 gates 0.99-1.0 ridge 0.05-1  cond max 3.43e+01
+    exact stages (ms): states 0.29  capacitance 0.63  eigh_default 8.47  eigh_jacobi 0.85
+    exact_default      9.67 ms   err 6.86e-06   peak 0.02 GB
+    exact_jacobi       1.59 ms   err 1.86e-05   peak 0.02 GB
+    cg30               9.02 ms   err 2.89e-06   peak 0.01 GB
+    jac30              9.06 ms   err 7.76e-07   peak 0.01 GB
+
+  d=64 C=32 gates 0.99-1.0 ridge 0.001-0.01  cond max 1.41e+03
+    exact stages (ms): states 0.28  capacitance 0.75  eigh_default 8.77  eigh_jacobi 0.85
+    exact_default      9.91 ms   err 2.66e-05   peak 0.02 GB
+    exact_jacobi       1.55 ms   err 8.73e-04   peak 0.02 GB
+    cg30               8.77 ms   err 1.44e-01   peak 0.01 GB
+    jac30              9.24 ms   err 1.28e-01   peak 0.01 GB
+
+  d=64 C=32 gates 0.9-1.0 ridge 0.05-1  cond max 3.08e+01
+    exact stages (ms): states 0.36  capacitance 0.73  eigh_default 9.41  eigh_jacobi 0.86
+    exact_default     10.57 ms   err 5.61e-06   peak 0.02 GB
+    exact_jacobi       1.57 ms   err 1.14e-05   peak 0.02 GB
+    cg30               9.04 ms   err 2.08e-06   peak 0.01 GB
+    jac30             10.06 ms   err 1.08e-06   peak 0.01 GB
+
+  d=64 C=32 gates 0.9-1.0 ridge 0.001-0.01  cond max 1.23e+03
+    exact stages (ms): states 0.31  capacitance 0.65  eigh_default 9.53  eigh_jacobi 0.85
+    exact_default     10.62 ms   err 4.14e-05   peak 0.02 GB
+    exact_jacobi       1.62 ms   err 6.60e-04   peak 0.02 GB
+    cg30               9.19 ms   err 9.05e-02   peak 0.01 GB
+    jac30              9.23 ms   err 1.33e-01   peak 0.01 GB
+
+  d=64 C=32 gates 0.5-1.0 ridge 0.05-1  cond max 3.04e+01
+    exact stages (ms): states 0.28  capacitance 0.71  eigh_default 12.31  eigh_jacobi 0.98
+    exact_default     13.46 ms   err 7.24e-06   peak 0.02 GB
+    exact_jacobi       1.58 ms   err 7.14e-05   peak 0.02 GB
+    cg30               9.12 ms   err 1.23e-06   peak 0.01 GB
+    jac30              9.22 ms   err 1.07e-06   peak 0.01 GB
+
+  d=64 C=32 gates 0.5-1.0 ridge 0.001-0.01  cond max 1.09e+03
+    exact stages (ms): states 0.29  capacitance 0.65  eigh_default 12.43  eigh_jacobi 0.90
+    exact_default     13.65 ms   err 5.92e-05   peak 0.02 GB
+    exact_jacobi       1.52 ms   err 6.87e-03   peak 0.02 GB
+    cg30               9.05 ms   err 1.11e-01   peak 0.01 GB
+    jac30              9.33 ms   err 1.31e-01   peak 0.01 GB
+
+Part C: torch.linalg.eigh, float32 SPD matrices, median ms (warmup 1, reps 3)
+  n= 32 batch=   16  default     0.25 (0.016/matrix)  jacobi     0.18 (0.011/matrix)
+  n= 32 batch=  256  default     1.01 (0.004/matrix)  jacobi     0.81 (0.003/matrix)
+  n= 32 batch= 1024  default     3.34 (0.003/matrix)  jacobi     2.94 (0.003/matrix)
+  n= 64 batch=   16  default    10.35 (0.647/matrix)  jacobi     0.82 (0.051/matrix)
+  n= 64 batch=  256  default   163.90 (0.640/matrix)  jacobi     7.32 (0.029/matrix)
+  n= 64 batch= 1024  default   654.47 (0.639/matrix)  jacobi    27.24 (0.027/matrix)
+  n=128 batch=   16  default    24.65 (1.541/matrix)  jacobi     8.53 (0.533/matrix)
+  n=128 batch=  256  default   388.42 (1.517/matrix)  jacobi    76.12 (0.297/matrix)
+  n=128 batch= 1024  default  1552.20 (1.516/matrix)  jacobi   273.71 (0.267/matrix)
+
+saved results/gpu_bench_quick_20261029_184905.json

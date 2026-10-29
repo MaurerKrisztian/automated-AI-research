@@ -1,0 +1,188 @@
+source: results/gpu_bench_20261029_184103.json
+
+Per cell: exact time / CG time (per eigh backend), eigh share of the exact solver's stage sum,
+and the fewest CG steps whose error is <= the best exact variant's error (plain CG / Jacobi).
+
+d= 64 C= 32 gates 0.99-1.0 ridge 0.05  cond 3.7e+01
+    exact_default    547.87 ms  err 5.61e-06  eigh share 0.977  /cg10 76.74  /cg30 30.81  /cg100 10.04  /cg200  5.11
+    exact_magma      138.17 ms  err 2.71e-06  eigh share 0.908  /cg10 19.35  /cg30  7.77  /cg100  2.53  /cg200  1.29
+    exact_cpu        136.42 ms  err 2.71e-06  eigh share 0.910  /cg10 19.11  /cg30  7.67  /cg100  2.50  /cg200  1.27
+    capacitance stage / cg30 0.63;  steps to match best exact: cg 100, jacobi 30
+d= 64 C= 32 gates 0.99-1.0 ridge 0.001  cond 1.5e+03
+    exact_default    564.45 ms  err 9.93e-05  eigh share 0.978  /cg10 80.22  /cg30 32.21  /cg100 10.40  /cg200  5.31
+    exact_magma      138.05 ms  err 6.91e-05  eigh share 0.912  /cg10 19.62  /cg30  7.88  /cg100  2.54  /cg200  1.30
+    exact_cpu        141.23 ms  err 6.91e-05  eigh share 0.914  /cg10 20.07  /cg30  8.06  /cg100  2.60  /cg200  1.33
+    capacitance stage / cg30 0.63;  steps to match best exact: cg 200, jacobi 200
+d= 64 C= 32 gates 0.9-1.0 ridge 0.05  cond 3.1e+01
+    exact_default    658.02 ms  err 5.68e-06  eigh share 0.981  /cg10 92.49  /cg30 37.30  /cg100 12.14  /cg200  6.18
+    exact_magma      140.61 ms  err 1.30e-06  eigh share 0.914  /cg10 19.76  /cg30  7.97  /cg100  2.59  /cg200  1.32
+    exact_cpu        141.41 ms  err 1.30e-06  eigh share 0.914  /cg10 19.88  /cg30  8.02  /cg100  2.61  /cg200  1.33
+    capacitance stage / cg30 0.63;  steps to match best exact: cg 100, jacobi 30
+d= 64 C= 32 gates 0.9-1.0 ridge 0.001  cond 1.3e+03
+    exact_default    663.17 ms  err 5.52e-05  eigh share 0.981  /cg10 94.25  /cg30 38.11  /cg100 12.37  /cg200  6.29
+    exact_magma      150.11 ms  err 6.13e-05  eigh share 0.916  /cg10 21.33  /cg30  8.63  /cg100  2.80  /cg200  1.42
+    exact_cpu        140.44 ms  err 6.13e-05  eigh share 0.913  /cg10 19.96  /cg30  8.07  /cg100  2.62  /cg200  1.33
+    capacitance stage / cg30 0.63;  steps to match best exact: cg 100, jacobi 100
+d= 64 C= 32 gates 0.5-1.0 ridge 0.05  cond 3.4e+01
+    exact_default    874.80 ms  err 8.19e-06  eigh share 0.986  /cg10 124.05  /cg30 46.63  /cg100 15.92  /cg200  8.25
+    exact_magma      120.81 ms  err 1.72e-06  eigh share 0.896  /cg10 17.13  /cg30  6.44  /cg100  2.20  /cg200  1.14
+    exact_cpu        120.21 ms  err 1.72e-06  eigh share 0.897  /cg10 17.05  /cg30  6.41  /cg100  2.19  /cg200  1.13
+    capacitance stage / cg30 0.59;  steps to match best exact: cg 30, jacobi >200
+d= 64 C= 32 gates 0.5-1.0 ridge 0.001  cond 1.4e+03
+    exact_default    889.21 ms  err 6.54e-05  eigh share 0.986  /cg10 125.83  /cg30 50.79  /cg100 16.40  /cg200  8.34
+    exact_magma      122.12 ms  err 7.13e-05  eigh share 0.896  /cg10 17.28  /cg30  6.97  /cg100  2.25  /cg200  1.15
+    exact_cpu        121.34 ms  err 7.13e-05  eigh share 0.902  /cg10 17.17  /cg30  6.93  /cg100  2.24  /cg200  1.14
+    capacitance stage / cg30 0.63;  steps to match best exact: cg 100, jacobi 100
+d= 64 C= 64 gates 0.99-1.0 ridge 0.05  cond 3.7e+01
+    exact_default    298.36 ms  err 5.78e-06  eigh share 0.889  /cg10 44.96  /cg30 17.17  /cg100  5.41  /cg200  2.74
+    exact_magma       95.10 ms  err 1.49e-06  eigh share 0.665  /cg10 14.33  /cg30  5.47  /cg100  1.73  /cg200  0.87
+    exact_cpu         96.64 ms  err 1.49e-06  eigh share 0.669  /cg10 14.56  /cg30  5.56  /cg100  1.75  /cg200  0.89
+    capacitance stage / cg30 1.85;  steps to match best exact: cg 100, jacobi 30
+d= 64 C= 64 gates 0.99-1.0 ridge 0.001  cond 1.5e+03
+    exact_default    303.91 ms  err 1.01e-04  eigh share 0.892  /cg10 45.31  /cg30 17.22  /cg100  5.43  /cg200  2.75
+    exact_magma      100.64 ms  err 6.93e-05  eigh share 0.671  /cg10 15.00  /cg30  5.70  /cg100  1.80  /cg200  0.91
+    exact_cpu        102.18 ms  err 6.93e-05  eigh share 0.680  /cg10 15.23  /cg30  5.79  /cg100  1.83  /cg200  0.92
+    capacitance stage / cg30 1.82;  steps to match best exact: cg 200, jacobi 200
+d= 64 C= 64 gates 0.9-1.0 ridge 0.05  cond 3.1e+01
+    exact_default    349.34 ms  err 5.51e-06  eigh share 0.906  /cg10 52.50  /cg30 19.84  /cg100  6.25  /cg200  3.16
+    exact_magma      125.96 ms  err 1.26e-06  eigh share 0.658  /cg10 18.93  /cg30  7.16  /cg100  2.25  /cg200  1.14
+    exact_cpu         94.72 ms  err 1.26e-06  eigh share 0.666  /cg10 14.24  /cg30  5.38  /cg100  1.69  /cg200  0.86
+    capacitance stage / cg30 1.83;  steps to match best exact: cg 100, jacobi >200
+d= 64 C= 64 gates 0.9-1.0 ridge 0.001  cond 1.3e+03
+    exact_default    354.08 ms  err 5.37e-05  eigh share 0.907  /cg10 52.89  /cg30 20.17  /cg100  6.35  /cg200  3.21
+    exact_magma       97.33 ms  err 3.54e-05  eigh share 0.675  /cg10 14.54  /cg30  5.54  /cg100  1.74  /cg200  0.88
+    exact_cpu         98.42 ms  err 3.54e-05  eigh share 0.669  /cg10 14.70  /cg30  5.61  /cg100  1.76  /cg200  0.89
+    capacitance stage / cg30 1.83;  steps to match best exact: cg 100, jacobi 100
+d= 64 C= 64 gates 0.5-1.0 ridge 0.05  cond 3.4e+01
+    exact_default    462.37 ms  err 6.82e-06  eigh share 0.929  /cg10 70.76  /cg30 26.43  /cg100  8.26  /cg200  4.18
+    exact_magma       87.54 ms  err 1.83e-06  eigh share 0.698  /cg10 13.40  /cg30  5.00  /cg100  1.56  /cg200  0.79
+    exact_cpu         81.47 ms  err 1.83e-06  eigh share 0.607  /cg10 12.47  /cg30  4.66  /cg100  1.46  /cg200  0.74
+    capacitance stage / cg30 1.84;  steps to match best exact: cg 100, jacobi >200
+d= 64 C= 64 gates 0.5-1.0 ridge 0.001  cond 1.4e+03
+    exact_default    463.15 ms  err 7.08e-05  eigh share 0.929  /cg10 68.68  /cg30 26.27  /cg100  8.30  /cg200  4.19
+    exact_magma       81.98 ms  err 5.90e-05  eigh share 0.608  /cg10 12.16  /cg30  4.65  /cg100  1.47  /cg200  0.74
+    exact_cpu         84.65 ms  err 5.90e-05  eigh share 0.619  /cg10 12.55  /cg30  4.80  /cg100  1.52  /cg200  0.77
+    capacitance stage / cg30 1.83;  steps to match best exact: cg 100, jacobi 100
+d=128 C= 32 gates 0.99-1.0 ridge 0.05  cond 3.3e+01
+    exact_default   1328.29 ms  err 1.43e-05  eigh share 0.988  /cg10 78.70  /cg30 29.40  /cg100  9.18  /cg200  4.64
+    exact_magma      516.33 ms  err 2.13e-06  eigh share 0.969  /cg10 30.59  /cg30 11.43  /cg100  3.57  /cg200  1.80
+    exact_cpu        509.15 ms  err 2.13e-06  eigh share 0.968  /cg10 30.17  /cg30 11.27  /cg100  3.52  /cg200  1.78
+    capacitance stage / cg30 0.30;  steps to match best exact: cg 100, jacobi 30
+d=128 C= 32 gates 0.99-1.0 ridge 0.001  cond 1.4e+03
+    exact_default   1371.11 ms  err 1.48e-04  eigh share 0.989  /cg10 81.96  /cg30 30.37  /cg100  9.48  /cg200  4.78
+    exact_magma      508.01 ms  err 9.87e-05  eigh share 0.970  /cg10 30.37  /cg30 11.25  /cg100  3.51  /cg200  1.77
+    exact_cpu        500.19 ms  err 9.87e-05  eigh share 0.971  /cg10 29.90  /cg30 11.08  /cg100  3.46  /cg200  1.74
+    capacitance stage / cg30 0.30;  steps to match best exact: cg 200, jacobi 200
+d=128 C= 32 gates 0.9-1.0 ridge 0.05  cond 3.1e+01
+    exact_default   1767.44 ms  err 1.84e-05  eigh share 0.992  /cg10 106.63  /cg30 39.30  /cg100 12.25  /cg200  6.18
+    exact_magma      418.94 ms  err 1.47e-06  eigh share 0.968  /cg10 25.27  /cg30  9.32  /cg100  2.90  /cg200  1.46
+    exact_cpu        426.88 ms  err 1.47e-06  eigh share 0.968  /cg10 25.75  /cg30  9.49  /cg100  2.96  /cg200  1.49
+    capacitance stage / cg30 0.30;  steps to match best exact: cg 100, jacobi >200
+d=128 C= 32 gates 0.9-1.0 ridge 0.001  cond 1.2e+03
+    exact_default   1846.51 ms  err 6.75e-05  eigh share 0.992  /cg10 104.87  /cg30 40.91  /cg100 12.78  /cg200  6.45
+    exact_magma      495.98 ms  err 5.45e-05  eigh share 0.968  /cg10 28.17  /cg30 10.99  /cg100  3.43  /cg200  1.73
+    exact_cpu        532.07 ms  err 5.45e-05  eigh share 0.968  /cg10 30.22  /cg30 11.79  /cg100  3.68  /cg200  1.86
+    capacitance stage / cg30 0.31;  steps to match best exact: cg 200, jacobi 200
+d=128 C= 32 gates 0.5-1.0 ridge 0.05  cond 3.3e+01
+    exact_default   2030.66 ms  err 1.56e-05  eigh share 0.992  /cg10 119.07  /cg30 45.06  /cg100 14.06  /cg200  7.08
+    exact_magma      373.04 ms  err 2.74e-06  eigh share 0.959  /cg10 21.87  /cg30  8.28  /cg100  2.58  /cg200  1.30
+    exact_cpu        376.82 ms  err 2.74e-06  eigh share 0.960  /cg10 22.09  /cg30  8.36  /cg100  2.61  /cg200  1.31
+    capacitance stage / cg30 0.30;  steps to match best exact: cg 100, jacobi >200
+d=128 C= 32 gates 0.5-1.0 ridge 0.001  cond 1.3e+03
+    exact_default   2038.63 ms  err 9.93e-05  eigh share 0.992  /cg10 121.64  /cg30 45.19  /cg100 14.11  /cg200  7.11
+    exact_magma      368.46 ms  err 9.26e-05  eigh share 0.960  /cg10 21.98  /cg30  8.17  /cg100  2.55  /cg200  1.29
+    exact_cpu        376.88 ms  err 9.26e-05  eigh share 0.960  /cg10 22.49  /cg30  8.35  /cg100  2.61  /cg200  1.32
+    capacitance stage / cg30 0.30;  steps to match best exact: cg 100, jacobi 200
+d=128 C= 64 gates 0.99-1.0 ridge 0.05  cond 3.3e+01
+    exact_default    678.15 ms  err 1.41e-05  eigh share 0.946  /cg10 43.11  /cg30 15.52  /cg100  4.80  /cg200  2.41
+    exact_magma      249.05 ms  err 2.37e-06  eigh share 0.860  /cg10 15.83  /cg30  5.70  /cg100  1.76  /cg200  0.89
+    exact_cpu        259.76 ms  err 2.37e-06  eigh share 0.859  /cg10 16.51  /cg30  5.94  /cg100  1.84  /cg200  0.92
+    capacitance stage / cg30 0.82;  steps to match best exact: cg 100, jacobi 30
+d=128 C= 64 gates 0.99-1.0 ridge 0.001  cond 1.4e+03
+    exact_default    695.88 ms  err 1.88e-04  eigh share 0.947  /cg10 44.23  /cg30 15.94  /cg100  4.92  /cg200  2.47
+    exact_magma      253.40 ms  err 8.01e-05  eigh share 0.860  /cg10 16.11  /cg30  5.80  /cg100  1.79  /cg200  0.90
+    exact_cpu        258.31 ms  err 8.01e-05  eigh share 0.867  /cg10 16.42  /cg30  5.92  /cg100  1.83  /cg200  0.92
+    capacitance stage / cg30 0.82;  steps to match best exact: cg 200, jacobi 200
+d=128 C= 64 gates 0.9-1.0 ridge 0.05  cond 3.1e+01
+    exact_default    902.49 ms  err 1.90e-05  eigh share 0.959  /cg10 57.39  /cg30 20.71  /cg100  6.38  /cg200  3.21
+    exact_magma      250.80 ms  err 1.45e-06  eigh share 0.847  /cg10 15.95  /cg30  5.75  /cg100  1.77  /cg200  0.89
+    exact_cpu        240.31 ms  err 1.45e-06  eigh share 0.850  /cg10 15.28  /cg30  5.51  /cg100  1.70  /cg200  0.85
+    capacitance stage / cg30 0.82;  steps to match best exact: cg 100, jacobi >200
+d=128 C= 64 gates 0.9-1.0 ridge 0.001  cond 1.2e+03
+    exact_default    925.41 ms  err 5.47e-05  eigh share 0.960  /cg10 58.84  /cg30 21.21  /cg100  6.55  /cg200  3.29
+    exact_magma      237.25 ms  err 9.67e-05  eigh share 0.856  /cg10 15.08  /cg30  5.44  /cg100  1.68  /cg200  0.84
+    exact_cpu        244.28 ms  err 9.67e-05  eigh share 0.857  /cg10 15.53  /cg30  5.60  /cg100  1.73  /cg200  0.87
+    capacitance stage / cg30 0.82;  steps to match best exact: cg 200, jacobi 200
+d=128 C= 64 gates 0.5-1.0 ridge 0.05  cond 3.3e+01
+    exact_default   1016.33 ms  err 1.50e-05  eigh share 0.964  /cg10 64.61  /cg30 23.32  /cg100  7.19  /cg200  3.62
+    exact_magma      229.07 ms  err 2.51e-06  eigh share 0.811  /cg10 14.56  /cg30  5.26  /cg100  1.62  /cg200  0.81
+    exact_cpu        229.49 ms  err 2.51e-06  eigh share 0.815  /cg10 14.59  /cg30  5.27  /cg100  1.62  /cg200  0.82
+    capacitance stage / cg30 0.82;  steps to match best exact: cg 100, jacobi >200
+d=128 C= 64 gates 0.5-1.0 ridge 0.001  cond 1.3e+03
+    exact_default   1022.11 ms  err 9.20e-05  eigh share 0.964  /cg10 65.21  /cg30 23.43  /cg100  7.23  /cg200  3.64
+    exact_magma      190.41 ms  err 1.01e-04  eigh share 0.815  /cg10 12.15  /cg30  4.37  /cg100  1.35  /cg200  0.68
+    exact_cpu        194.61 ms  err 1.01e-04  eigh share 0.819  /cg10 12.42  /cg30  4.46  /cg100  1.38  /cg200  0.69
+    capacitance stage / cg30 0.82;  steps to match best exact: cg 100, jacobi 200
+
+Ranges over all cells:
+  exact_default / cg10: 43.1–125.8x
+  exact_default / cg30: 15.5–50.8x
+  exact_default / cg100: 4.8–16.4x
+  exact_default / cg200: 2.4–8.3x
+  eigh_default share of stage sum: 88.9–99.2%   exact_default time 298–2039 ms   peak 0.62–2.24 GB
+  exact_magma / cg10: 12.1–30.6x
+  exact_magma / cg30: 4.4–11.4x
+  exact_magma / cg100: 1.3–3.6x
+  exact_magma / cg200: 0.7–1.8x
+  eigh_magma share of stage sum: 60.8–97.0%   exact_magma time 82–516 ms   peak 0.62–2.24 GB
+  exact_cpu / cg10: 12.4–30.2x
+  exact_cpu / cg30: 4.5–11.8x
+  exact_cpu / cg100: 1.4–3.7x
+  exact_cpu / cg200: 0.7–1.9x
+  eigh_cpu share of stage sum: 60.7–97.1%   exact_cpu time 81–532 ms   peak 0.62–2.24 GB
+  capacitance stage / cg30: 0.30–1.85
+  cg10: time 6.5–17.6 ms   peak 0.12–0.31 GB
+  cg30: time 17.4–45.2 ms   peak 0.12–0.31 GB
+  cg100: time 53.6–144.7 ms   peak 0.12–0.31 GB
+  cg200: time 105.4–286.9 ms   peak 0.12–0.31 GB
+  jac10: time 7.1–19.7 ms   peak 0.13–0.33 GB
+  jac30: time 18.4–50.6 ms   peak 0.13–0.33 GB
+  jac100: time 57.6–161.1 ms   peak 0.13–0.33 GB
+  jac200: time 112.9–317.6 ms   peak 0.13–0.33 GB
+
+  errors, cond <= 1e2 (12 cells, cond 3.1e+01–3.7e+01):
+    exact_default  5.5e-06–1.9e-05
+    exact_magma    1.3e-06–2.7e-06
+    exact_cpu      1.3e-06–2.7e-06
+    cg10           1.9e-02–2.8e-02
+    jac10          1.1e-03–8.0e-03
+    cg30           1.5e-06–9.7e-06
+    jac30          1.1e-06–3.0e-06
+    cg100          1.0e-06–2.1e-06
+    jac100         1.1e-06–3.0e-06
+    cg200          1.0e-06–2.1e-06
+    jac200         1.1e-06–3.0e-06
+
+  errors, cond > 1e2 (12 cells, cond 1.2e+03–1.5e+03):
+    exact_default  5.4e-05–1.9e-04
+    exact_magma    3.5e-05–1.0e-04
+    exact_cpu      3.5e-05–1.0e-04
+    cg10           1.1e+00–3.4e+00
+    jac10          9.6e-01–3.4e+00
+    cg30           8.5e-02–2.9e-01
+    jac30          1.5e-01–4.8e-01
+    cg100          2.3e-05–1.9e-03
+    jac100         1.9e-05–1.5e-03
+    cg200          1.6e-05–3.9e-05
+    jac200         1.9e-05–4.9e-05
+
+Part C (eigh alone, ms per matrix):
+  n= 32 batch=   16  default 0.016  magma 0.055  cpu 0.060
+  n= 32 batch=  256  default 0.004  magma 0.054  cpu 0.053
+  n= 32 batch= 1024  default 0.003  magma 0.052  cpu 0.051
+  n= 64 batch=   16  default 0.642  magma 0.151  cpu 0.128
+  n= 64 batch=  256  default 0.640  magma 0.127  cpu 0.127
+  n= 64 batch= 1024  default 0.641  magma 0.126  cpu 0.129
+  n=128 batch=   16  default 1.528  magma 0.448  cpu 0.425
+  n=128 batch=  256  default 1.518  magma 0.426  cpu 0.431
+  n=128 batch= 1024  default 1.517  magma 0.477  cpu 0.482

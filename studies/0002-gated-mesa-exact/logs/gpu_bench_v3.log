@@ -1,0 +1,380 @@
+Part A: float64 port of the start-anchor solver against gated_mesa.chunk_solve (NumPy) and a dense solve
+  T= 128 d= 16 C= 32 gates 0.9-1.0 ridge 0.05-1  cond     25.7  x vs numpy 4.6e-16  x vs dense 6.9e-16  out vs dense 1.4e-15
+  T= 256 d= 64 C= 64 gates 0.5-1.0 ridge 0.05-1  cond     28.6  x vs numpy 1.1e-15  x vs dense 9.7e-16  out vs dense 2.0e-15
+  T= 128 d= 32 C= 16 gates 0.99-1.0 ridge 0.001-0.01  cond   1009.6  x vs numpy 8.7e-15  x vs dense 1.5e-14  out vs dense 3.6e-14
+  T= 128 d= 64 C= 64 gates 0.01-0.2 ridge 0.05-1  cond     26.0  x vs numpy 1.4e-15  x vs dense 1.0e-15  out vs dense 3.9e-15
+
+Part B: float32 forward solve on NVIDIA GeForce RTX 5060 Ti, TF32 off; N=16 heads, T=2048, d_v=64; eigh backends ['default', 'magma', 'cpu', 'jacobi'] (CPU threads 6); CG residual stop 1e-06. Times are medians in ms (warmup 3, reps 10), including the chunk-start states. Output error: max over seeds, float64 readout, against a dense float64 solve.
+
+  d=64 C=32 gates 0.99-1.0 ridge 0.05-1  cond max 3.66e+01
+    exact stages (ms): states 1.35  capacitance 10.97  eigh_default 536.50  eigh_magma 124.42  eigh_cpu 126.44  eigh_jacobi 24.79
+    exact_default    550.14 ms   err 5.61e-06   peak 0.62 GB
+    exact_magma      133.93 ms   err 2.71e-06   peak 0.62 GB
+    exact_cpu        135.61 ms   err 2.71e-06   peak 0.62 GB
+    exact_jacobi      37.13 ms   err 7.77e-06   peak 0.64 GB
+    cg10               7.06 ms   err 2.34e-02   peak 0.13 GB
+    jac10              7.72 ms   err 5.11e-03   peak 0.14 GB
+    cg30              17.51 ms   err 4.36e-06   peak 0.13 GB
+    jac30             18.98 ms   err 1.07e-06   peak 0.14 GB
+    cg100             54.25 ms   err 1.11e-06   peak 0.13 GB
+    jac100            58.12 ms   err 1.07e-06   peak 0.14 GB
+    cg200            106.69 ms   err 1.11e-06   peak 0.13 GB
+    jac200           113.97 ms   err 1.07e-06   peak 0.14 GB
+
+  d=64 C=32 gates 0.99-1.0 ridge 0.001-0.01  cond max 1.52e+03
+    exact stages (ms): states 1.35  capacitance 10.95  eigh_default 550.61  eigh_magma 131.19  eigh_cpu 132.58  eigh_jacobi 24.20
+    exact_default    562.38 ms   err 9.93e-05   peak 0.62 GB
+    exact_magma      146.19 ms   err 6.91e-05   peak 0.62 GB
+    exact_cpu        148.09 ms   err 6.91e-05   peak 0.62 GB
+    exact_jacobi      38.21 ms   err 3.74e-05   peak 0.64 GB
+    cg10               7.03 ms   err 1.19e+00   peak 0.13 GB
+    jac10              7.73 ms   err 1.32e+00   peak 0.14 GB
+    cg30              17.77 ms   err 1.99e-01   peak 0.13 GB
+    jac30             18.93 ms   err 1.94e-01   peak 0.14 GB
+    cg100             54.88 ms   err 1.91e-04   peak 0.13 GB
+    jac100            58.14 ms   err 1.76e-04   peak 0.14 GB
+    cg200            107.97 ms   err 1.65e-05   peak 0.13 GB
+    jac200           114.07 ms   err 1.90e-05   peak 0.14 GB
+
+  d=64 C=32 gates 0.9-1.0 ridge 0.05-1  cond max 3.12e+01
+    exact stages (ms): states 1.38  capacitance 10.93  eigh_default 645.72  eigh_magma 117.82  eigh_cpu 120.74  eigh_jacobi 30.45
+    exact_default    658.15 ms   err 5.68e-06   peak 0.62 GB
+    exact_magma      139.16 ms   err 1.30e-06   peak 0.62 GB
+    exact_cpu        136.41 ms   err 1.30e-06   peak 0.62 GB
+    exact_jacobi      42.71 ms   err 7.80e-06   peak 0.64 GB
+    cg10               7.17 ms   err 2.00e-02   peak 0.13 GB
+    jac10              7.66 ms   err 2.24e-03   peak 0.14 GB
+    cg30              17.66 ms   err 1.71e-06   peak 0.13 GB
+    jac30             19.01 ms   err 1.26e-06   peak 0.14 GB
+    cg100             54.92 ms   err 1.08e-06   peak 0.13 GB
+    jac100            58.25 ms   err 1.26e-06   peak 0.14 GB
+    cg200            107.85 ms   err 1.08e-06   peak 0.13 GB
+    jac200           114.26 ms   err 1.26e-06   peak 0.14 GB
+
+  d=64 C=32 gates 0.9-1.0 ridge 0.001-0.01  cond max 1.29e+03
+    exact stages (ms): states 1.31  capacitance 10.96  eigh_default 650.86  eigh_magma 122.45  eigh_cpu 127.13  eigh_jacobi 31.21
+    exact_default    662.66 ms   err 5.52e-05   peak 0.62 GB
+    exact_magma      130.05 ms   err 6.13e-05   peak 0.62 GB
+    exact_cpu        131.69 ms   err 6.13e-05   peak 0.62 GB
+    exact_jacobi      43.53 ms   err 3.05e-05   peak 0.64 GB
+    cg10               7.02 ms   err 1.12e+00   peak 0.13 GB
+    jac10              7.61 ms   err 9.64e-01   peak 0.14 GB
+    cg30              17.48 ms   err 1.27e-01   peak 0.13 GB
+    jac30             18.77 ms   err 1.49e-01   peak 0.14 GB
+    cg100             54.47 ms   err 2.35e-05   peak 0.13 GB
+    jac100            57.71 ms   err 1.90e-05   peak 0.14 GB
+    cg200            107.26 ms   err 2.35e-05   peak 0.13 GB
+    jac200           113.29 ms   err 1.90e-05   peak 0.14 GB
+
+  d=64 C=32 gates 0.5-1.0 ridge 0.05-1  cond max 3.43e+01
+    exact stages (ms): states 1.35  capacitance 10.94  eigh_default 866.90  eigh_magma 100.09  eigh_cpu 102.83  eigh_jacobi 41.51
+    exact_default    877.80 ms   err 8.19e-06   peak 0.62 GB
+    exact_magma      111.40 ms   err 1.72e-06   peak 0.62 GB
+    exact_cpu        113.20 ms   err 1.72e-06   peak 0.62 GB
+    exact_jacobi      53.89 ms   err 7.18e-06   peak 0.64 GB
+    cg10               7.05 ms   err 1.95e-02   peak 0.13 GB
+    jac10              7.75 ms   err 1.37e-03   peak 0.14 GB
+    cg30              17.74 ms   err 1.55e-06   peak 0.13 GB
+    jac30             19.00 ms   err 1.79e-06   peak 0.14 GB
+    cg100             54.99 ms   err 1.45e-06   peak 0.13 GB
+    jac100            58.33 ms   err 1.79e-06   peak 0.14 GB
+    cg200            108.07 ms   err 1.45e-06   peak 0.13 GB
+    jac200           114.31 ms   err 1.79e-06   peak 0.14 GB
+
+  d=64 C=32 gates 0.5-1.0 ridge 0.001-0.01  cond max 1.38e+03
+    exact stages (ms): states 1.38  capacitance 10.90  eigh_default 871.56  eigh_magma 100.42  eigh_cpu 104.27  eigh_jacobi 41.87
+    exact_default    884.36 ms   err 6.54e-05   peak 0.62 GB
+    exact_magma      115.77 ms   err 7.13e-05   peak 0.62 GB
+    exact_cpu        116.69 ms   err 7.13e-05   peak 0.62 GB
+    exact_jacobi      54.08 ms   err 8.81e-05   peak 0.64 GB
+    cg10               7.03 ms   err 1.94e+00   peak 0.13 GB
+    jac10              7.71 ms   err 1.71e+00   peak 0.14 GB
+    cg30              17.59 ms   err 1.24e-01   peak 0.13 GB
+    jac30             18.88 ms   err 1.80e-01   peak 0.14 GB
+    cg100             54.47 ms   err 3.28e-05   peak 0.13 GB
+    jac100            57.70 ms   err 2.91e-05   peak 0.14 GB
+    cg200            107.13 ms   err 3.28e-05   peak 0.13 GB
+    jac200           113.33 ms   err 2.91e-05   peak 0.14 GB
+
+  d=64 C=64 gates 0.99-1.0 ridge 0.05-1  cond max 3.66e+01
+    exact stages (ms): states 0.72  capacitance 32.10  eigh_default 265.15  eigh_magma 60.63  eigh_cpu 62.68  eigh_jacobi 12.10
+    exact_default    298.01 ms   err 5.78e-06   peak 2.11 GB
+    exact_magma       92.44 ms   err 1.49e-06   peak 2.11 GB
+    exact_cpu         94.21 ms   err 1.49e-06   peak 2.11 GB
+    exact_jacobi      44.77 ms   err 8.08e-06   peak 2.12 GB
+    cg10               6.57 ms   err 2.34e-02   peak 0.12 GB
+    jac10              7.38 ms   err 5.11e-03   peak 0.13 GB
+    cg30              17.52 ms   err 4.36e-06   peak 0.12 GB
+    jac30             18.41 ms   err 1.10e-06   peak 0.13 GB
+    cg100             55.83 ms   err 1.17e-06   peak 0.12 GB
+    jac100            57.82 ms   err 1.10e-06   peak 0.13 GB
+    cg200            110.43 ms   err 1.17e-06   peak 0.12 GB
+    jac200           113.94 ms   err 1.10e-06   peak 0.13 GB
+
+  d=64 C=64 gates 0.99-1.0 ridge 0.001-0.01  cond max 1.52e+03
+    exact stages (ms): states 0.73  capacitance 32.11  eigh_default 271.24  eigh_magma 62.93  eigh_cpu 63.94  eigh_jacobi 12.16
+    exact_default    304.36 ms   err 1.01e-04   peak 2.11 GB
+    exact_magma       94.02 ms   err 6.93e-05   peak 2.11 GB
+    exact_cpu         94.73 ms   err 6.93e-05   peak 2.11 GB
+    exact_jacobi      44.89 ms   err 6.93e-05   peak 2.12 GB
+    cg10               6.57 ms   err 1.19e+00   peak 0.12 GB
+    jac10              7.10 ms   err 1.32e+00   peak 0.13 GB
+    cg30              17.56 ms   err 1.98e-01   peak 0.12 GB
+    jac30             18.42 ms   err 2.87e-01   peak 0.13 GB
+    cg100             55.91 ms   err 1.51e-04   peak 0.12 GB
+    jac100            57.76 ms   err 1.55e-04   peak 0.13 GB
+    cg200            110.53 ms   err 1.65e-05   peak 0.12 GB
+    jac200           113.89 ms   err 1.90e-05   peak 0.13 GB
+
+  d=64 C=64 gates 0.9-1.0 ridge 0.05-1  cond max 3.12e+01
+    exact stages (ms): states 0.79  capacitance 32.07  eigh_default 317.88  eigh_magma 61.15  eigh_cpu 63.31  eigh_jacobi 14.76
+    exact_default    350.86 ms   err 5.51e-06   peak 2.11 GB
+    exact_magma       93.19 ms   err 1.26e-06   peak 2.11 GB
+    exact_cpu         95.36 ms   err 1.26e-06   peak 2.11 GB
+    exact_jacobi      47.55 ms   err 7.03e-06   peak 2.12 GB
+    cg10               6.58 ms   err 2.00e-02   peak 0.12 GB
+    jac10              7.13 ms   err 2.24e-03   peak 0.13 GB
+    cg30              17.58 ms   err 1.71e-06   peak 0.12 GB
+    jac30             18.43 ms   err 1.26e-06   peak 0.13 GB
+    cg100             55.85 ms   err 1.06e-06   peak 0.12 GB
+    jac100            57.70 ms   err 1.26e-06   peak 0.13 GB
+    cg200            110.39 ms   err 1.06e-06   peak 0.12 GB
+    jac200           113.78 ms   err 1.26e-06   peak 0.13 GB
+
+  d=64 C=64 gates 0.9-1.0 ridge 0.001-0.01  cond max 1.29e+03
+    exact stages (ms): states 0.76  capacitance 32.05  eigh_default 320.54  eigh_magma 61.23  eigh_cpu 63.55  eigh_jacobi 15.08
+    exact_default    352.65 ms   err 5.37e-05   peak 2.11 GB
+    exact_magma       91.69 ms   err 3.54e-05   peak 2.11 GB
+    exact_cpu         93.50 ms   err 3.54e-05   peak 2.11 GB
+    exact_jacobi      47.80 ms   err 3.54e-05   peak 2.12 GB
+    cg10               6.60 ms   err 1.12e+00   peak 0.12 GB
+    jac10              7.10 ms   err 9.64e-01   peak 0.13 GB
+    cg30              17.51 ms   err 1.27e-01   peak 0.12 GB
+    jac30             18.33 ms   err 1.49e-01   peak 0.13 GB
+    cg100             55.71 ms   err 2.35e-05   peak 0.12 GB
+    jac100            57.56 ms   err 1.90e-05   peak 0.13 GB
+    cg200            110.26 ms   err 2.35e-05   peak 0.12 GB
+    jac200           113.58 ms   err 1.90e-05   peak 0.13 GB
+
+  d=64 C=64 gates 0.5-1.0 ridge 0.05-1  cond max 3.43e+01
+    exact stages (ms): states 1.16  capacitance 32.18  eigh_default 426.37  eigh_magma 47.31  eigh_cpu 50.70  eigh_jacobi 20.18
+    exact_default    457.48 ms   err 6.82e-06   peak 2.11 GB
+    exact_magma       79.68 ms   err 1.83e-06   peak 2.11 GB
+    exact_cpu         80.32 ms   err 1.83e-06   peak 2.11 GB
+    exact_jacobi      52.98 ms   err 7.67e-06   peak 2.12 GB
+    cg10               6.59 ms   err 1.95e-02   peak 0.12 GB
+    jac10              7.15 ms   err 2.13e-03   peak 0.13 GB
+    cg30              17.55 ms   err 2.05e-06   peak 0.12 GB
+    jac30             18.45 ms   err 1.97e-06   peak 0.13 GB
+    cg100             55.85 ms   err 1.65e-06   peak 0.12 GB
+    jac100            57.75 ms   err 1.97e-06   peak 0.13 GB
+    cg200            110.47 ms   err 1.65e-06   peak 0.12 GB
+    jac200           113.80 ms   err 1.97e-06   peak 0.13 GB
+
+  d=64 C=64 gates 0.5-1.0 ridge 0.001-0.01  cond max 1.38e+03
+    exact stages (ms): states 0.74  capacitance 32.06  eigh_default 431.09  eigh_magma 46.06  eigh_cpu 46.86  eigh_jacobi 20.59
+    exact_default    464.91 ms   err 7.08e-05   peak 2.11 GB
+    exact_magma       79.84 ms   err 5.90e-05   peak 2.11 GB
+    exact_cpu         79.61 ms   err 5.90e-05   peak 2.11 GB
+    exact_jacobi      53.23 ms   err 1.04e-04   peak 2.12 GB
+    cg10               6.56 ms   err 1.82e+00   peak 0.12 GB
+    jac10              7.14 ms   err 2.04e+00   peak 0.13 GB
+    cg30              17.50 ms   err 8.50e-02   peak 0.12 GB
+    jac30             18.44 ms   err 2.20e-01   peak 0.13 GB
+    cg100             55.79 ms   err 3.06e-05   peak 0.12 GB
+    jac100            57.67 ms   err 3.35e-05   peak 0.13 GB
+    cg200            110.44 ms   err 3.06e-05   peak 0.12 GB
+    jac200           113.78 ms   err 3.35e-05   peak 0.13 GB
+
+  d=128 C=32 gates 0.99-1.0 ridge 0.05-1  cond max 3.34e+01
+    exact stages (ms): states 1.71  capacitance 13.57  eigh_default 1298.23  eigh_magma 471.24  eigh_cpu 473.47  eigh_jacobi 254.51
+    exact_default   1333.25 ms   err 1.43e-05   peak 0.92 GB
+    exact_magma      453.86 ms   err 2.13e-06   peak 0.92 GB
+    exact_cpu        465.74 ms   err 2.13e-06   peak 0.92 GB
+    exact_jacobi     270.10 ms   err 1.42e-05   peak 0.98 GB
+    cg10              16.72 ms   err 2.85e-02   peak 0.31 GB
+    jac10             19.14 ms   err 7.95e-03   peak 0.33 GB
+    cg30              45.18 ms   err 9.70e-06   peak 0.31 GB
+    jac30             50.62 ms   err 1.21e-06   peak 0.33 GB
+    cg100            144.64 ms   err 1.01e-06   peak 0.31 GB
+    jac100           160.51 ms   err 1.21e-06   peak 0.33 GB
+    cg200            286.89 ms   err 1.01e-06   peak 0.31 GB
+    jac200           317.61 ms   err 1.21e-06   peak 0.33 GB
+
+  d=128 C=32 gates 0.99-1.0 ridge 0.001-0.01  cond max 1.40e+03
+    exact stages (ms): states 1.70  capacitance 13.62  eigh_default 1334.81  eigh_magma 451.51  eigh_cpu 461.30  eigh_jacobi 259.18
+    exact_default   1344.39 ms   err 1.48e-04   peak 0.92 GB
+    exact_magma      467.77 ms   err 9.87e-05   peak 0.92 GB
+    exact_cpu        481.70 ms   err 9.87e-05   peak 0.92 GB
+    exact_jacobi     273.46 ms   err 6.33e-05   peak 0.98 GB
+    cg10              16.68 ms   err 1.20e+00   peak 0.31 GB
+    jac10             19.16 ms   err 1.53e+00   peak 0.33 GB
+    cg30              45.15 ms   err 2.86e-01   peak 0.31 GB
+    jac30             50.46 ms   err 2.47e-01   peak 0.33 GB
+    cg100            144.55 ms   err 1.58e-03   peak 0.31 GB
+    jac100           160.34 ms   err 1.44e-03   peak 0.33 GB
+    cg200            286.79 ms   err 2.13e-05   peak 0.31 GB
+    jac200           317.52 ms   err 1.95e-05   peak 0.33 GB
+
+  d=128 C=32 gates 0.9-1.0 ridge 0.05-1  cond max 3.13e+01
+    exact stages (ms): states 1.60  capacitance 13.62  eigh_default 1758.46  eigh_magma 436.89  eigh_cpu 441.49  eigh_jacobi 350.33
+    exact_default   1794.81 ms   err 1.84e-05   peak 0.92 GB
+    exact_magma      423.13 ms   err 1.47e-06   peak 0.92 GB
+    exact_cpu        434.98 ms   err 1.47e-06   peak 0.92 GB
+    exact_jacobi     366.73 ms   err 1.68e-05   peak 0.98 GB
+    cg10              16.81 ms   err 1.90e-02   peak 0.31 GB
+    jac10             19.20 ms   err 2.95e-03   peak 0.33 GB
+    cg30              45.16 ms   err 2.83e-06   peak 0.31 GB
+    jac30             50.56 ms   err 1.58e-06   peak 0.33 GB
+    cg100            144.69 ms   err 1.20e-06   peak 0.31 GB
+    jac100           160.49 ms   err 1.58e-06   peak 0.33 GB
+    cg200            286.90 ms   err 1.20e-06   peak 0.31 GB
+    jac200           317.62 ms   err 1.58e-06   peak 0.33 GB
+
+  d=128 C=32 gates 0.9-1.0 ridge 0.001-0.01  cond max 1.21e+03
+    exact stages (ms): states 1.65  capacitance 13.56  eigh_default 1797.42  eigh_magma 440.87  eigh_cpu 445.44  eigh_jacobi 353.54
+    exact_default   1812.49 ms   err 6.75e-05   peak 0.92 GB
+    exact_magma      429.50 ms   err 5.45e-05   peak 0.92 GB
+    exact_cpu        438.88 ms   err 5.45e-05   peak 0.92 GB
+    exact_jacobi     369.44 ms   err 4.47e-05   peak 0.98 GB
+    cg10              16.68 ms   err 1.57e+00   peak 0.31 GB
+    jac10             19.16 ms   err 1.85e+00   peak 0.33 GB
+    cg30              45.08 ms   err 2.94e-01   peak 0.31 GB
+    jac30             50.52 ms   err 2.88e-01   peak 0.33 GB
+    cg100            144.45 ms   err 2.37e-04   peak 0.31 GB
+    jac100           160.16 ms   err 2.48e-04   peak 0.33 GB
+    cg200            286.62 ms   err 2.10e-05   peak 0.31 GB
+    jac200           317.34 ms   err 2.75e-05   peak 0.33 GB
+
+  d=128 C=32 gates 0.5-1.0 ridge 0.05-1  cond max 3.35e+01
+    exact stages (ms): states 1.65  capacitance 13.62  eigh_default 1985.18  eigh_magma 347.26  eigh_cpu 349.10  eigh_jacobi 381.53
+    exact_default   2000.95 ms   err 1.56e-05   peak 0.92 GB
+    exact_magma      336.32 ms   err 2.74e-06   peak 0.92 GB
+    exact_cpu        346.53 ms   err 2.74e-06   peak 0.92 GB
+    exact_jacobi     397.15 ms   err 1.41e-05   peak 0.98 GB
+    cg10              16.80 ms   err 2.78e-02   peak 0.31 GB
+    jac10             19.12 ms   err 1.08e-03   peak 0.33 GB
+    cg30              45.14 ms   err 3.92e-06   peak 0.31 GB
+    jac30             50.56 ms   err 2.77e-06   peak 0.33 GB
+    cg100            144.70 ms   err 2.08e-06   peak 0.31 GB
+    jac100           160.56 ms   err 2.77e-06   peak 0.33 GB
+    cg200            286.94 ms   err 2.08e-06   peak 0.31 GB
+    jac200           317.59 ms   err 2.77e-06   peak 0.33 GB
+
+  d=128 C=32 gates 0.5-1.0 ridge 0.001-0.01  cond max 1.31e+03
+    exact stages (ms): states 1.69  capacitance 13.97  eigh_default 1992.92  eigh_magma 345.18  eigh_cpu 355.37  eigh_jacobi 381.70
+    exact_default   2017.56 ms   err 9.93e-05   peak 0.92 GB
+    exact_magma      329.59 ms   err 9.26e-05   peak 0.92 GB
+    exact_cpu        343.56 ms   err 9.26e-05   peak 0.92 GB
+    exact_jacobi     397.16 ms   err 1.01e-04   peak 0.98 GB
+    cg10              16.68 ms   err 3.41e+00   peak 0.31 GB
+    jac10             19.25 ms   err 3.39e+00   peak 0.33 GB
+    cg30              45.09 ms   err 2.72e-01   peak 0.31 GB
+    jac30             50.51 ms   err 4.52e-01   peak 0.33 GB
+    cg100            144.62 ms   err 3.88e-05   peak 0.31 GB
+    jac100           160.33 ms   err 1.48e-04   peak 0.33 GB
+    cg200            286.98 ms   err 3.88e-05   peak 0.31 GB
+    jac200           317.56 ms   err 4.38e-05   peak 0.33 GB
+
+  d=128 C=64 gates 0.99-1.0 ridge 0.05-1  cond max 3.34e+01
+    exact stages (ms): states 0.86  capacitance 35.91  eigh_default 642.12  eigh_magma 223.23  eigh_cpu 227.39  eigh_jacobi 128.18
+    exact_default    675.62 ms   err 1.41e-05   peak 2.24 GB
+    exact_magma      255.64 ms   err 2.37e-06   peak 2.24 GB
+    exact_cpu        258.83 ms   err 2.37e-06   peak 2.24 GB
+    exact_jacobi     164.36 ms   err 1.38e-05   peak 2.27 GB
+    cg10              15.69 ms   err 2.85e-02   peak 0.25 GB
+    jac10             18.10 ms   err 7.95e-03   peak 0.27 GB
+    cg30              43.66 ms   err 9.34e-06   peak 0.25 GB
+    jac30             48.88 ms   err 1.12e-06   peak 0.27 GB
+    cg100            141.42 ms   err 1.01e-06   peak 0.25 GB
+    jac100           156.59 ms   err 1.12e-06   peak 0.27 GB
+    cg200            281.30 ms   err 1.01e-06   peak 0.25 GB
+    jac200           310.59 ms   err 1.12e-06   peak 0.27 GB
+
+  d=128 C=64 gates 0.99-1.0 ridge 0.001-0.01  cond max 1.40e+03
+    exact stages (ms): states 0.87  capacitance 35.90  eigh_default 653.74  eigh_magma 246.20  eigh_cpu 233.33  eigh_jacobi 130.50
+    exact_default    694.56 ms   err 1.88e-04   peak 2.24 GB
+    exact_magma      254.13 ms   err 8.01e-05   peak 2.24 GB
+    exact_cpu        259.63 ms   err 8.01e-05   peak 2.24 GB
+    exact_jacobi     166.83 ms   err 6.49e-05   peak 2.27 GB
+    cg10              15.73 ms   err 1.20e+00   peak 0.25 GB
+    jac10             18.10 ms   err 1.53e+00   peak 0.27 GB
+    cg30              43.66 ms   err 2.86e-01   peak 0.25 GB
+    jac30             48.89 ms   err 2.79e-01   peak 0.27 GB
+    cg100            141.49 ms   err 1.91e-03   peak 0.25 GB
+    jac100           156.69 ms   err 1.49e-03   peak 0.27 GB
+    cg200            281.31 ms   err 2.02e-05   peak 0.25 GB
+    jac200           310.72 ms   err 2.41e-05   peak 0.27 GB
+
+  d=128 C=64 gates 0.9-1.0 ridge 0.05-1  cond max 3.13e+01
+    exact stages (ms): states 0.88  capacitance 35.85  eigh_default 864.73  eigh_magma 201.45  eigh_cpu 210.81  eigh_jacobi 176.01
+    exact_default    902.14 ms   err 1.90e-05   peak 2.24 GB
+    exact_magma      235.96 ms   err 1.45e-06   peak 2.24 GB
+    exact_cpu        240.69 ms   err 1.45e-06   peak 2.24 GB
+    exact_jacobi     212.00 ms   err 1.66e-05   peak 2.27 GB
+    cg10              16.13 ms   err 1.90e-02   peak 0.25 GB
+    jac10             18.27 ms   err 2.95e-03   peak 0.27 GB
+    cg30              43.68 ms   err 2.83e-06   peak 0.25 GB
+    jac30             48.93 ms   err 1.51e-06   peak 0.27 GB
+    cg100            141.44 ms   err 1.30e-06   peak 0.25 GB
+    jac100           156.61 ms   err 1.51e-06   peak 0.27 GB
+    cg200            281.10 ms   err 1.30e-06   peak 0.25 GB
+    jac200           310.50 ms   err 1.51e-06   peak 0.27 GB
+
+  d=128 C=64 gates 0.9-1.0 ridge 0.001-0.01  cond max 1.21e+03
+    exact stages (ms): states 0.88  capacitance 35.89  eigh_default 887.05  eigh_magma 217.74  eigh_cpu 222.62  eigh_jacobi 178.83
+    exact_default    931.42 ms   err 5.47e-05   peak 2.24 GB
+    exact_magma      233.13 ms   err 9.67e-05   peak 2.24 GB
+    exact_cpu        238.56 ms   err 9.67e-05   peak 2.24 GB
+    exact_jacobi     216.06 ms   err 4.72e-05   peak 2.27 GB
+    cg10              15.73 ms   err 1.57e+00   peak 0.25 GB
+    jac10             18.08 ms   err 1.85e+00   peak 0.27 GB
+    cg30              43.67 ms   err 2.84e-01   peak 0.25 GB
+    jac30             48.86 ms   err 2.92e-01   peak 0.27 GB
+    cg100            141.24 ms   err 2.47e-04   peak 0.25 GB
+    jac100           156.46 ms   err 3.15e-04   peak 0.27 GB
+    cg200            280.99 ms   err 2.07e-05   peak 0.25 GB
+    jac200           310.43 ms   err 2.26e-05   peak 0.27 GB
+
+  d=128 C=64 gates 0.5-1.0 ridge 0.05-1  cond max 3.35e+01
+    exact stages (ms): states 0.94  capacitance 35.93  eigh_default 979.30  eigh_magma 154.15  eigh_cpu 160.38  eigh_jacobi 193.09
+    exact_default   1015.78 ms   err 1.50e-05   peak 2.24 GB
+    exact_magma      191.67 ms   err 2.51e-06   peak 2.24 GB
+    exact_cpu        196.17 ms   err 2.51e-06   peak 2.24 GB
+    exact_jacobi     229.82 ms   err 1.32e-05   peak 2.27 GB
+    cg10              15.72 ms   err 2.78e-02   peak 0.25 GB
+    jac10             18.11 ms   err 1.07e-03   peak 0.27 GB
+    cg30              43.60 ms   err 3.92e-06   peak 0.25 GB
+    jac30             48.86 ms   err 2.96e-06   peak 0.27 GB
+    cg100            141.40 ms   err 2.12e-06   peak 0.25 GB
+    jac100           156.63 ms   err 2.96e-06   peak 0.27 GB
+    cg200            281.12 ms   err 2.12e-06   peak 0.25 GB
+    jac200           310.55 ms   err 2.96e-06   peak 0.27 GB
+
+  d=128 C=64 gates 0.5-1.0 ridge 0.001-0.01  cond max 1.31e+03
+    exact stages (ms): states 0.89  capacitance 35.93  eigh_default 985.40  eigh_magma 172.99  eigh_cpu 172.77  eigh_jacobi 192.99
+    exact_default   1024.74 ms   err 9.20e-05   peak 2.24 GB
+    exact_magma      190.96 ms   err 1.01e-04   peak 2.24 GB
+    exact_cpu        194.29 ms   err 1.01e-04   peak 2.24 GB
+    exact_jacobi     229.94 ms   err 1.10e-04   peak 2.27 GB
+    cg10              15.73 ms   err 3.34e+00   peak 0.25 GB
+    jac10             18.11 ms   err 3.39e+00   peak 0.27 GB
+    cg30              43.62 ms   err 2.27e-01   peak 0.25 GB
+    jac30             48.85 ms   err 4.77e-01   peak 0.27 GB
+    cg100            141.41 ms   err 3.91e-05   peak 0.25 GB
+    jac100           156.58 ms   err 1.51e-04   peak 0.27 GB
+    cg200            281.15 ms   err 3.91e-05   peak 0.25 GB
+    jac200           310.60 ms   err 4.85e-05   peak 0.27 GB
+
+Part C: torch.linalg.eigh, float32 SPD matrices, median ms (warmup 1, reps 3)
+  n= 32 batch=   16  default     0.25 (0.016/matrix)  magma     1.25 (0.078/matrix)  cpu     0.81 (0.050/matrix)  jacobi     0.22 (0.014/matrix)
+  n= 32 batch=  256  default     1.02 (0.004/matrix)  magma    11.79 (0.046/matrix)  cpu    13.09 (0.051/matrix)  jacobi     0.89 (0.003/matrix)
+  n= 32 batch= 1024  default     3.28 (0.003/matrix)  magma    49.59 (0.048/matrix)  cpu    50.75 (0.050/matrix)  jacobi     3.01 (0.003/matrix)
+  n= 64 batch=   16  default    10.37 (0.648/matrix)  magma     2.07 (0.129/matrix)  cpu     1.98 (0.124/matrix)  jacobi     1.09 (0.068/matrix)
+  n= 64 batch=  256  default   162.84 (0.636/matrix)  magma    30.70 (0.120/matrix)  cpu    32.09 (0.125/matrix)  jacobi     8.29 (0.032/matrix)
+  n= 64 batch= 1024  default   653.12 (0.638/matrix)  magma   129.44 (0.126/matrix)  cpu   138.05 (0.135/matrix)  jacobi    31.26 (0.031/matrix)
+  n=128 batch=   16  default    24.37 (1.523/matrix)  magma     6.63 (0.414/matrix)  cpu     6.40 (0.400/matrix)  jacobi    10.83 (0.677/matrix)
+  n=128 batch=  256  default   388.11 (1.516/matrix)  magma   155.40 (0.607/matrix)  cpu   104.57 (0.408/matrix)  jacobi    85.66 (0.335/matrix)
+  n=128 batch= 1024  default  1553.26 (1.517/matrix)  magma   480.75 (0.469/matrix)  cpu   477.95 (0.467/matrix)  jacobi   315.85 (0.308/matrix)
+
+saved results/gpu_bench_20261029_192644.json

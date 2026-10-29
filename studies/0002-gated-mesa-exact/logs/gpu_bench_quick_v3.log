@@ -1,0 +1,106 @@
+Part A: float64 port of the start-anchor solver against gated_mesa.chunk_solve (NumPy) and a dense solve
+  T= 128 d= 16 C= 32 gates 0.9-1.0 ridge 0.05-1  cond     25.7  x vs numpy 4.6e-16  x vs dense 6.9e-16  out vs dense 1.4e-15
+  T= 256 d= 64 C= 64 gates 0.5-1.0 ridge 0.05-1  cond     28.6  x vs numpy 1.1e-15  x vs dense 9.7e-16  out vs dense 2.0e-15
+  T= 128 d= 32 C= 16 gates 0.99-1.0 ridge 0.001-0.01  cond   1009.6  x vs numpy 8.7e-15  x vs dense 1.5e-14  out vs dense 3.6e-14
+  T= 128 d= 64 C= 64 gates 0.01-0.2 ridge 0.05-1  cond     26.0  x vs numpy 1.4e-15  x vs dense 1.0e-15  out vs dense 3.9e-15
+
+Part B: float32 forward solve on NVIDIA GeForce RTX 5060 Ti, TF32 off; N=2 heads, T=256, d_v=64; eigh backends ['default', 'magma', 'cpu'] (CPU threads 6); CG residual stop 1e-06. Times are medians in ms (warmup 3, reps 3), including the chunk-start states. Output error: max over seeds, float64 readout, against a dense float64 solve.
+[W1029 18:08:48.036203762 Context.cpp:444] Warning: torch.backends.cuda.preferred_linalg_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+[W1029 18:08:48.036219832 Context.cpp:422] Warning: The usage of MAGMA backend for linear algebra operations is deprecated and will be removed in future releases. cuSOLVER stays as the default backend.If you see any error messages with cuSOLVER but not MAGMA, please, file an issue on GitHub. (function operator())
+
+  d=64 C=32 gates 0.99-1.0 ridge 0.05-1  cond max 3.43e+01
+    exact stages (ms): states 0.39  capacitance 0.74  eigh_default 8.52  eigh_magma 1.89  eigh_cpu 1.81
+    exact_default      9.68 ms   err 6.86e-06   peak 0.02 GB
+    exact_magma        3.11 ms   err 1.44e-06   peak 0.02 GB
+    exact_cpu          3.45 ms   err 1.44e-06   peak 0.02 GB
+    cg10               3.37 ms   err 1.80e-02   peak 0.01 GB
+    jac10              3.75 ms   err 4.68e-03   peak 0.01 GB
+    cg30               9.03 ms   err 2.89e-06   peak 0.01 GB
+    jac30              9.32 ms   err 7.76e-07   peak 0.01 GB
+    cg100             29.97 ms   err 8.59e-07   peak 0.01 GB
+    jac100            30.22 ms   err 7.76e-07   peak 0.01 GB
+    cg200             59.91 ms   err 8.59e-07   peak 0.01 GB
+    jac200            59.80 ms   err 7.76e-07   peak 0.01 GB
+
+  d=64 C=32 gates 0.99-1.0 ridge 0.001-0.01  cond max 1.41e+03
+    exact stages (ms): states 0.30  capacitance 0.64  eigh_default 8.80  eigh_magma 2.12  eigh_cpu 2.26
+    exact_default      9.97 ms   err 2.66e-05   peak 0.02 GB
+    exact_magma        3.04 ms   err 3.96e-05   peak 0.02 GB
+    exact_cpu          3.20 ms   err 3.96e-05   peak 0.02 GB
+    cg10               3.54 ms   err 9.18e-01   peak 0.01 GB
+    jac10              3.73 ms   err 7.49e-01   peak 0.01 GB
+    cg30               8.96 ms   err 1.44e-01   peak 0.01 GB
+    jac30              9.28 ms   err 1.28e-01   peak 0.01 GB
+    cg100             30.26 ms   err 6.67e-05   peak 0.01 GB
+    jac100            30.41 ms   err 9.12e-05   peak 0.01 GB
+    cg200             56.93 ms   err 1.32e-05   peak 0.01 GB
+    jac200            58.52 ms   err 1.26e-05   peak 0.01 GB
+
+  d=64 C=32 gates 0.9-1.0 ridge 0.05-1  cond max 3.08e+01
+    exact stages (ms): states 0.30  capacitance 0.63  eigh_default 9.51  eigh_magma 2.06  eigh_cpu 2.11
+    exact_default     10.70 ms   err 5.61e-06   peak 0.02 GB
+    exact_magma        3.33 ms   err 1.03e-06   peak 0.02 GB
+    exact_cpu          3.37 ms   err 1.03e-06   peak 0.02 GB
+    cg10               3.55 ms   err 1.87e-02   peak 0.01 GB
+    jac10              3.61 ms   err 1.80e-03   peak 0.01 GB
+    cg30               9.04 ms   err 2.08e-06   peak 0.01 GB
+    jac30              9.75 ms   err 1.08e-06   peak 0.01 GB
+    cg100             29.30 ms   err 9.17e-07   peak 0.01 GB
+    jac100            29.62 ms   err 1.08e-06   peak 0.01 GB
+    cg200             58.44 ms   err 9.17e-07   peak 0.01 GB
+    jac200            58.02 ms   err 1.08e-06   peak 0.01 GB
+
+  d=64 C=32 gates 0.9-1.0 ridge 0.001-0.01  cond max 1.23e+03
+    exact stages (ms): states 0.33  capacitance 0.68  eigh_default 9.52  eigh_magma 1.85  eigh_cpu 1.88
+    exact_default     10.85 ms   err 4.14e-05   peak 0.02 GB
+    exact_magma        3.22 ms   err 4.14e-05   peak 0.02 GB
+    exact_cpu          3.24 ms   err 4.14e-05   peak 0.02 GB
+    cg10               3.63 ms   err 9.40e-01   peak 0.01 GB
+    jac10              3.53 ms   err 1.11e+00   peak 0.01 GB
+    cg30               9.69 ms   err 9.05e-02   peak 0.01 GB
+    jac30              9.23 ms   err 1.33e-01   peak 0.01 GB
+    cg100             28.52 ms   err 3.43e-05   peak 0.01 GB
+    jac100            28.93 ms   err 3.46e-05   peak 0.01 GB
+    cg200             56.65 ms   err 2.14e-05   peak 0.01 GB
+    jac200            58.50 ms   err 1.31e-05   peak 0.01 GB
+
+  d=64 C=32 gates 0.5-1.0 ridge 0.05-1  cond max 3.04e+01
+    exact stages (ms): states 0.28  capacitance 0.93  eigh_default 12.40  eigh_magma 1.52  eigh_cpu 1.55
+    exact_default     13.55 ms   err 7.24e-06   peak 0.02 GB
+    exact_magma        2.66 ms   err 3.35e-06   peak 0.02 GB
+    exact_cpu          2.62 ms   err 3.35e-06   peak 0.02 GB
+    cg10               3.53 ms   err 1.37e-02   peak 0.01 GB
+    jac10              3.49 ms   err 6.69e-04   peak 0.01 GB
+    cg30               8.86 ms   err 1.23e-06   peak 0.01 GB
+    jac30              9.45 ms   err 1.07e-06   peak 0.01 GB
+    cg100             28.87 ms   err 1.23e-06   peak 0.01 GB
+    jac100            29.83 ms   err 1.07e-06   peak 0.01 GB
+    cg200             56.11 ms   err 1.23e-06   peak 0.01 GB
+    jac200            58.86 ms   err 1.07e-06   peak 0.01 GB
+
+  d=64 C=32 gates 0.5-1.0 ridge 0.001-0.01  cond max 1.09e+03
+    exact stages (ms): states 0.32  capacitance 0.73  eigh_default 12.44  eigh_magma 1.45  eigh_cpu 1.49
+    exact_default     13.67 ms   err 5.92e-05   peak 0.02 GB
+    exact_magma        2.70 ms   err 4.62e-05   peak 0.02 GB
+    exact_cpu          2.71 ms   err 4.62e-05   peak 0.02 GB
+    cg10               3.34 ms   err 1.65e+00   peak 0.01 GB
+    jac10              3.54 ms   err 1.51e+00   peak 0.01 GB
+    cg30               8.94 ms   err 1.11e-01   peak 0.01 GB
+    jac30              9.44 ms   err 1.31e-01   peak 0.01 GB
+    cg100             28.52 ms   err 2.42e-05   peak 0.01 GB
+    jac100            30.19 ms   err 2.86e-05   peak 0.01 GB
+    cg200             61.56 ms   err 2.42e-05   peak 0.01 GB
+    jac200            60.52 ms   err 2.86e-05   peak 0.01 GB
+
+Part C: torch.linalg.eigh, float32 SPD matrices, median ms (warmup 1, reps 3)
+  n= 32 batch=   16  default     0.26 (0.016/matrix)  magma     0.87 (0.054/matrix)  cpu     0.80 (0.050/matrix)
+  n= 32 batch=  256  default     1.03 (0.004/matrix)  magma    13.12 (0.051/matrix)  cpu    12.59 (0.049/matrix)
+  n= 32 batch= 1024  default     3.36 (0.003/matrix)  magma    49.60 (0.048/matrix)  cpu    48.80 (0.048/matrix)
+  n= 64 batch=   16  default    10.42 (0.651/matrix)  magma     2.24 (0.140/matrix)  cpu     2.19 (0.137/matrix)
+  n= 64 batch=  256  default   164.01 (0.641/matrix)  magma    36.59 (0.143/matrix)  cpu    37.01 (0.145/matrix)
+  n= 64 batch= 1024  default   654.97 (0.640/matrix)  magma   128.02 (0.125/matrix)  cpu   136.57 (0.133/matrix)
+  n=128 batch=   16  default    24.69 (1.543/matrix)  magma     7.59 (0.474/matrix)  cpu     7.35 (0.459/matrix)
+  n=128 batch=  256  default   391.84 (1.531/matrix)  magma   115.52 (0.451/matrix)  cpu   105.86 (0.414/matrix)
+  n=128 batch= 1024  default  1570.18 (1.533/matrix)  magma   447.20 (0.437/matrix)  cpu   443.54 (0.433/matrix)
+
+saved results/gpu_bench_quick_20261029_180916.json

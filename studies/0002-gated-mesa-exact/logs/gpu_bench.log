@@ -1,0 +1,249 @@
+Part A: float64 port of the start-anchor solver against gated_mesa.chunk_solve (NumPy) and a dense solve
+  T= 128 d= 16 C= 32 gates 0.9-1.0 ridge 0.05-1  cond     25.7  x vs numpy 4.6e-16  x vs dense 6.9e-16  out vs dense 1.4e-15
+  T= 256 d= 64 C= 64 gates 0.5-1.0 ridge 0.05-1  cond     28.6  x vs numpy 1.1e-15  x vs dense 9.7e-16  out vs dense 2.0e-15
+  T= 128 d= 32 C= 16 gates 0.99-1.0 ridge 0.001-0.01  cond   1009.6  x vs numpy 8.7e-15  x vs dense 1.5e-14  out vs dense 3.6e-14
+  T= 128 d= 64 C= 64 gates 0.01-0.2 ridge 0.05-1  cond     26.0  x vs numpy 1.4e-15  x vs dense 1.0e-15  out vs dense 3.9e-15
+
+Part B: float32 forward solve on NVIDIA GeForce RTX 5060 Ti, TF32 off; N=16 heads, T=2048, d_v=64. Times are medians in ms (warmup 3, reps 10), including the chunk-start states. Output error: max over seeds, float64 readout, against a dense float64 solve.
+
+  d=64 C=32 gates 0.99-1.0 ridge 0.05-1  cond max 3.66e+01
+    exact stages (ms): states 1.29  eigh 535.15  capacitance+rest 10.87
+    exact     547.56 ms   err 5.61e-06   peak 0.62 GB
+    cg10        6.88 ms   err 2.34e-02   peak 0.13 GB
+    jac10       7.61 ms   err 5.11e-03   peak 0.14 GB
+    cg30       17.47 ms   err 4.36e-06   peak 0.13 GB
+    jac30      19.05 ms   err 6.88e-07   peak 0.14 GB
+    cg100      54.07 ms   err 7.37e-07   peak 0.13 GB
+    jac100     58.89 ms   err 6.88e-07   peak 0.14 GB
+
+  d=64 C=32 gates 0.99-1.0 ridge 0.001-0.01  cond max 1.52e+03
+    exact stages (ms): states 1.26  eigh 552.27  capacitance+rest 11.04
+    exact     561.76 ms   err 9.93e-05   peak 0.62 GB
+    cg10        6.81 ms   err 1.19e+00   peak 0.13 GB
+    jac10       7.55 ms   err 1.32e+00   peak 0.14 GB
+    cg30       17.19 ms   err 1.99e-01   peak 0.13 GB
+    jac30      18.55 ms   err 1.94e-01   peak 0.14 GB
+    cg100      53.92 ms   err 1.91e-04   peak 0.13 GB
+    jac100     57.58 ms   err 1.76e-04   peak 0.14 GB
+
+  d=64 C=32 gates 0.9-1.0 ridge 0.05-1  cond max 3.12e+01
+    exact stages (ms): states 1.29  eigh 649.05  capacitance+rest 10.87
+    exact     660.83 ms   err 5.68e-06   peak 0.62 GB
+    cg10        7.00 ms   err 2.00e-02   peak 0.13 GB
+    jac10       7.66 ms   err 2.24e-03   peak 0.14 GB
+    cg30       17.43 ms   err 1.71e-06   peak 0.13 GB
+    jac30      18.94 ms   err 5.73e-07   peak 0.14 GB
+    cg100      54.22 ms   err 6.18e-07   peak 0.13 GB
+    jac100     58.48 ms   err 5.73e-07   peak 0.14 GB
+
+  d=64 C=32 gates 0.9-1.0 ridge 0.001-0.01  cond max 1.29e+03
+    exact stages (ms): states 1.29  eigh 649.26  capacitance+rest 10.89
+    exact     664.18 ms   err 5.52e-05   peak 0.62 GB
+    cg10        6.76 ms   err 1.12e+00   peak 0.13 GB
+    jac10       7.45 ms   err 9.64e-01   peak 0.14 GB
+    cg30       17.01 ms   err 1.27e-01   peak 0.13 GB
+    jac30      18.62 ms   err 1.49e-01   peak 0.14 GB
+    cg100      53.06 ms   err 2.33e-05   peak 0.13 GB
+    jac100     57.19 ms   err 2.43e-05   peak 0.14 GB
+
+  d=64 C=32 gates 0.5-1.0 ridge 0.05-1  cond max 3.43e+01
+    exact stages (ms): states 1.26  eigh 866.69  capacitance+rest 10.80
+    exact     877.95 ms   err 8.19e-06   peak 0.62 GB
+    cg10        6.72 ms   err 1.95e-02   peak 0.13 GB
+    jac10       7.45 ms   err 1.37e-03   peak 0.14 GB
+    cg30       17.11 ms   err 1.55e-06   peak 0.13 GB
+    jac30      18.59 ms   err 1.25e-06   peak 0.14 GB
+    cg100      53.27 ms   err 8.87e-07   peak 0.13 GB
+    jac100     57.67 ms   err 1.14e-04   peak 0.14 GB
+
+  d=64 C=32 gates 0.5-1.0 ridge 0.001-0.01  cond max 1.38e+03
+    exact stages (ms): states 1.28  eigh 877.67  capacitance+rest 10.94
+    exact     884.86 ms   err 6.54e-05   peak 0.62 GB
+    cg10        6.82 ms   err 1.94e+00   peak 0.13 GB
+    jac10       7.47 ms   err 1.71e+00   peak 0.14 GB
+    cg30       17.26 ms   err 1.24e-01   peak 0.13 GB
+    jac30      18.54 ms   err 1.80e-01   peak 0.14 GB
+    cg100      53.67 ms   err 3.69e-05   peak 0.13 GB
+    jac100     57.12 ms   err 3.45e-05   peak 0.14 GB
+
+  d=64 C=64 gates 0.99-1.0 ridge 0.05-1  cond max 3.66e+01
+    exact stages (ms): states 0.73  eigh 265.58  capacitance+rest 32.08
+    exact     298.61 ms   err 5.78e-06   peak 2.11 GB
+    cg10        6.61 ms   err 2.34e-02   peak 0.12 GB
+    jac10       7.18 ms   err 5.11e-03   peak 0.13 GB
+    cg30       17.56 ms   err 4.36e-06   peak 0.12 GB
+    jac30      18.39 ms   err 6.21e-07   peak 0.13 GB
+    cg100      55.84 ms   err 7.37e-07   peak 0.12 GB
+    jac100     57.83 ms   err 1.89e-06   peak 0.13 GB
+
+  d=64 C=64 gates 0.99-1.0 ridge 0.001-0.01  cond max 1.52e+03
+    exact stages (ms): states 0.70  eigh 272.04  capacitance+rest 32.09
+    exact     305.31 ms   err 1.01e-04   peak 2.11 GB
+    cg10        6.60 ms   err 1.19e+00   peak 0.12 GB
+    jac10       7.09 ms   err 1.32e+00   peak 0.13 GB
+    cg30       17.47 ms   err 1.98e-01   peak 0.12 GB
+    jac30      18.29 ms   err 2.87e-01   peak 0.13 GB
+    cg100      55.75 ms   err 1.51e-04   peak 0.12 GB
+    jac100     57.58 ms   err 1.55e-04   peak 0.13 GB
+
+  d=64 C=64 gates 0.9-1.0 ridge 0.05-1  cond max 3.12e+01
+    exact stages (ms): states 0.71  eigh 319.16  capacitance+rest 32.19
+    exact     352.45 ms   err 5.51e-06   peak 2.11 GB
+    cg10        6.51 ms   err 2.00e-02   peak 0.12 GB
+    jac10       7.05 ms   err 2.24e-03   peak 0.13 GB
+    cg30       17.57 ms   err 1.71e-06   peak 0.12 GB
+    jac30      18.34 ms   err 6.54e-07   peak 0.13 GB
+    cg100      55.70 ms   err 6.69e-07   peak 0.12 GB
+    jac100     57.67 ms   err 6.54e-07   peak 0.13 GB
+
+  d=64 C=64 gates 0.9-1.0 ridge 0.001-0.01  cond max 1.29e+03
+    exact stages (ms): states 0.78  eigh 321.82  capacitance+rest 32.06
+    exact     354.74 ms   err 5.37e-05   peak 2.11 GB
+    cg10        6.54 ms   err 1.12e+00   peak 0.12 GB
+    jac10       7.06 ms   err 9.64e-01   peak 0.13 GB
+    cg30       17.49 ms   err 1.27e-01   peak 0.12 GB
+    jac30      18.31 ms   err 1.49e-01   peak 0.13 GB
+    cg100      55.44 ms   err 2.33e-05   peak 0.12 GB
+    jac100     57.25 ms   err 2.43e-05   peak 0.13 GB
+
+  d=64 C=64 gates 0.5-1.0 ridge 0.05-1  cond max 3.43e+01
+    exact stages (ms): states 0.72  eigh 429.21  capacitance+rest 32.15
+    exact     462.56 ms   err 6.82e-06   peak 2.11 GB
+    cg10        6.53 ms   err 1.95e-02   peak 0.12 GB
+    jac10       7.09 ms   err 2.13e-03   peak 0.13 GB
+    cg30       17.51 ms   err 2.05e-06   peak 0.12 GB
+    jac30      18.36 ms   err 1.15e-06   peak 0.13 GB
+    cg100      55.64 ms   err 1.26e-06   peak 0.12 GB
+    jac100     57.71 ms   err 2.08e+01   peak 0.13 GB
+
+  d=64 C=64 gates 0.5-1.0 ridge 0.001-0.01  cond max 1.38e+03
+    exact stages (ms): states 0.71  eigh 432.80  capacitance+rest 32.04
+    exact     466.64 ms   err 7.08e-05   peak 2.11 GB
+    cg10        6.49 ms   err 1.82e+00   peak 0.12 GB
+    jac10       7.10 ms   err 2.04e+00   peak 0.13 GB
+    cg30       17.51 ms   err 8.50e-02   peak 0.12 GB
+    jac30      18.27 ms   err 2.20e-01   peak 0.13 GB
+    cg100      55.48 ms   err 4.29e-05   peak 0.12 GB
+    jac100     57.26 ms   err 3.43e-05   peak 0.13 GB
+
+  d=128 C=32 gates 0.99-1.0 ridge 0.05-1  cond max 3.34e+01
+    exact stages (ms): states 1.68  eigh 1319.61  capacitance+rest 13.62
+    exact    1321.90 ms   err 1.43e-05   peak 0.92 GB
+    cg10       16.63 ms   err 2.85e-02   peak 0.31 GB
+    jac10      19.08 ms   err 7.95e-03   peak 0.33 GB
+    cg30       45.07 ms   err 9.70e-06   peak 0.31 GB
+    jac30      50.43 ms   err 6.66e-07   peak 0.33 GB
+    cg100     144.77 ms   err 7.19e-07   peak 0.31 GB
+    jac100    160.37 ms   err 6.73e-07   peak 0.33 GB
+
+  d=128 C=32 gates 0.99-1.0 ridge 0.001-0.01  cond max 1.40e+03
+    exact stages (ms): states 1.60  eigh 1339.06  capacitance+rest 13.63
+    exact    1361.97 ms   err 1.48e-04   peak 0.92 GB
+    cg10       16.60 ms   err 1.20e+00   peak 0.31 GB
+    jac10      19.16 ms   err 1.53e+00   peak 0.33 GB
+    cg30       44.94 ms   err 2.86e-01   peak 0.31 GB
+    jac30      50.29 ms   err 2.47e-01   peak 0.33 GB
+    cg100     144.13 ms   err 1.58e-03   peak 0.31 GB
+    jac100    160.01 ms   err 1.44e-03   peak 0.33 GB
+
+  d=128 C=32 gates 0.9-1.0 ridge 0.05-1  cond max 3.13e+01
+    exact stages (ms): states 1.57  eigh 1767.61  capacitance+rest 13.61
+    exact    1784.54 ms   err 1.84e-05   peak 0.92 GB
+    cg10       16.59 ms   err 1.90e-02   peak 0.31 GB
+    jac10      19.05 ms   err 2.95e-03   peak 0.33 GB
+    cg30       44.88 ms   err 2.83e-06   peak 0.31 GB
+    jac30      50.23 ms   err 8.51e-07   peak 0.33 GB
+    cg100     143.82 ms   err 7.49e-07   peak 0.31 GB
+    jac100    159.76 ms   err 8.51e-07   peak 0.33 GB
+
+  d=128 C=32 gates 0.9-1.0 ridge 0.001-0.01  cond max 1.21e+03
+    exact stages (ms): states 1.58  eigh 1806.77  capacitance+rest 13.64
+    exact    1823.90 ms   err 6.75e-05   peak 0.92 GB
+    cg10       16.77 ms   err 1.57e+00   peak 0.31 GB
+    jac10      19.04 ms   err 1.85e+00   peak 0.33 GB
+    cg30       44.90 ms   err 2.94e-01   peak 0.31 GB
+    jac30      50.39 ms   err 2.88e-01   peak 0.33 GB
+    cg100     143.78 ms   err 2.37e-04   peak 0.31 GB
+    jac100    159.58 ms   err 2.48e-04   peak 0.33 GB
+
+  d=128 C=32 gates 0.5-1.0 ridge 0.05-1  cond max 3.35e+01
+    exact stages (ms): states 1.62  eigh 2004.03  capacitance+rest 13.62
+    exact    2015.19 ms   err 1.56e-05   peak 0.92 GB
+    cg10       16.55 ms   err 2.78e-02   peak 0.31 GB
+    jac10      19.01 ms   err 1.08e-03   peak 0.33 GB
+    cg30       44.87 ms   err 3.92e-06   peak 0.31 GB
+    jac30      50.30 ms   err 2.29e-06   peak 0.33 GB
+    cg100     143.93 ms   err 1.56e-06   peak 0.31 GB
+    jac100    159.98 ms   err 2.29e-06   peak 0.33 GB
+
+  d=128 C=32 gates 0.5-1.0 ridge 0.001-0.01  cond max 1.31e+03
+    exact stages (ms): states 1.60  eigh 1999.27  capacitance+rest 13.57
+    exact    2019.46 ms   err 9.93e-05   peak 0.92 GB
+    cg10       16.81 ms   err 3.41e+00   peak 0.31 GB
+    jac10      18.99 ms   err 3.39e+00   peak 0.33 GB
+    cg30       44.91 ms   err 2.72e-01   peak 0.31 GB
+    jac30      50.39 ms   err 4.52e-01   peak 0.33 GB
+    cg100     143.92 ms   err 3.79e-05   peak 0.31 GB
+    jac100    159.57 ms   err 1.48e-04   peak 0.33 GB
+
+  d=128 C=64 gates 0.99-1.0 ridge 0.05-1  cond max 3.34e+01
+    exact stages (ms): states 0.90  eigh 642.51  capacitance+rest 35.82
+    exact     678.12 ms   err 1.41e-05   peak 2.24 GB
+    cg10       15.60 ms   err 2.85e-02   peak 0.25 GB
+    jac10      18.09 ms   err 7.95e-03   peak 0.27 GB
+    cg30       43.39 ms   err 9.34e-06   peak 0.25 GB
+    jac30      48.67 ms   err 6.64e-07   peak 0.27 GB
+    cg100     140.72 ms   err 7.22e-07   peak 0.25 GB
+    jac100    156.21 ms   err 7.04e-07   peak 0.27 GB
+
+  d=128 C=64 gates 0.99-1.0 ridge 0.001-0.01  cond max 1.40e+03
+    exact stages (ms): states 0.86  eigh 657.97  capacitance+rest 35.86
+    exact     693.28 ms   err 1.88e-04   peak 2.24 GB
+    cg10       15.67 ms   err 1.20e+00   peak 0.25 GB
+    jac10      18.07 ms   err 1.53e+00   peak 0.27 GB
+    cg30       43.46 ms   err 2.86e-01   peak 0.25 GB
+    jac30      48.65 ms   err 2.79e-01   peak 0.27 GB
+    cg100     140.61 ms   err 1.91e-03   peak 0.25 GB
+    jac100    156.07 ms   err 1.49e-03   peak 0.27 GB
+
+  d=128 C=64 gates 0.9-1.0 ridge 0.05-1  cond max 3.13e+01
+    exact stages (ms): states 0.84  eigh 874.22  capacitance+rest 35.88
+    exact     916.82 ms   err 1.90e-05   peak 2.24 GB
+    cg10       15.64 ms   err 1.90e-02   peak 0.25 GB
+    jac10      18.00 ms   err 2.95e-03   peak 0.27 GB
+    cg30       43.42 ms   err 2.83e-06   peak 0.25 GB
+    jac30      48.70 ms   err 1.03e-06   peak 0.27 GB
+    cg100     140.69 ms   err 8.58e-07   peak 0.25 GB
+    jac100    156.34 ms   err 1.03e-06   peak 0.27 GB
+
+  d=128 C=64 gates 0.9-1.0 ridge 0.001-0.01  cond max 1.21e+03
+    exact stages (ms): states 0.90  eigh 894.48  capacitance+rest 35.82
+    exact     936.79 ms   err 5.47e-05   peak 2.24 GB
+    cg10       15.72 ms   err 1.57e+00   peak 0.25 GB
+    jac10      18.02 ms   err 1.85e+00   peak 0.27 GB
+    cg30       43.40 ms   err 2.84e-01   peak 0.25 GB
+    jac30      48.69 ms   err 2.92e-01   peak 0.27 GB
+    cg100     140.54 ms   err 2.47e-04   peak 0.25 GB
+    jac100    155.94 ms   err 3.15e-04   peak 0.27 GB
+
+  d=128 C=64 gates 0.5-1.0 ridge 0.05-1  cond max 3.35e+01
+    exact stages (ms): states 0.86  eigh 983.67  capacitance+rest 35.83
+    exact    1020.46 ms   err 1.50e-05   peak 2.24 GB
+    cg10       15.72 ms   err 2.78e-02   peak 0.25 GB
+    jac10      18.01 ms   err 1.07e-03   peak 0.27 GB
+    cg30       43.36 ms   err 3.92e-06   peak 0.25 GB
+    jac30      48.70 ms   err 2.37e-06   peak 0.27 GB
+    cg100     140.48 ms   err 1.57e-06   peak 0.25 GB
+    jac100    156.29 ms   err 2.37e-06   peak 0.27 GB
+
+  d=128 C=64 gates 0.5-1.0 ridge 0.001-0.01  cond max 1.31e+03
+    exact stages (ms): states 0.87  eigh 987.83  capacitance+rest 35.80
+    exact    1025.28 ms   err 9.20e-05   peak 2.24 GB
+    cg10       15.64 ms   err 3.34e+00   peak 0.25 GB
+    jac10      17.99 ms   err 3.39e+00   peak 0.27 GB
+    cg30       43.39 ms   err 2.27e-01   peak 0.25 GB
+    jac30      48.68 ms   err 4.77e-01   peak 0.27 GB
+    cg100     140.49 ms   err 4.48e-05   peak 0.25 GB
+    jac100    155.88 ms   err 1.51e-04   peak 0.27 GB
+
+saved results/gpu_bench_20261029_175912.json

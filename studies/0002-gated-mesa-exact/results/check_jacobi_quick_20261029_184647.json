@@ -1,0 +1,281 @@
+{
+ "env": {
+  "time": "2026-10-29T18:46:47+0100",
+  "argv": [
+   "check_jacobi.py",
+   "--quick"
+  ],
+  "python": "3.11.15",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "tf32_matmul": false,
+  "git_commit": "68e6a3b",
+  "git_dirty": true
+ },
+ "args": {
+  "quick": true,
+  "sweeps": [
+   4,
+   8
+  ],
+  "n": [
+   64
+  ],
+  "B": 16,
+  "device": "cuda"
+ },
+ "rows": [
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "torch",
+   "rec": 1.7686171269877276e-15,
+   "orth": 1.1656877698719661e-14,
+   "eig": 0.0
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi4",
+   "rec": 0.04035283456827595,
+   "orth": 2.3883737629375777e-14,
+   "eig": 0.008830280508556701
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi8",
+   "rec": 2.2436549952384122e-14,
+   "orth": 8.66369804228457e-14,
+   "eig": 1.601474974566946e-14
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "torch",
+   "rec": 2.1562981551667837e-05,
+   "orth": 8.52437185469115e-05,
+   "eig": 1.3559957334523234e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi4",
+   "rec": 0.04035347355604077,
+   "orth": 8.596367692362565e-05,
+   "eig": 0.008824048111818368
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi8",
+   "rec": 2.7781930933322546e-05,
+   "orth": 0.00011419254401059153,
+   "eig": 1.4689594524845786e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "torch",
+   "rec": 1.669131323912854e-15,
+   "orth": 1.1395879295480174e-14,
+   "eig": 0.0
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi4",
+   "rec": 0.0348003165835914,
+   "orth": 2.5172950814484288e-14,
+   "eig": 0.0087949654996948
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi8",
+   "rec": 3.302253202507673e-06,
+   "orth": 9.078135087036421e-14,
+   "eig": 4.870073395424335e-08
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "torch",
+   "rec": 2.7656621355812727e-05,
+   "orth": 0.00010560507698809537,
+   "eig": 1.5196556963702133e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi4",
+   "rec": 0.034737370065689166,
+   "orth": 8.396323340008768e-05,
+   "eig": 0.008870326434028249
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi8",
+   "rec": 2.772326704378616e-05,
+   "orth": 0.00013273670401881888,
+   "eig": 1.3306815222874686e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "torch",
+   "rec": 2.2451881733196238e-15,
+   "orth": 1.1693703715000229e-14,
+   "eig": 0.0
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi4",
+   "rec": 0.01802629891461559,
+   "orth": 2.678109908959447e-14,
+   "eig": 0.004766609035241646
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi8",
+   "rec": 3.092141611527702e-08,
+   "orth": 9.890338802895984e-14,
+   "eig": 8.103584476433655e-14
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "torch",
+   "rec": 2.755849423585603e-05,
+   "orth": 0.00010276352191773844,
+   "eig": 1.577388776477038e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi4",
+   "rec": 0.01802642286318428,
+   "orth": 8.879210541236573e-05,
+   "eig": 0.004762727767832797
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi8",
+   "rec": 2.7739316051411072e-05,
+   "orth": 0.00012555533406261756,
+   "eig": 1.4681361044645168e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "torch",
+   "rec": 1.937068207650611e-15,
+   "orth": 1.159940805108973e-14,
+   "eig": 0.0
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi4",
+   "rec": 0.02135642925647542,
+   "orth": 2.5211106791802154e-14,
+   "eig": 0.004928695691658862
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi8",
+   "rec": 1.4604194260359724e-06,
+   "orth": 1.0452670206586186e-13,
+   "eig": 1.7969834219211056e-07
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "torch",
+   "rec": 2.7724217220012015e-05,
+   "orth": 0.0001014473443517165,
+   "eig": 1.5232310050355125e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi4",
+   "rec": 0.021359222075288172,
+   "orth": 8.688293712026474e-05,
+   "eig": 0.004928059123275782
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi8",
+   "rec": 2.9002322384031066e-05,
+   "orth": 0.00013168610966254911,
+   "eig": 1.6160485616039776e-05
+  },
+  {
+   "part": "B",
+   "n": 64,
+   "batch": 64,
+   "ms": {
+    "default": 41.21951100387378,
+    "cpu": 7.829542002582457,
+    "jacobi4": 0.8983020015875809,
+    "jacobi8": 1.6973799938568845
+   }
+  }
+ ]
+}

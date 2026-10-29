@@ -1,0 +1,69 @@
+Part A: float64 port of the start-anchor solver against gated_mesa.chunk_solve (NumPy) and a dense solve
+  T= 128 d= 16 C= 32 gates 0.9-1.0 ridge 0.05-1  cond     25.7  x vs numpy 4.6e-16  x vs dense 6.9e-16  out vs dense 1.4e-15
+  T= 256 d= 64 C= 64 gates 0.5-1.0 ridge 0.05-1  cond     28.6  x vs numpy 1.1e-15  x vs dense 9.7e-16  out vs dense 2.0e-15
+  T= 128 d= 32 C= 16 gates 0.99-1.0 ridge 0.001-0.01  cond   1009.6  x vs numpy 8.7e-15  x vs dense 1.5e-14  out vs dense 3.6e-14
+  T= 128 d= 64 C= 64 gates 0.01-0.2 ridge 0.05-1  cond     26.0  x vs numpy 1.4e-15  x vs dense 1.0e-15  out vs dense 3.9e-15
+
+Part B: float32 forward solve on NVIDIA GeForce RTX 5060 Ti, TF32 off; N=2 heads, T=256, d_v=64. Times are medians in ms (warmup 3, reps 3), including the chunk-start states. Output error: max over seeds, float64 readout, against a dense float64 solve.
+
+  d=64 C=32 gates 0.99-1.0 ridge 0.05-1  cond max 3.43e+01
+    exact stages (ms): states 0.31  eigh 8.38  capacitance+rest 0.66
+    exact       9.44 ms   err 6.86e-06   peak 0.02 GB
+    cg10        3.28 ms   err 1.80e-02   peak 0.01 GB
+    jac10       3.49 ms   err 4.68e-03   peak 0.01 GB
+    cg30        8.90 ms   err 2.89e-06   peak 0.01 GB
+    jac30       9.10 ms   err 5.43e-07   peak 0.01 GB
+    cg100      28.29 ms   err 6.89e-07   peak 0.01 GB
+    jac100     28.49 ms   err 5.23e-07   peak 0.01 GB
+
+  d=64 C=32 gates 0.99-1.0 ridge 0.001-0.01  cond max 1.41e+03
+    exact stages (ms): states 0.40  eigh 8.61  capacitance+rest 0.69
+    exact       9.71 ms   err 2.66e-05   peak 0.02 GB
+    cg10        3.29 ms   err 9.18e-01   peak 0.01 GB
+    jac10       3.50 ms   err 7.49e-01   peak 0.01 GB
+    cg30        8.71 ms   err 1.44e-01   peak 0.01 GB
+    jac30       8.95 ms   err 1.28e-01   peak 0.01 GB
+    cg100      27.79 ms   err 6.67e-05   peak 0.01 GB
+    jac100     29.75 ms   err 9.12e-05   peak 0.01 GB
+
+  d=64 C=32 gates 0.9-1.0 ridge 0.05-1  cond max 3.08e+01
+    exact stages (ms): states 0.29  eigh 9.34  capacitance+rest 0.64
+    exact      10.55 ms   err 5.61e-06   peak 0.02 GB
+    cg10        3.33 ms   err 1.87e-02   peak 0.01 GB
+    jac10       3.38 ms   err 1.80e-03   peak 0.01 GB
+    cg30        8.79 ms   err 2.08e-06   peak 0.01 GB
+    jac30       9.01 ms   err 6.10e-07   peak 0.01 GB
+    cg100      28.05 ms   err 6.37e-07   peak 0.01 GB
+    jac100     28.60 ms   err 6.10e-07   peak 0.01 GB
+
+  d=64 C=32 gates 0.9-1.0 ridge 0.001-0.01  cond max 1.23e+03
+    exact stages (ms): states 0.30  eigh 9.39  capacitance+rest 0.66
+    exact      10.41 ms   err 4.14e-05   peak 0.02 GB
+    cg10        3.32 ms   err 9.40e-01   peak 0.01 GB
+    jac10       3.54 ms   err 1.11e+00   peak 0.01 GB
+    cg30        8.71 ms   err 9.05e-02   peak 0.01 GB
+    jac30       8.94 ms   err 1.33e-01   peak 0.01 GB
+    cg100      27.83 ms   err 3.43e-05   peak 0.01 GB
+    jac100     29.33 ms   err 3.46e-05   peak 0.01 GB
+
+  d=64 C=32 gates 0.5-1.0 ridge 0.05-1  cond max 3.04e+01
+    exact stages (ms): states 0.29  eigh 12.22  capacitance+rest 0.67
+    exact      13.36 ms   err 7.24e-06   peak 0.02 GB
+    cg10        3.34 ms   err 1.37e-02   peak 0.01 GB
+    jac10       3.53 ms   err 6.69e-04   peak 0.01 GB
+    cg30       10.06 ms   err 1.22e-06   peak 0.01 GB
+    jac30       9.27 ms   err 1.23e-06   peak 0.01 GB
+    cg100      27.95 ms   err 1.03e-06   peak 0.01 GB
+    jac100     28.83 ms   err 1.23e-06   peak 0.01 GB
+
+  d=64 C=32 gates 0.5-1.0 ridge 0.001-0.01  cond max 1.09e+03
+    exact stages (ms): states 0.31  eigh 12.32  capacitance+rest 0.63
+    exact      13.36 ms   err 5.92e-05   peak 0.02 GB
+    cg10        3.36 ms   err 1.65e+00   peak 0.01 GB
+    jac10       3.54 ms   err 1.51e+00   peak 0.01 GB
+    cg30        8.68 ms   err 1.11e-01   peak 0.01 GB
+    jac30       9.22 ms   err 1.31e-01   peak 0.01 GB
+    cg100      28.36 ms   err 2.55e-05   peak 0.01 GB
+    jac100     28.88 ms   err 2.66e-05   peak 0.01 GB
+
+saved results/gpu_bench_quick_20261029_173536.json

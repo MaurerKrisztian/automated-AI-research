@@ -100,3 +100,85 @@ Both agents finished; together they ran about 260 tool calls.
   - The two-anchor policy was less accurate than start-only on 33 of 45 float32 inputs.
 - README: Summary, Verdict, Claims 2–8, Results (conditioning tables, CG variants, FLOP equivalents), Limitations and Next steps rewritten against these logs. Preconditioned DeltaNet added to the novelty table (only what its abstract says). The O(d³) statement hedged. Reproduce commands now tee to /tmp. Script docstrings updated the same way; no computation changed.
 - The study is still uncommitted: commit attempts were declined in this session. The results JSONs therefore record `git_dirty: true`, and the code version is not pinned by a commit.
+
+### GPU micro-benchmark, forward solve (2026-10-29, evening)
+
+Purpose: first GPU numbers (a small version of backlog I-011). Forward solve only, float32, plain PyTorch for every method. RTX 5060 Ti 16 GB, PyTorch 2.11.0 + CUDA 12.8, TF32 off.
+
+- New `gpu_bench.py`:
+  - Ports the **start-anchor** solver to batched PyTorch. Capacitances are padded to C: rows i > t are zero, so A_t is padded with I. It uses one `torch.linalg.eigh` over all chunk-start states and one batched C×C Cholesky per token.
+  - The two-anchor policy was not ported, because it was less accurate in float32 (claim 4).
+  - Baselines: chunked CG as in fla (x₀ = 0, no preconditioner) and Jacobi PCG from MesaNet's diagonal start, at 10, 30 and 100 steps, both in plain PyTorch. The fla Triton kernels are not installed and were not run.
+  - Every timing includes the chunk-start states. The readout is not timed.
+- Smoke tests: `logs/gpu_bench_quick.log` (`results/gpu_bench_quick_20261029_173434.json`) is **superseded and invalid for plain-CG timings**. A parsing bug (`int("cg10"[3:])` = 0) ran plain CG for 0 steps in the timed closure; its errors and every other number are unaffected. Fixed, and rerun as `logs/gpu_bench_quick_v2.log` (`results/gpu_bench_quick_20261029_173536.json`). The condition-number estimate was also changed to every 8th token for speed.
+- Side check (scratch, not saved, not cited as evidence): `torch.linalg.eigh` on CUDA batches only for n ≤ 32. At n = 64 and 128 it took about 0.6 and 1.5 ms per matrix, slower than the CPU. This is why the full run was expected to be eigh-bound.
+- Full run: `../../.venv/bin/python -u gpu_bench.py 2>&1 | tee logs/gpu_bench.log`, about 23 minutes in the background, peak memory 2.24 GB. Results: `results/gpu_bench_20261029_175912.json`.
+  - Settings: N = 16 heads, T = 2048, d_v = 64, d ∈ {64, 128}, C ∈ {32, 64}, gates 0.99–1, 0.9–1 and 0.5–1, ridges 0.05–1 (condition 31–37) and 1e-3–1e-2 (1.2e3–1.5e3), flat keys, 3 input seeds for errors.
+  - Part A: the port matches `gated_mesa.chunk_solve` in float64 to ≤ 8.7e-15 and a dense solve to ≤ 1.5e-14.
+  - **Speed:** the exact forward solve took 299–2019 ms, against 17.0–17.6 ms (d = 64) and 43.4–45.1 ms (d = 128) for 30-step CG. That is 16–45× slower.
+  - `eigh` took 89–99.8% of the exact solver's time (265–2004 ms). The capacitance stage alone took 10.8–11.0 ms (d = 64, C = 32), 32.0–32.2 (64, 64), 13.6 (128, 32) and 35.8–35.9 (128, 64).
+  - **Accuracy, float32:**
+    - At condition about 30, exact reached 5.5e-6–1.9e-5, CG30 1.6e-6–9.7e-6 and Jacobi30 5.7e-7–2.4e-6. CG30 is the more accurate there.
+    - At condition about 1e3, exact reached 5.4e-5–1.9e-4 and CG30 0.085–0.29. CG100 reached 2.3e-5–1.9e-3, at 53–145 ms.
+  - **Anomaly:** Jacobi PCG at 100 steps gave 20.8 on d = 64, C = 64, gates 0.5–1, ridge 0.05–1, while 30 steps on the same inputs gave 1.2e-6. This looks like a float32 breakdown after convergence that my guard (positivity only) does not catch. It is a defect in this baseline implementation; that cell is not used in any claim.
+- Conclusion: refuted *for this implementation*. With `torch.linalg.eigh`, the exact forward solve is 16–45× slower than 30-step CG on this GPU, even when CG needs 100 steps to match its accuracy. Without eigh, the capacitance stage costs 0.30–1.8× a 30-step CG solve, so the method's GPU case depends entirely on a fast batched eigendecomposition (or avoiding it). The hypothesis of I-011 (training pass faster than 30 + 30 CG at d = 128) was not tested directly, since the backward was not ported, but the forward result alone makes it fail with this eigh.
+
+### Review of the GPU benchmark, and version 2 (2026-10-29, evening)
+
+- `/review-study`: the `reviewer` agent returned **revise** (2 major, 5 minor; REVIEW.md). I confirmed both majors myself:
+  - The ratios were wrong. Recomputed per cell from `results/gpu_bench_20261029_175912.json`: 15.6–51.3× against CG30 and 4.8–16.5× against CG100, not 16–45× and 5–14×. I had taken ratios of range ends. The "16–45×", "5–14×" and "89–99.8%" in the previous entry are wrong; the corrected values are below.
+  - A faster `eigh` was available but not tried. In a scratch check (not saved), 512 matrices took 330 ms (cuSOLVER) vs 69 ms (MAGMA) at n = 64, and 785 vs 212 ms at n = 128.
+- Changes to `gpu_bench.py` (version 2):
+  - The exact solver runs with three `eigh` backends: default (cuSOLVER), MAGMA, and CPU.
+  - CG gets a residual stop (`--cg-tol 1e-6`, relative to the initial residual), which freezes converged tokens. Every step is still computed, so times are unchanged.
+  - CG also runs at 200 steps.
+  - Part C times `eigh` alone, so the scaling statement now has a log.
+  - The timed closures take each method as a function, removing the name parsing behind the v1 smoke-test bug.
+- New `aggregate_gpu_bench.py` computes every ratio, the `eigh` share (over the stage sum) and the CG steps needed to match the exact error, per cell, from the results JSON.
+- Smoke test: `logs/gpu_bench_quick_v3.log` (`results/gpu_bench_quick_20261029_180916.json`).
+- Full run: `../../.venv/bin/python -u gpu_bench.py 2>&1 | tee logs/gpu_bench_v2.log`, about 32 minutes in the background. Results: `results/gpu_bench_20261029_184103.json`.
+- Aggregation: `logs/aggregate_gpu_bench_v2.log`, then `logs/aggregate_gpu_bench_v3.log`. These are the same data; v3 adds the matched-error ratios, so it supersedes v2.
+- Outcome:
+  - Part A is unchanged. Version 1's default-`eigh` exact times reproduce to within 1.6%.
+  - `eigh` alone: the default takes 0.64 / 1.5 ms per matrix at n = 64 / 128, MAGMA and CPU 0.13–0.15 / 0.43–0.48. The default batches only at n = 32.
+  - Exact against CG30: 15.5–50.8× slower with the default `eigh`, 4.4–11.8× with MAGMA or CPU, where `eigh` still takes 61–97%.
+  - At matched error: the exact solver is 1.5–6.4× slower than plain CG at condition ~30. At condition ~1e3 it takes 0.84–2.62× plain CG's time and 0.61–2.43× Jacobi's, where CG needs 100–200 steps.
+  - MAGMA and CPU `eigh` also lower the exact solver's float32 error, to 1.3e-6–2.7e-6 at condition ~30.
+  - No Jacobi breakdown with the residual stop.
+  - `logs/gpu_bench.log` (v1) is **superseded** by `logs/gpu_bench_v2.log`.
+- Front-matter evidence goes back to E2 (review issue 7): the headline claims are E2, and claim 9 alone is E3.
+
+### Batched Jacobi eigendecomposition (2026-10-29, night)
+
+Purpose: remove the `eigh` bottleneck found by the benchmark (claim 9).
+
+- New `jacobi_eigh.py`: a Triton kernel with one program per matrix. It runs cyclic two-sided Jacobi in round-robin order, with the matrix and eigenvectors in global-memory scratch, and CTA barriers between the row, column and eigenvector phases.
+- New `check_jacobi.py`: compares against `torch.linalg.eigh` in float64 and float32. Inputs are random symmetric matrices, SPD matrices with condition 1e3, and whitened chunk-start states. It measures reconstruction, orthogonality and the sorted eigenvalue error.
+- Version 1 used fixed sweeps.
+  - Logs: `logs/check_jacobi_quick.log` and `logs/check_jacobi.log` (`results/check_jacobi_20261029_184807.json`), now **superseded**.
+  - In float64 the kernel was correct (8 sweeps, 1.6e-14 on Gaussian matrices). In float32, 8 sweeps matched torch at n = 64 and 10 at n = 128 on its inputs. Batch 1024 took 28.7 ms (n = 64) and 299 ms (n = 128, 10 sweeps), against 653 / 1553 ms for the default `eigh` and 124 / 428 for the CPU.
+  - Scratch: 8 warps were slightly faster than 4 (26.9 vs 28.7 ms; 275 vs 299 ms).
+- Problem: in the benchmark smoke test (`logs/gpu_bench_quick_v4.log`), the solver's float32 error with 8-sweep Jacobi was 3–100× worse than with torch `eigh` (up to 6.9e-3 at gates 0.5–1, ridge 1e-3–1e-2).
+  - A scratch diagnosis showed 8 sweeps were not converged on those states; 12 sweeps matched torch.
+  - Extra sweeps slowly degraded the error (8.8e-5 at 24 sweeps), because in float32, rotations kept firing on round-off after convergence.
+- Version 2 of the kernel:
+  - It skips a rotation when |a_pq| ≤ eps·√|a_pp a_qq| or ≤ eps·max|A|.
+  - It sets a rotated pair's off-diagonal entries to exactly zero.
+  - It stops after a sweep with no rotation, capped at 20 sweeps.
+  - Two intermediate attempts, a relative threshold alone and then an eps·max|A|/n floor, still ran to the cap on small-ridge states (scratch runs, not saved).
+- `logs/check_jacobi_v2.log` (`results/check_jacobi_v2_20261029_185255.json`):
+  - Float32 errors are 0.59–1.38× torch's on every input, using 7–15 sweeps, never the cap.
+  - Float64 reaches 2.2e-14–7.2e-14, except 6e-10–9e-10 on n = 128 fast-forgetting states at 20 sweeps.
+  - Batch 1024: 31 ms (n = 64) and 315 ms (n = 128).
+- Smoke test with the Jacobi backend: `logs/gpu_bench_quick_v5.log`. The solver error now matches the default `eigh`'s.
+- Full benchmark v3, with four backends: `../../.venv/bin/python -u gpu_bench.py 2>&1 | grep --line-buffered -v "Warning: " | tee logs/gpu_bench_v3.log`, about 45 minutes in the background. Results: `results/gpu_bench_20261029_192644.json`. The grep only drops PyTorch's two MAGMA deprecation warnings.
+  - Default-`eigh` times reproduce v2 to within 1.9%.
+- Aggregation:
+  - `logs/aggregate_gpu_bench_v4.log` is **superseded and wrong for matched error**: it paired the fastest exact variant's time with the most accurate variant's error, which favoured the exact solver (it showed wins at condition ~30).
+  - Fixed so each variant is matched at its own error: `logs/aggregate_gpu_bench_v5.log`. Win counts were then added in `logs/aggregate_gpu_bench_v6.log`, the version cited.
+- Outcome (v6):
+  - Jacobi `eigh` takes 0.031 / 0.31 ms per matrix at n = 64 / 128 (default 0.64 / 1.5; CPU 0.13 / 0.47).
+  - Exact with Jacobi against CG30: 2.1–8.8× slower (default 15.5–50.3×; CPU 4.5–10.7×); `eigh` takes 27–96% of its time.
+  - At matched error, condition ~30: 1.36–3.14× slower than plain CG, in all 12 cells.
+  - At matched error, condition ~1e3: 0.35–2.28× plain CG's time (faster in 9 of 12) and 0.33–1.16× Jacobi PCG's (faster in 10 of 12).
+- README Summary, Verdict, claim 9, GPU results, Limitations, Next steps, Reproduce and Files are updated. Claim 9 changed after the review in REVIEW.md, so it needs another review.

@@ -1,0 +1,1184 @@
+{
+ "env": {
+  "time": "2026-10-29T18:48:07+0100",
+  "argv": [
+   "check_jacobi.py"
+  ],
+  "python": "3.11.15",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "tf32_matmul": false,
+  "git_commit": "68e6a3b",
+  "git_dirty": true
+ },
+ "args": {
+  "quick": false,
+  "sweeps": [
+   2,
+   4,
+   6,
+   8,
+   10,
+   12
+  ],
+  "n": [
+   64,
+   128
+  ],
+  "B": 128,
+  "device": "cuda"
+ },
+ "rows": [
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "torch",
+   "rec": 1.8415826428072106e-15,
+   "orth": 1.220338333735626e-14,
+   "eig": 0.0
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi2",
+   "rec": 0.3562376339629474,
+   "orth": 1.778966364982071e-14,
+   "eig": 0.11936489841784707
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi4",
+   "rec": 0.04178197949201783,
+   "orth": 2.5740216138271396e-14,
+   "eig": 0.018324002060263425
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi6",
+   "rec": 0.00010928558395793445,
+   "orth": 8.223956052863998e-14,
+   "eig": 1.0192514113877047e-06
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi8",
+   "rec": 2.3152120291694157e-14,
+   "orth": 8.686367629604996e-14,
+   "eig": 1.6859018417854788e-14
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi10",
+   "rec": 2.3152120291694157e-14,
+   "orth": 8.686367629604996e-14,
+   "eig": 1.6859018417854788e-14
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi12",
+   "rec": 2.3152120291694157e-14,
+   "orth": 8.686367629604996e-14,
+   "eig": 1.6859018417854788e-14
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "torch",
+   "rec": 2.1980647648186026e-05,
+   "orth": 8.52437185469115e-05,
+   "eig": 1.3559957334523234e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi2",
+   "rec": 0.3562370330715216,
+   "orth": 4.309709043499495e-05,
+   "eig": 0.11936035708802151
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi4",
+   "rec": 0.04179118764036081,
+   "orth": 8.897774400916084e-05,
+   "eig": 0.018328593765749985
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi6",
+   "rec": 0.000112666467684797,
+   "orth": 0.0001169776869221023,
+   "eig": 1.5658222756322534e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi8",
+   "rec": 2.8397506768199306e-05,
+   "orth": 0.00011708087441679255,
+   "eig": 1.5658222756322534e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi10",
+   "rec": 2.8397506768199306e-05,
+   "orth": 0.00011708087441679255,
+   "eig": 1.5658222756322534e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi12",
+   "rec": 2.8397506768199306e-05,
+   "orth": 0.00011708087441679255,
+   "eig": 1.5658222756322534e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "torch",
+   "rec": 1.9669396949622262e-15,
+   "orth": 1.1734463619403323e-14,
+   "eig": 0.0
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi2",
+   "rec": 0.28000207781976233,
+   "orth": 1.7988971762946515e-14,
+   "eig": 0.08274511791359977
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi4",
+   "rec": 0.033984849950220636,
+   "orth": 2.5267539419234985e-14,
+   "eig": 0.009061054759517245
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi6",
+   "rec": 0.0014159141673057017,
+   "orth": 6.378317423340982e-14,
+   "eig": 0.0005392784404731133
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi8",
+   "rec": 1.628944255646631e-05,
+   "orth": 1.0807457279344335e-13,
+   "eig": 1.0116330854224035e-06
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi10",
+   "rec": 1.282864178559004e-12,
+   "orth": 1.1018554928773884e-13,
+   "eig": 2.114575181622059e-14
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi12",
+   "rec": 3.2892348034058804e-14,
+   "orth": 1.1018554928773884e-13,
+   "eig": 2.114575181622059e-14
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "torch",
+   "rec": 2.8509404732459777e-05,
+   "orth": 0.0001075601973189967,
+   "eig": 1.6421094953445745e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi2",
+   "rec": 0.2800095139280545,
+   "orth": 4.2715571955929104e-05,
+   "eig": 0.08274349002253252
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi4",
+   "rec": 0.033410157539175235,
+   "orth": 8.709555711829738e-05,
+   "eig": 0.009055844043189328
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi6",
+   "rec": 0.001413487179338118,
+   "orth": 0.00012196378534522472,
+   "eig": 0.000538227872034432
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi8",
+   "rec": 2.829338243038594e-05,
+   "orth": 0.00013313498368817885,
+   "eig": 1.5320983465610797e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi10",
+   "rec": 2.8293364543297196e-05,
+   "orth": 0.00013341157811909033,
+   "eig": 1.5320983465610797e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi12",
+   "rec": 2.8293364543297196e-05,
+   "orth": 0.00013341157811909033,
+   "eig": 1.5320983465610797e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "torch",
+   "rec": 2.2451881733196238e-15,
+   "orth": 1.1693703715000229e-14,
+   "eig": 0.0
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi2",
+   "rec": 0.22012716081251069,
+   "orth": 1.8116758704336525e-14,
+   "eig": 0.06199713947636023
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi4",
+   "rec": 0.01802629891461559,
+   "orth": 2.678109908959447e-14,
+   "eig": 0.004766609035241646
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi6",
+   "rec": 0.00022495807409354574,
+   "orth": 6.904619951869879e-14,
+   "eig": 1.5402313475710443e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi8",
+   "rec": 3.092141611527702e-08,
+   "orth": 9.890338802895984e-14,
+   "eig": 8.103584476433655e-14
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi10",
+   "rec": 2.244648228264477e-11,
+   "orth": 1.0222742549940374e-13,
+   "eig": 1.9536383224155706e-14
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi12",
+   "rec": 4.761724336594751e-13,
+   "orth": 1.0337419975633993e-13,
+   "eig": 1.9536383224155706e-14
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "torch",
+   "rec": 2.755849423585603e-05,
+   "orth": 0.00010276352191773844,
+   "eig": 1.577388776477038e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi2",
+   "rec": 0.2201276824689102,
+   "orth": 4.3264834449109716e-05,
+   "eig": 0.06199163415369984
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi4",
+   "rec": 0.01802642286318428,
+   "orth": 8.879210541236573e-05,
+   "eig": 0.004762727767832797
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi6",
+   "rec": 0.00022626262298407624,
+   "orth": 0.00012179622351721581,
+   "eig": 1.534091862015481e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi8",
+   "rec": 2.7739316051411072e-05,
+   "orth": 0.00012555533406261756,
+   "eig": 1.4681361044645168e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi10",
+   "rec": 2.773931605210638e-05,
+   "orth": 0.0001355363026598089,
+   "eig": 1.4681361044645168e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi12",
+   "rec": 2.773931605210638e-05,
+   "orth": 0.0001445121045902542,
+   "eig": 1.4681361044645168e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "torch",
+   "rec": 1.937068207650611e-15,
+   "orth": 1.159940805108973e-14,
+   "eig": 0.0
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi2",
+   "rec": 0.22398940550253998,
+   "orth": 1.7816840174806557e-14,
+   "eig": 0.07103695680189451
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi4",
+   "rec": 0.02135642925647542,
+   "orth": 2.5211106791802154e-14,
+   "eig": 0.004928695691658862
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi6",
+   "rec": 0.0003915999265043395,
+   "orth": 6.554332454021172e-14,
+   "eig": 8.610606059153928e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi8",
+   "rec": 1.4604194260359724e-06,
+   "orth": 1.0452670206586186e-13,
+   "eig": 1.7969834219211056e-07
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi10",
+   "rec": 1.281648158828916e-10,
+   "orth": 1.0831133621306257e-13,
+   "eig": 1.9561159036811926e-14
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi12",
+   "rec": 1.1913250607487022e-11,
+   "orth": 1.0810250241479578e-13,
+   "eig": 1.9561159036811926e-14
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "torch",
+   "rec": 2.7724217220012015e-05,
+   "orth": 0.0001014473443517165,
+   "eig": 1.5232310050355125e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi2",
+   "rec": 0.22398968505802433,
+   "orth": 4.256974180884955e-05,
+   "eig": 0.07103300491738229
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi4",
+   "rec": 0.021359222075288172,
+   "orth": 8.688293712026474e-05,
+   "eig": 0.004928059123275782
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi6",
+   "rec": 0.0003920057114946115,
+   "orth": 0.00012473495192245906,
+   "eig": 8.311749823844528e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi8",
+   "rec": 2.9002322384031066e-05,
+   "orth": 0.00013168610966254911,
+   "eig": 1.6160485616039776e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi10",
+   "rec": 2.9002321462641555e-05,
+   "orth": 0.00013524138650559356,
+   "eig": 1.6160485616039776e-05
+  },
+  {
+   "part": "A",
+   "n": 64,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi12",
+   "rec": 2.9002321462641555e-05,
+   "orth": 0.00014489479990089683,
+   "eig": 1.6160485616039776e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "torch",
+   "rec": 2.036190092837723e-15,
+   "orth": 1.9678708544200937e-14,
+   "eig": 0.0
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi2",
+   "rec": 0.4110386418538057,
+   "orth": 3.4315438592316066e-14,
+   "eig": 0.10706301593416358
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi4",
+   "rec": 0.07720368554267815,
+   "orth": 4.808185747773853e-14,
+   "eig": 0.025127683591521056
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi6",
+   "rec": 0.0015557849211185516,
+   "orth": 1.7313824829205763e-13,
+   "eig": 0.0003463134203442008
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi8",
+   "rec": 6.609075465764245e-09,
+   "orth": 2.5684701165575097e-13,
+   "eig": 5.1970721379707116e-14
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi10",
+   "rec": 4.6673295940923656e-14,
+   "orth": 2.5714896758774846e-13,
+   "eig": 3.436546720405931e-14
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float64",
+   "method": "jacobi12",
+   "rec": 4.6673295940923656e-14,
+   "orth": 2.5714896758774846e-13,
+   "eig": 3.436546720405931e-14
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "torch",
+   "rec": 6.687232379313325e-05,
+   "orth": 0.0003795264295318492,
+   "eig": 3.6489804685200095e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi2",
+   "rec": 0.4110349659801215,
+   "orth": 0.00011664046708260275,
+   "eig": 0.10723899363322306
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi4",
+   "rec": 0.07893652856137805,
+   "orth": 0.0002473411173055168,
+   "eig": 0.024148443573309974
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi6",
+   "rec": 0.0016189046652898367,
+   "orth": 0.0003641162860394547,
+   "eig": 0.0005522055701196404
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi8",
+   "rec": 6.338850889288384e-05,
+   "orth": 0.0003732396918829391,
+   "eig": 3.264967719553411e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi10",
+   "rec": 6.338850880464429e-05,
+   "orth": 0.0003732409772621045,
+   "eig": 3.264967719553411e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "gaussian symmetric",
+   "dtype": "torch.float32",
+   "method": "jacobi12",
+   "rec": 6.338850880464429e-05,
+   "orth": 0.0003732409772621045,
+   "eig": 3.264967719553411e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "torch",
+   "rec": 1.9284968422312306e-15,
+   "orth": 1.898003867171068e-14,
+   "eig": 0.0
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi2",
+   "rec": 0.3017329766604186,
+   "orth": 3.4510769305767936e-14,
+   "eig": 0.0896751841074928
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi4",
+   "rec": 0.048920668974773554,
+   "orth": 5.008939930897941e-14,
+   "eig": 0.010032243083361493
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi6",
+   "rec": 0.004656473645085463,
+   "orth": 1.5353452861635767e-13,
+   "eig": 0.0006765384240807763
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi8",
+   "rec": 0.00013436864292191598,
+   "orth": 2.7027149151835493e-13,
+   "eig": 2.1384609546044604e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi10",
+   "rec": 6.2427267672168684e-09,
+   "orth": 3.0551006201815115e-13,
+   "eig": 2.705951018810994e-13
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float64",
+   "method": "jacobi12",
+   "rec": 6.565322800421421e-14,
+   "orth": 3.0553659754821327e-13,
+   "eig": 4.10409484175034e-14
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "torch",
+   "rec": 7.665741524593031e-05,
+   "orth": 0.0004527191023087985,
+   "eig": 4.4067635367911404e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi2",
+   "rec": 0.3017545287452818,
+   "orth": 0.00011716436217182089,
+   "eig": 0.08964770694684612
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi4",
+   "rec": 0.049237436296290356,
+   "orth": 0.0002487814933823803,
+   "eig": 0.009214396213907676
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi6",
+   "rec": 0.004062287438668759,
+   "orth": 0.0003586776163402971,
+   "eig": 0.0005610072829289962
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi8",
+   "rec": 0.00012770392754606514,
+   "orth": 0.0004128506388081668,
+   "eig": 3.0734994822897916e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi10",
+   "rec": 6.044812563147922e-05,
+   "orth": 0.00041950296911893455,
+   "eig": 3.0734994822897916e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "SPD, cond 1e3",
+   "dtype": "torch.float32",
+   "method": "jacobi12",
+   "rec": 6.044812576018846e-05,
+   "orth": 0.00041950801368680453,
+   "eig": 3.0734994822897916e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "torch",
+   "rec": 2.1921623232801587e-15,
+   "orth": 1.828016141168155e-14,
+   "eig": 0.0
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi2",
+   "rec": 0.2910115256200655,
+   "orth": 3.41625086831872e-14,
+   "eig": 0.07355028264264879
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi4",
+   "rec": 0.04208076949336384,
+   "orth": 9.480062159693055e-14,
+   "eig": 0.005109106194744498
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi6",
+   "rec": 0.002891249631914256,
+   "orth": 2.2620908885237816e-13,
+   "eig": 0.0005759998366004317
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi8",
+   "rec": 0.00019889159579104053,
+   "orth": 2.650287498916321e-13,
+   "eig": 8.61498979359095e-06
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi10",
+   "rec": 1.7244103307274685e-06,
+   "orth": 2.9928723984560093e-13,
+   "eig": 1.0320258217290493e-07
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float64",
+   "method": "jacobi12",
+   "rec": 7.271752618051903e-10,
+   "orth": 3.07183423683757e-13,
+   "eig": 4.084088564342688e-14
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "torch",
+   "rec": 8.089707506563296e-05,
+   "orth": 0.0005009449840744742,
+   "eig": 4.7300569148837256e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi2",
+   "rec": 0.2909855679637697,
+   "orth": 0.00012013433010623392,
+   "eig": 0.07354523016812657
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi4",
+   "rec": 0.04246712575761946,
+   "orth": 0.00024840612372303253,
+   "eig": 0.008136849059722598
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi6",
+   "rec": 0.002955748706013106,
+   "orth": 0.00036699037614504283,
+   "eig": 0.00037059502524425215
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi8",
+   "rec": 0.00019017990857277646,
+   "orth": 0.00043471748841245484,
+   "eig": 3.380987788697673e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi10",
+   "rec": 5.8844449671688876e-05,
+   "orth": 0.00045402816802322764,
+   "eig": 3.380987788697673e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.05-1",
+   "dtype": "torch.float32",
+   "method": "jacobi12",
+   "rec": 5.884444788585961e-05,
+   "orth": 0.0005050328183837024,
+   "eig": 3.380987788697673e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "torch",
+   "rec": 2.1602532724513357e-15,
+   "orth": 1.826475327195892e-14,
+   "eig": 0.0
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi2",
+   "rec": 0.30645474578424886,
+   "orth": 3.448686856460505e-14,
+   "eig": 0.12254032023597237
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi4",
+   "rec": 0.041409598510184255,
+   "orth": 8.011237855377363e-14,
+   "eig": 0.009239469385193419
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi6",
+   "rec": 0.00337336933735646,
+   "orth": 2.0446674870596658e-13,
+   "eig": 0.0005965438089024082
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi8",
+   "rec": 0.0001419677986108319,
+   "orth": 2.625237793475299e-13,
+   "eig": 1.9598001980983544e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi10",
+   "rec": 2.226333186012044e-06,
+   "orth": 3.0046248424816635e-13,
+   "eig": 1.9324840357040339e-07
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float64",
+   "method": "jacobi12",
+   "rec": 1.050362161620414e-09,
+   "orth": 3.130740341980342e-13,
+   "eig": 4.4629802719917434e-14
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "torch",
+   "rec": 8.084364434878133e-05,
+   "orth": 0.0005000107455372932,
+   "eig": 4.996388823214462e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi2",
+   "rec": 0.30645674311973825,
+   "orth": 0.00012127552440441489,
+   "eig": 0.1225301616307837
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi4",
+   "rec": 0.041801982971593196,
+   "orth": 0.0002465051585502086,
+   "eig": 0.007756263123162937
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi6",
+   "rec": 0.0034229859322606852,
+   "orth": 0.00036331746339304864,
+   "eig": 0.0006944348165383685
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi8",
+   "rec": 0.00014086933233427998,
+   "orth": 0.00043303170411731405,
+   "eig": 3.310546282564072e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi10",
+   "rec": 5.829953958687454e-05,
+   "orth": 0.0004590119365855853,
+   "eig": 3.310546282564072e-05
+  },
+  {
+   "part": "A",
+   "n": 128,
+   "input": "S H0 S, ridge 0.001-0.01",
+   "dtype": "torch.float32",
+   "method": "jacobi12",
+   "rec": 5.8299537262980685e-05,
+   "orth": 0.0005066531319219538,
+   "eig": 3.310546282564072e-05
+  },
+  {
+   "part": "B",
+   "n": 64,
+   "batch": 1024,
+   "ms": {
+    "default": 652.6584789971821,
+    "cpu": 124.09105299593648,
+    "jacobi2": 7.3061209986917675,
+    "jacobi4": 14.521125995088369,
+    "jacobi6": 21.62360099464422,
+    "jacobi8": 28.74093799619004,
+    "jacobi10": 35.95025499816984,
+    "jacobi12": 43.15498299547471
+   }
+  },
+  {
+   "part": "B",
+   "n": 128,
+   "batch": 1024,
+   "ms": {
+    "default": 1553.0462430033367,
+    "cpu": 428.2720379997045,
+    "jacobi2": 60.096601002442185,
+    "jacobi4": 119.71905099926516,
+    "jacobi6": 179.38578499888536,
+    "jacobi8": 238.87949100026162,
+    "jacobi10": 298.66448000393575,
+    "jacobi12": 358.20456399960676
+   }
+  }
+ ]
+}

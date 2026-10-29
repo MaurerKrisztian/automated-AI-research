@@ -1,0 +1,30 @@
+Part A: accuracy against sweeps (worst over the batch). torch.linalg.eigh rows use the same dtype.
+  n= 64 gaussian symmetric         float64 torch eigh: rec 1.8e-15 orth 1.2e-14 eig 0.0e+00
+                                           jacobi  4:  rec 4.0e-02 orth 2.4e-14 eig 8.8e-03
+                                           jacobi  8:  rec 2.2e-14 orth 8.7e-14 eig 1.6e-14
+  n= 64 gaussian symmetric         float32 torch eigh: rec 2.2e-05 orth 8.5e-05 eig 1.4e-05
+                                           jacobi  4:  rec 4.0e-02 orth 8.6e-05 eig 8.8e-03
+                                           jacobi  8:  rec 2.8e-05 orth 1.1e-04 eig 1.5e-05
+  n= 64 SPD, cond 1e3              float64 torch eigh: rec 1.7e-15 orth 1.1e-14 eig 0.0e+00
+                                           jacobi  4:  rec 3.5e-02 orth 2.5e-14 eig 8.8e-03
+                                           jacobi  8:  rec 3.3e-06 orth 9.1e-14 eig 4.9e-08
+  n= 64 SPD, cond 1e3              float32 torch eigh: rec 2.8e-05 orth 1.1e-04 eig 1.5e-05
+                                           jacobi  4:  rec 3.5e-02 orth 8.4e-05 eig 8.9e-03
+                                           jacobi  8:  rec 2.8e-05 orth 1.3e-04 eig 1.3e-05
+  n= 64 S H0 S, ridge 0.05-1       float64 torch eigh: rec 2.2e-15 orth 1.2e-14 eig 0.0e+00
+                                           jacobi  4:  rec 1.8e-02 orth 2.7e-14 eig 4.8e-03
+                                           jacobi  8:  rec 3.1e-08 orth 9.9e-14 eig 8.1e-14
+  n= 64 S H0 S, ridge 0.05-1       float32 torch eigh: rec 2.8e-05 orth 1.0e-04 eig 1.6e-05
+                                           jacobi  4:  rec 1.8e-02 orth 8.9e-05 eig 4.8e-03
+                                           jacobi  8:  rec 2.8e-05 orth 1.3e-04 eig 1.5e-05
+  n= 64 S H0 S, ridge 0.001-0.01   float64 torch eigh: rec 1.9e-15 orth 1.2e-14 eig 0.0e+00
+                                           jacobi  4:  rec 2.1e-02 orth 2.5e-14 eig 4.9e-03
+                                           jacobi  8:  rec 1.5e-06 orth 1.0e-13 eig 1.8e-07
+  n= 64 S H0 S, ridge 0.001-0.01   float32 torch eigh: rec 2.8e-05 orth 1.0e-04 eig 1.5e-05
+                                           jacobi  4:  rec 2.1e-02 orth 8.7e-05 eig 4.9e-03
+                                           jacobi  8:  rec 2.9e-05 orth 1.3e-04 eig 1.6e-05
+
+Part B: float32 time for a batch of 1024 (median ms, warmup 2, reps 5)
+  n= 64  default 41.22  cpu 7.83  jacobi4 0.90  jacobi8 1.70
+
+saved results/check_jacobi_quick_20261029_184647.json
