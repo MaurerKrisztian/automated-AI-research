@@ -1,0 +1,276 @@
+== A. float64: chunk solver vs refined token-by-token reference (max error / max |reference|)
+   err o, err x: chunk solver; dense x: plain float64 dense solve per token; bwd err: chunk solver's
+   normwise backward error; end: tokens that downdated from the chunk-end anchor; primal: tokens that solved
+   the d x d system because their capacitance would have had m >= d rows; max m: largest system solved
+                                        case   C policy cond max    err o    err x  dense x  bwd err  end primal max m
+ gates none (1) T200 d16 dv8 ridge 0.05-1 a0  32  start  2.6e+01  1.2e-15  6.1e-16  4.9e-16  1.1e-15    0    102    16
+ gates none (1) T200 d16 dv8 ridge 0.05-1 a0  32    two  2.6e+01  2.2e-15  1.2e-15  4.9e-16  1.6e-15  100      6    16
+ gates none (1) T200 d16 dv8 ridge 0.05-1 a2  32  start  1.1e+02  1.4e-15  1.4e-15  4.2e-16  1.2e-16    0    102    16
+ gates none (1) T200 d16 dv8 ridge 0.05-1 a2  32    two  1.1e+02  1.4e-15  1.4e-15  4.2e-16  1.8e-16  100      6    16
+gates none (1) T200 d16 dv8 ridge 1e-6-1e-4 a0  32  start  5.6e+05  7.6e-12  6.8e-12  2.3e-12  4.2e-15    0    102    16
+gates none (1) T200 d16 dv8 ridge 1e-6-1e-4 a0  32    two  5.6e+05  7.6e-12  6.8e-12  2.3e-12  4.2e-15  100      6    16
+gates none (1) T200 d16 dv8 ridge 1e-6-1e-4 a2  32  start  1.5e+05  4.1e-13  4.3e-14  9.8e-16  1.3e-15    0    102    16
+gates none (1) T200 d16 dv8 ridge 1e-6-1e-4 a2  32    two  1.5e+05  4.1e-13  4.3e-14  9.8e-16  1.3e-15  100      6    16
+gates none (1) T200 d64 dv16 ridge 0.05-1 a0  16  start  3.1e+01  6.0e-15  1.4e-15  5.7e-16  1.2e-15    0      0    16
+gates none (1) T200 d64 dv16 ridge 0.05-1 a0  16    two  3.1e+01  6.0e-15  2.7e-15  5.7e-16  1.2e-15  100      0     8
+gates none (1) T200 d64 dv16 ridge 0.05-1 a2  16  start  4.7e+01  1.6e-15  1.5e-15  6.3e-16  4.0e-16    0      0    16
+gates none (1) T200 d64 dv16 ridge 0.05-1 a2  16    two  4.7e+01  2.3e-15  1.2e-15  6.3e-16  4.2e-16  100      0     8
+gates none (1) T200 d64 dv16 ridge 1e-6-1e-4 a0  16  start  9.7e+05  4.6e-11  1.2e-11  7.9e-12  5.3e-15    0      0    16
+gates none (1) T200 d64 dv16 ridge 1e-6-1e-4 a0  16    two  9.7e+05  4.6e-11  2.8e-11  7.9e-12  3.3e-15  100      0     8
+gates none (1) T200 d64 dv16 ridge 1e-6-1e-4 a2  16  start  1.4e+06  4.4e-10  1.5e-10  4.4e-15  3.3e-15    0      0    16
+gates none (1) T200 d64 dv16 ridge 1e-6-1e-4 a2  16    two  1.4e+06  4.4e-10  1.5e-10  4.4e-15  3.3e-15  100      0     8
+  gates none (1) T150 d8 dv4 ridge 0.05-1 a0  64  start  2.6e+01  1.3e-15  2.7e-16  3.6e-16  9.7e-16    0    129     8
+  gates none (1) T150 d8 dv4 ridge 0.05-1 a0  64    two  2.6e+01  1.3e-15  2.7e-16  3.6e-16  9.7e-16   24    105     8
+  gates none (1) T150 d8 dv4 ridge 0.05-1 a2  64  start  1.2e+02  5.5e-16  7.2e-16  2.0e-16  1.1e-16    0    129     8
+  gates none (1) T150 d8 dv4 ridge 0.05-1 a2  64    two  1.2e+02  5.5e-16  7.2e-16  2.0e-16  1.1e-16   24    105     8
+gates none (1) T150 d8 dv4 ridge 1e-6-1e-4 a0  64  start  1.7e+05  3.9e-12  4.3e-12  1.3e-12  5.4e-15    0    129     8
+gates none (1) T150 d8 dv4 ridge 1e-6-1e-4 a0  64    two  1.7e+05  3.9e-12  4.3e-12  1.3e-12  5.4e-15   24    105     8
+gates none (1) T150 d8 dv4 ridge 1e-6-1e-4 a2  64  start  2.2e+05  2.9e-11  1.7e-13  3.8e-15  2.1e-14    0    129     8
+gates none (1) T150 d8 dv4 ridge 1e-6-1e-4 a2  64    two  2.2e+05  2.9e-11  1.7e-13  3.8e-15  2.1e-14   24    105     8
+gates none (1) T257 d32 dv32 ridge 0.05-1 a0  64  start  3.0e+01  1.3e-15  5.6e-16  5.6e-16  1.1e-15    0    132    32
+gates none (1) T257 d32 dv32 ridge 0.05-1 a0  64    two  3.0e+01  4.3e-15  1.4e-15  5.6e-16  1.0e-15  129      4    32
+gates none (1) T257 d32 dv32 ridge 0.05-1 a2  64  start  7.6e+01  7.8e-16  2.2e-15  5.7e-16  2.0e-16    0    132    32
+gates none (1) T257 d32 dv32 ridge 0.05-1 a2  64    two  7.6e+01  6.9e-15  1.6e-14  5.7e-16  1.1e-15  129      4    32
+gates none (1) T257 d32 dv32 ridge 1e-6-1e-4 a0  64  start  5.9e+05  2.5e-11  1.4e-11  8.3e-12  1.9e-14    0    132    32
+gates none (1) T257 d32 dv32 ridge 1e-6-1e-4 a0  64    two  5.9e+05  2.5e-11  1.4e-11  8.3e-12  1.9e-14  129      4    32
+gates none (1) T257 d32 dv32 ridge 1e-6-1e-4 a2  64  start  9.3e+05  3.2e-11  2.1e-12  4.0e-16  1.4e-14    0    132    32
+gates none (1) T257 d32 dv32 ridge 1e-6-1e-4 a2  64    two  9.3e+05  5.7e-11  6.3e-12  4.0e-16  1.4e-14  129      4    32
+gates none (1) T96 d128 dv16 ridge 0.05-1 a0  32  start  3.8e+01  2.0e-14  8.9e-15  8.2e-16  2.3e-15    0      0    32
+gates none (1) T96 d128 dv16 ridge 0.05-1 a0  32    two  3.8e+01  2.0e-14  1.0e-14  8.2e-16  2.5e-15   48      0    16
+gates none (1) T96 d128 dv16 ridge 0.05-1 a2  32  start  2.1e+01  7.8e-16  1.1e-15  7.0e-16  2.9e-16    0      0    32
+gates none (1) T96 d128 dv16 ridge 0.05-1 a2  32    two  2.1e+01  1.4e-15  1.1e-15  7.0e-16  2.9e-16   48      0    16
+gates none (1) T96 d128 dv16 ridge 1e-6-1e-4 a0  32  start  9.9e+05  3.8e-11  1.3e-11  1.4e-11  5.2e-16    0      0    32
+gates none (1) T96 d128 dv16 ridge 1e-6-1e-4 a0  32    two  9.9e+05  1.1e-10  1.4e-10  1.4e-11  2.1e-15   48      0    16
+gates none (1) T96 d128 dv16 ridge 1e-6-1e-4 a2  32  start  3.6e+05  2.2e-11  1.1e-10  9.0e-16  3.8e-15    0      0    32
+gates none (1) T96 d128 dv16 ridge 1e-6-1e-4 a2  32    two  3.6e+05  1.5e-10  3.5e-10  9.0e-16  8.8e-15   48      0    16
+  gates 0.999-1 T200 d16 dv8 ridge 0.05-1 a0  32  start  1.8e+01  1.9e-15  3.5e-16  8.1e-16  1.4e-15    0    102    16
+  gates 0.999-1 T200 d16 dv8 ridge 0.05-1 a0  32    two  1.8e+01  3.3e-15  8.6e-16  8.1e-16  1.6e-15  100      6    16
+  gates 0.999-1 T200 d16 dv8 ridge 0.05-1 a2  32  start  1.0e+02  1.5e-15  1.3e-15  2.9e-16  8.4e-17    0    102    16
+  gates 0.999-1 T200 d16 dv8 ridge 0.05-1 a2  32    two  1.0e+02  1.4e-15  1.0e-15  2.9e-16  1.2e-16  100      6    16
+gates 0.999-1 T200 d16 dv8 ridge 1e-6-1e-4 a0  32  start  5.9e+05  1.1e-11  1.8e-12  2.7e-12  7.6e-14    0    102    16
+gates 0.999-1 T200 d16 dv8 ridge 1e-6-1e-4 a0  32    two  5.9e+05  1.1e-11  1.8e-12  2.7e-12  7.6e-14  100      6    16
+gates 0.999-1 T200 d16 dv8 ridge 1e-6-1e-4 a2  32  start  3.3e+05  8.5e-12  2.9e-13  1.3e-13  1.7e-14    0    102    16
+gates 0.999-1 T200 d16 dv8 ridge 1e-6-1e-4 a2  32    two  3.3e+05  8.5e-12  2.9e-13  1.3e-13  1.7e-14  100      6    16
+ gates 0.999-1 T200 d64 dv16 ridge 0.05-1 a0  16  start  3.0e+01  4.5e-15  1.3e-15  7.8e-16  1.2e-15    0      0    16
+ gates 0.999-1 T200 d64 dv16 ridge 0.05-1 a0  16    two  3.0e+01  4.5e-15  2.8e-15  7.8e-16  1.1e-15  100      0     8
+ gates 0.999-1 T200 d64 dv16 ridge 0.05-1 a2  16  start  3.8e+01  1.8e-15  1.9e-14  8.5e-16  2.0e-15    0      0    16
+ gates 0.999-1 T200 d64 dv16 ridge 0.05-1 a2  16    two  3.8e+01  1.6e-15  1.9e-14  8.5e-16  2.3e-15  100      0     8
+gates 0.999-1 T200 d64 dv16 ridge 1e-6-1e-4 a0  16  start  9.8e+05  1.1e-11  3.0e-11  1.7e-11  4.8e-15    0      0    16
+gates 0.999-1 T200 d64 dv16 ridge 1e-6-1e-4 a0  16    two  9.8e+05  1.7e-11  8.8e-11  1.7e-11  4.6e-15  100      0     8
+gates 0.999-1 T200 d64 dv16 ridge 1e-6-1e-4 a2  16  start  1.3e+06  2.3e-09  1.1e-09  1.2e-15  8.2e-15    0      0    16
+gates 0.999-1 T200 d64 dv16 ridge 1e-6-1e-4 a2  16    two  1.3e+06  2.3e-09  1.1e-09  1.2e-15  5.4e-15  100      0     8
+   gates 0.999-1 T150 d8 dv4 ridge 0.05-1 a0  64  start  2.0e+01  1.1e-15  3.1e-16  1.8e-16  6.8e-16    0    129     8
+   gates 0.999-1 T150 d8 dv4 ridge 0.05-1 a0  64    two  2.0e+01  1.1e-15  3.1e-16  1.8e-16  7.3e-16   24    105     8
+   gates 0.999-1 T150 d8 dv4 ridge 0.05-1 a2  64  start  8.1e+01  9.5e-16  8.2e-16  2.7e-16  1.0e-16    0    129     8
+   gates 0.999-1 T150 d8 dv4 ridge 0.05-1 a2  64    two  8.1e+01  9.5e-16  8.2e-16  2.7e-16  1.0e-16   24    105     8
+gates 0.999-1 T150 d8 dv4 ridge 1e-6-1e-4 a0  64  start  1.6e+05  5.8e-12  2.2e-12  8.0e-13  6.0e-15    0    129     8
+gates 0.999-1 T150 d8 dv4 ridge 1e-6-1e-4 a0  64    two  1.6e+05  5.8e-12  2.2e-12  8.0e-13  6.0e-15   24    105     8
+gates 0.999-1 T150 d8 dv4 ridge 1e-6-1e-4 a2  64  start  1.2e+05  2.8e-12  1.6e-13  2.4e-13  1.5e-14    0    129     8
+gates 0.999-1 T150 d8 dv4 ridge 1e-6-1e-4 a2  64    two  1.2e+05  2.8e-12  1.6e-13  2.4e-13  1.5e-14   24    105     8
+ gates 0.999-1 T257 d32 dv32 ridge 0.05-1 a0  64  start  3.5e+01  2.8e-15  4.9e-16  4.9e-16  9.2e-16    0    132    32
+ gates 0.999-1 T257 d32 dv32 ridge 0.05-1 a0  64    two  3.5e+01  4.5e-15  1.4e-15  4.9e-16  1.1e-15  129      4    32
+ gates 0.999-1 T257 d32 dv32 ridge 0.05-1 a2  64  start  8.1e+01  5.8e-15  2.1e-14  5.9e-16  1.9e-15    0    132    32
+ gates 0.999-1 T257 d32 dv32 ridge 0.05-1 a2  64    two  8.1e+01  1.2e-14  5.0e-14  5.9e-16  3.5e-15  129      4    32
+gates 0.999-1 T257 d32 dv32 ridge 1e-6-1e-4 a0  64  start  1.3e+06  1.6e-11  1.0e-11  1.1e-11  3.8e-14    0    132    32
+gates 0.999-1 T257 d32 dv32 ridge 1e-6-1e-4 a0  64    two  1.3e+06  1.6e-11  1.0e-11  1.1e-11  3.8e-14  129      4    32
+gates 0.999-1 T257 d32 dv32 ridge 1e-6-1e-4 a2  64  start  4.3e+05  1.5e-12  1.2e-13  2.2e-15  3.2e-15    0    132    32
+gates 0.999-1 T257 d32 dv32 ridge 1e-6-1e-4 a2  64    two  4.3e+05  1.5e-12  1.2e-13  2.2e-15  3.2e-15  129      4    32
+ gates 0.999-1 T96 d128 dv16 ridge 0.05-1 a0  32  start  2.9e+01  1.9e-14  5.1e-15  6.8e-16  3.0e-15    0      0    32
+ gates 0.999-1 T96 d128 dv16 ridge 0.05-1 a0  32    two  2.9e+01  1.9e-14  6.1e-15  6.8e-16  3.0e-15   48      0    16
+ gates 0.999-1 T96 d128 dv16 ridge 0.05-1 a2  32  start  1.9e+01  7.4e-16  1.5e-15  8.7e-16  3.6e-16    0      0    32
+ gates 0.999-1 T96 d128 dv16 ridge 0.05-1 a2  32    two  1.9e+01  7.4e-16  1.5e-15  8.7e-16  3.6e-16   48      0    16
+gates 0.999-1 T96 d128 dv16 ridge 1e-6-1e-4 a0  32  start  1.1e+06  3.6e-10  1.5e-11  1.4e-11  7.8e-15    0      0    32
+gates 0.999-1 T96 d128 dv16 ridge 1e-6-1e-4 a0  32    two  1.1e+06  3.3e-10  7.7e-11  1.4e-11  5.0e-15   48      0    16
+gates 0.999-1 T96 d128 dv16 ridge 1e-6-1e-4 a2  32  start  3.6e+05  6.0e-11  9.2e-11  7.8e-16  5.0e-15    0      0    32
+gates 0.999-1 T96 d128 dv16 ridge 1e-6-1e-4 a2  32    two  3.6e+05  6.0e-11  9.2e-11  7.8e-16  6.9e-15   48      0    16
+   gates 0.99-1 T200 d16 dv8 ridge 0.05-1 a0  32  start  2.2e+01  1.7e-15  4.1e-16  2.7e-16  7.3e-16    0    102    16
+   gates 0.99-1 T200 d16 dv8 ridge 0.05-1 a0  32    two  2.2e+01  4.6e-15  9.3e-16  2.7e-16  1.3e-15  100      6    16
+   gates 0.99-1 T200 d16 dv8 ridge 0.05-1 a2  32  start  9.7e+01  1.0e-15  1.2e-15  4.0e-16  1.9e-16    0    102    16
+   gates 0.99-1 T200 d16 dv8 ridge 0.05-1 a2  32    two  9.7e+01  1.6e-15  1.2e-15  4.0e-16  1.9e-16  100      6    16
+gates 0.99-1 T200 d16 dv8 ridge 1e-6-1e-4 a0  32  start  3.6e+05  8.4e-12  2.6e-12  2.0e-12  2.1e-15    0    102    16
+gates 0.99-1 T200 d16 dv8 ridge 1e-6-1e-4 a0  32    two  3.6e+05  8.4e-12  2.6e-12  2.0e-12  2.1e-15  100      6    16
+gates 0.99-1 T200 d16 dv8 ridge 1e-6-1e-4 a2  32  start  1.1e+05  2.8e-12  5.1e-14  8.9e-15  4.5e-15    0    102    16
+gates 0.99-1 T200 d16 dv8 ridge 1e-6-1e-4 a2  32    two  1.1e+05  2.8e-12  5.1e-14  8.9e-15  4.5e-15  100      6    16
+  gates 0.99-1 T200 d64 dv16 ridge 0.05-1 a0  16  start  3.4e+01  4.7e-15  3.3e-15  8.9e-16  1.6e-15    0      0    16
+  gates 0.99-1 T200 d64 dv16 ridge 0.05-1 a0  16    two  3.4e+01  3.9e-15  4.5e-15  8.9e-16  2.3e-15  100      0     8
+  gates 0.99-1 T200 d64 dv16 ridge 0.05-1 a2  16  start  3.6e+01  1.1e-15  3.6e-15  9.3e-16  4.1e-16    0      0    16
+  gates 0.99-1 T200 d64 dv16 ridge 0.05-1 a2  16    two  3.6e+01  1.6e-15  3.1e-15  9.3e-16  4.4e-16  100      0     8
+gates 0.99-1 T200 d64 dv16 ridge 1e-6-1e-4 a0  16  start  1.1e+06  1.7e-10  2.3e-11  1.0e-11  8.6e-15    0      0    16
+gates 0.99-1 T200 d64 dv16 ridge 1e-6-1e-4 a0  16    two  1.1e+06  1.7e-10  9.4e-10  1.0e-11  1.7e-14  100      0     8
+gates 0.99-1 T200 d64 dv16 ridge 1e-6-1e-4 a2  16  start  9.8e+05  5.9e-10  6.0e-10  5.7e-16  1.4e-14    0      0    16
+gates 0.99-1 T200 d64 dv16 ridge 1e-6-1e-4 a2  16    two  9.8e+05  7.1e-10  9.3e-10  5.7e-16  2.9e-14  100      0     8
+    gates 0.99-1 T150 d8 dv4 ridge 0.05-1 a0  64  start  9.5e+00  1.1e-15  5.5e-16  2.2e-16  8.2e-16    0    129     8
+    gates 0.99-1 T150 d8 dv4 ridge 0.05-1 a0  64    two  9.5e+00  1.1e-15  5.5e-16  2.2e-16  8.2e-16   24    105     8
+    gates 0.99-1 T150 d8 dv4 ridge 0.05-1 a2  64  start  7.9e+01  6.5e-16  4.1e-16  2.7e-16  7.8e-17    0    129     8
+    gates 0.99-1 T150 d8 dv4 ridge 0.05-1 a2  64    two  7.9e+01  6.5e-16  4.1e-16  2.7e-16  1.2e-16   24    105     8
+ gates 0.99-1 T150 d8 dv4 ridge 1e-6-1e-4 a0  64  start  4.8e+05  4.0e-11  4.3e-12  5.8e-12  4.6e-15    0    129     8
+ gates 0.99-1 T150 d8 dv4 ridge 1e-6-1e-4 a0  64    two  4.8e+05  4.0e-11  4.3e-12  5.8e-12  4.6e-15   24    105     8
+ gates 0.99-1 T150 d8 dv4 ridge 1e-6-1e-4 a2  64  start  4.6e+04  4.7e-14  5.2e-15  1.1e-15  3.5e-16    0    129     8
+ gates 0.99-1 T150 d8 dv4 ridge 1e-6-1e-4 a2  64    two  4.6e+04  4.7e-14  5.2e-15  1.1e-15  3.5e-16   24    105     8
+  gates 0.99-1 T257 d32 dv32 ridge 0.05-1 a0  64  start  2.7e+01  1.5e-15  5.4e-16  4.8e-16  7.5e-16    0    132    32
+  gates 0.99-1 T257 d32 dv32 ridge 0.05-1 a0  64    two  2.7e+01  3.5e-15  1.1e-15  4.8e-16  8.6e-16  129      4    32
+  gates 0.99-1 T257 d32 dv32 ridge 0.05-1 a2  64  start  4.6e+01  3.4e-15  1.5e-14  4.7e-16  3.0e-15    0    132    32
+  gates 0.99-1 T257 d32 dv32 ridge 0.05-1 a2  64    two  4.6e+01  3.5e-15  1.5e-14  4.7e-16  4.3e-15  129      4    32
+gates 0.99-1 T257 d32 dv32 ridge 1e-6-1e-4 a0  64  start  1.4e+06  2.2e-11  4.7e-12  9.7e-12  1.7e-14    0    132    32
+gates 0.99-1 T257 d32 dv32 ridge 1e-6-1e-4 a0  64    two  1.4e+06  2.2e-11  4.7e-12  9.7e-12  1.7e-14  129      4    32
+gates 0.99-1 T257 d32 dv32 ridge 1e-6-1e-4 a2  64  start  5.3e+05  4.1e-12  1.7e-13  6.4e-16  1.6e-14    0    132    32
+gates 0.99-1 T257 d32 dv32 ridge 1e-6-1e-4 a2  64    two  5.3e+05  4.1e-12  1.7e-13  6.4e-16  1.6e-14  129      4    32
+  gates 0.99-1 T96 d128 dv16 ridge 0.05-1 a0  32  start  3.2e+01  9.5e-15  2.8e-15  6.8e-16  1.2e-15    0      0    32
+  gates 0.99-1 T96 d128 dv16 ridge 0.05-1 a0  32    two  3.2e+01  9.5e-15  3.7e-15  6.8e-16  1.4e-15   48      0    16
+  gates 0.99-1 T96 d128 dv16 ridge 0.05-1 a2  32  start  2.0e+01  2.0e-15  2.5e-15  8.2e-16  2.9e-16    0      0    32
+  gates 0.99-1 T96 d128 dv16 ridge 0.05-1 a2  32    two  2.0e+01  2.3e-15  4.1e-15  8.2e-16  5.2e-16   48      0    16
+gates 0.99-1 T96 d128 dv16 ridge 1e-6-1e-4 a0  32  start  1.0e+06  3.5e-11  3.1e-11  1.3e-11  5.3e-16    0      0    32
+gates 0.99-1 T96 d128 dv16 ridge 1e-6-1e-4 a0  32    two  1.0e+06  6.8e-11  6.5e-11  1.3e-11  1.2e-15   48      0    16
+gates 0.99-1 T96 d128 dv16 ridge 1e-6-1e-4 a2  32  start  3.3e+05  3.4e-12  8.5e-12  8.2e-16  3.3e-16    0      0    32
+gates 0.99-1 T96 d128 dv16 ridge 1e-6-1e-4 a2  32    two  3.3e+05  2.0e-12  1.1e-11  8.2e-16  9.2e-16   48      0    16
+    gates 0.9-1 T200 d16 dv8 ridge 0.05-1 a0  32  start  2.5e+01  1.6e-15  3.9e-16  4.9e-16  4.8e-16    0    102    16
+    gates 0.9-1 T200 d16 dv8 ridge 0.05-1 a0  32    two  2.5e+01  3.7e-15  1.4e-15  4.9e-16  1.9e-15  100      6    16
+    gates 0.9-1 T200 d16 dv8 ridge 0.05-1 a2  32  start  1.9e+01  4.8e-16  1.1e-15  2.8e-16  3.5e-16    0    102    16
+    gates 0.9-1 T200 d16 dv8 ridge 0.05-1 a2  32    two  1.9e+01  5.4e-16  1.1e-15  2.8e-16  3.5e-16  100      6    16
+ gates 0.9-1 T200 d16 dv8 ridge 1e-6-1e-4 a0  32  start  4.9e+05  1.3e-11  4.2e-12  3.2e-12  2.6e-15    0    102    16
+ gates 0.9-1 T200 d16 dv8 ridge 1e-6-1e-4 a0  32    two  4.9e+05  1.3e-11  4.2e-12  3.2e-12  2.6e-15  100      6    16
+ gates 0.9-1 T200 d16 dv8 ridge 1e-6-1e-4 a2  32  start  6.1e+04  1.4e-12  7.6e-14  1.7e-15  1.1e-14    0    102    16
+ gates 0.9-1 T200 d16 dv8 ridge 1e-6-1e-4 a2  32    two  6.1e+04  1.4e-12  7.6e-14  1.7e-15  1.1e-14  100      6    16
+   gates 0.9-1 T200 d64 dv16 ridge 0.05-1 a0  16  start  3.0e+01  3.5e-15  1.4e-15  7.0e-16  8.8e-16    0      0    16
+   gates 0.9-1 T200 d64 dv16 ridge 0.05-1 a0  16    two  3.0e+01  6.2e-15  2.2e-15  7.0e-16  1.3e-15  100      0     8
+   gates 0.9-1 T200 d64 dv16 ridge 0.05-1 a2  16  start  1.9e+01  1.2e-15  1.9e-15  9.7e-16  3.0e-16    0      0    16
+   gates 0.9-1 T200 d64 dv16 ridge 0.05-1 a2  16    two  1.9e+01  1.3e-15  1.8e-15  9.7e-16  3.2e-16  100      0     8
+gates 0.9-1 T200 d64 dv16 ridge 1e-6-1e-4 a0  16  start  1.1e+06  4.0e-11  1.1e-11  1.4e-11  1.0e-14    0      0    16
+gates 0.9-1 T200 d64 dv16 ridge 1e-6-1e-4 a0  16    two  1.1e+06  8.1e-11  1.1e-09  1.4e-11  1.0e-14  100      0     8
+gates 0.9-1 T200 d64 dv16 ridge 1e-6-1e-4 a2  16  start  3.9e+05  3.4e-12  2.1e-12  5.8e-16  3.9e-16    0      0    16
+gates 0.9-1 T200 d64 dv16 ridge 1e-6-1e-4 a2  16    two  3.9e+05  5.7e-12  2.6e-12  5.8e-16  8.5e-16  100      0     8
+     gates 0.9-1 T150 d8 dv4 ridge 0.05-1 a0  64  start  1.4e+01  9.5e-16  2.8e-16  4.1e-16  6.2e-16    0    129     8
+     gates 0.9-1 T150 d8 dv4 ridge 0.05-1 a0  64    two  1.4e+01  1.5e-15  7.7e-16  4.1e-16  1.3e-15   24    105     8
+     gates 0.9-1 T150 d8 dv4 ridge 0.05-1 a2  64  start  4.0e+01  6.9e-16  9.1e-16  1.7e-16  1.9e-16    0    129     8
+     gates 0.9-1 T150 d8 dv4 ridge 0.05-1 a2  64    two  4.0e+01  9.2e-16  9.1e-16  1.7e-16  1.9e-16   24    105     8
+  gates 0.9-1 T150 d8 dv4 ridge 1e-6-1e-4 a0  64  start  4.6e+05  9.5e-12  2.6e-12  3.6e-12  3.0e-15    0    129     8
+  gates 0.9-1 T150 d8 dv4 ridge 1e-6-1e-4 a0  64    two  4.6e+05  9.5e-12  2.6e-12  3.6e-12  3.0e-15   24    105     8
+  gates 0.9-1 T150 d8 dv4 ridge 1e-6-1e-4 a2  64  start  1.0e+05  1.2e-12  1.2e-14  8.9e-16  1.3e-14    0    129     8
+  gates 0.9-1 T150 d8 dv4 ridge 1e-6-1e-4 a2  64    two  1.0e+05  1.2e-12  1.2e-14  8.9e-16  1.3e-14   24    105     8
+   gates 0.9-1 T257 d32 dv32 ridge 0.05-1 a0  64  start  2.7e+01  1.6e-15  6.4e-16  4.7e-16  4.3e-16    0    132    32
+   gates 0.9-1 T257 d32 dv32 ridge 0.05-1 a0  64    two  2.7e+01  9.5e-15  5.8e-15  4.7e-16  2.4e-15  129      4    32
+   gates 0.9-1 T257 d32 dv32 ridge 0.05-1 a2  64  start  1.4e+01  7.5e-16  1.2e-15  6.3e-16  3.2e-16    0    132    32
+   gates 0.9-1 T257 d32 dv32 ridge 0.05-1 a2  64    two  1.4e+01  1.1e-15  1.0e-15  6.3e-16  3.4e-16  129      4    32
+gates 0.9-1 T257 d32 dv32 ridge 1e-6-1e-4 a0  64  start  5.6e+05  2.6e-11  6.0e-12  4.6e-12  1.1e-13    0    132    32
+gates 0.9-1 T257 d32 dv32 ridge 1e-6-1e-4 a0  64    two  5.6e+05  2.6e-11  6.0e-12  4.6e-12  1.1e-13  129      4    32
+gates 0.9-1 T257 d32 dv32 ridge 1e-6-1e-4 a2  64  start  2.7e+05  1.7e-13  1.3e-14  1.1e-15  3.9e-16    0    132    32
+gates 0.9-1 T257 d32 dv32 ridge 1e-6-1e-4 a2  64    two  2.7e+05  1.7e-13  4.4e-14  1.1e-15  3.9e-16  129      4    32
+   gates 0.9-1 T96 d128 dv16 ridge 0.05-1 a0  32  start  2.9e+01  1.9e-15  1.4e-15  8.5e-16  4.7e-16    0      0    32
+   gates 0.9-1 T96 d128 dv16 ridge 0.05-1 a0  32    two  2.9e+01  1.0e-14  6.9e-15  8.5e-16  2.5e-15   48      0    16
+   gates 0.9-1 T96 d128 dv16 ridge 0.05-1 a2  32  start  1.9e+01  6.6e-16  1.3e-15  9.5e-16  3.1e-16    0      0    32
+   gates 0.9-1 T96 d128 dv16 ridge 0.05-1 a2  32    two  1.9e+01  6.6e-16  1.1e-15  9.5e-16  3.1e-16   48      0    16
+gates 0.9-1 T96 d128 dv16 ridge 1e-6-1e-4 a0  32  start  9.0e+05  2.4e-11  1.4e-11  1.5e-11  3.4e-16    0      0    32
+gates 0.9-1 T96 d128 dv16 ridge 1e-6-1e-4 a0  32    two  9.0e+05  3.7e-10  1.8e-10  1.5e-11  8.5e-15   48      0    16
+gates 0.9-1 T96 d128 dv16 ridge 1e-6-1e-4 a2  32  start  1.2e+05  2.9e-11  9.9e-12  5.9e-16  1.8e-15    0      0    32
+gates 0.9-1 T96 d128 dv16 ridge 1e-6-1e-4 a2  32    two  1.2e+05  3.4e-11  1.9e-11  5.9e-16  7.0e-15   48      0    16
+    gates 0.5-1 T200 d16 dv8 ridge 0.05-1 a0  32  start  3.2e+01  1.5e-15  1.2e-15  4.1e-16  2.5e-16    0    102    16
+    gates 0.5-1 T200 d16 dv8 ridge 0.05-1 a0  32    two  3.2e+01  4.5e-14  3.5e-14  4.1e-16  4.0e-15   51     55    16
+    gates 0.5-1 T200 d16 dv8 ridge 0.05-1 a2  32  start  1.3e+01  3.9e-16  1.1e-15  3.2e-16  3.3e-16    0    102    16
+    gates 0.5-1 T200 d16 dv8 ridge 0.05-1 a2  32    two  1.3e+01  1.5e-15  1.4e-15  3.2e-16  4.5e-16   48     58    16
+ gates 0.5-1 T200 d16 dv8 ridge 1e-6-1e-4 a0  32  start  8.8e+05  2.5e-11  2.3e-12  2.7e-12  1.7e-14    0    102    16
+ gates 0.5-1 T200 d16 dv8 ridge 1e-6-1e-4 a0  32    two  8.8e+05  2.5e-11  2.3e-12  2.7e-12  1.7e-14   54     52    16
+ gates 0.5-1 T200 d16 dv8 ridge 1e-6-1e-4 a2  32  start  2.3e+05  1.2e-13  4.0e-14  1.9e-15  7.7e-16    0    102    16
+ gates 0.5-1 T200 d16 dv8 ridge 1e-6-1e-4 a2  32    two  2.3e+05  7.4e-13  2.9e-13  1.9e-15  7.7e-16   45     61    16
+   gates 0.5-1 T200 d64 dv16 ridge 0.05-1 a0  16  start  3.2e+01  6.3e-15  4.4e-15  4.9e-16  1.5e-15    0      0    16
+   gates 0.5-1 T200 d64 dv16 ridge 0.05-1 a0  16    two  3.2e+01  3.9e-14  6.7e-14  4.9e-16  1.3e-14   94      0    10
+   gates 0.5-1 T200 d64 dv16 ridge 0.05-1 a2  16  start  2.0e+01  6.9e-16  1.5e-15  6.5e-16  2.9e-16    0      0    16
+   gates 0.5-1 T200 d64 dv16 ridge 0.05-1 a2  16    two  2.0e+01  9.0e-16  3.1e-15  6.5e-16  1.7e-15   93      0    10
+gates 0.5-1 T200 d64 dv16 ridge 1e-6-1e-4 a0  16  start  1.3e+06  2.4e-11  8.6e-12  4.0e-12  2.0e-15    0      0    16
+gates 0.5-1 T200 d64 dv16 ridge 1e-6-1e-4 a0  16    two  1.3e+06  5.2e-10  2.8e-10  4.0e-12  2.8e-14   95      0    11
+gates 0.5-1 T200 d64 dv16 ridge 1e-6-1e-4 a2  16  start  2.6e+05  3.2e-12  1.7e-11  8.6e-16  4.6e-15    0      0    16
+gates 0.5-1 T200 d64 dv16 ridge 1e-6-1e-4 a2  16    two  2.6e+05  2.5e-11  1.2e-10  8.6e-16  2.6e-13   87      0    10
+     gates 0.5-1 T150 d8 dv4 ridge 0.05-1 a0  64  start  1.9e+01  1.1e-15  1.7e-15  1.9e-16  7.1e-16    0    129     8
+     gates 0.5-1 T150 d8 dv4 ridge 0.05-1 a0  64    two  1.9e+01  3.9e-15  2.6e-15  1.9e-16  3.1e-15   22    107     8
+     gates 0.5-1 T150 d8 dv4 ridge 0.05-1 a2  64  start  1.7e+01  7.7e-16  8.5e-16  2.1e-16  2.6e-16    0    129     8
+     gates 0.5-1 T150 d8 dv4 ridge 0.05-1 a2  64    two  1.7e+01  6.0e-15  8.9e-16  2.1e-16  5.6e-16   20    109     8
+  gates 0.5-1 T150 d8 dv4 ridge 1e-6-1e-4 a0  64  start  5.8e+05  7.2e-12  3.4e-12  1.3e-12  9.5e-14    0    129     8
+  gates 0.5-1 T150 d8 dv4 ridge 1e-6-1e-4 a0  64    two  5.8e+05  7.2e-12  3.4e-12  1.3e-12  9.5e-14   24    105     8
+  gates 0.5-1 T150 d8 dv4 ridge 1e-6-1e-4 a2  64  start  7.8e+04  9.6e-13  6.6e-14  1.7e-14  1.6e-13    0    129     8
+  gates 0.5-1 T150 d8 dv4 ridge 1e-6-1e-4 a2  64    two  7.8e+04  9.6e-13  6.6e-14  1.7e-14  1.6e-13   22    107     8
+   gates 0.5-1 T257 d32 dv32 ridge 0.05-1 a0  64  start  2.8e+01  1.5e-15  1.1e-15  6.5e-16  5.9e-16    0    132    32
+   gates 0.5-1 T257 d32 dv32 ridge 0.05-1 a0  64    two  2.8e+01  1.6e-14  8.3e-15  6.5e-16  5.6e-15   31    102    32
+   gates 0.5-1 T257 d32 dv32 ridge 0.05-1 a2  64  start  1.8e+01  7.5e-16  1.2e-15  4.9e-16  3.2e-16    0    132    32
+   gates 0.5-1 T257 d32 dv32 ridge 0.05-1 a2  64    two  1.8e+01  7.5e-16  1.4e-15  4.9e-16  5.0e-16   32    101    32
+gates 0.5-1 T257 d32 dv32 ridge 1e-6-1e-4 a0  64  start  7.9e+05  1.8e-11  5.0e-12  8.7e-12  5.6e-15    0    132    32
+gates 0.5-1 T257 d32 dv32 ridge 1e-6-1e-4 a0  64    two  7.9e+05  2.9e-11  5.0e-12  8.7e-12  8.6e-15   35     98    32
+gates 0.5-1 T257 d32 dv32 ridge 1e-6-1e-4 a2  64  start  1.0e+05  4.6e-12  7.6e-12  4.9e-16  2.8e-15    0    132    32
+gates 0.5-1 T257 d32 dv32 ridge 1e-6-1e-4 a2  64    two  1.0e+05  1.3e-10  6.5e-11  4.9e-16  5.0e-14   33    100    32
+   gates 0.5-1 T96 d128 dv16 ridge 0.05-1 a0  32  start  2.8e+01  2.8e-15  1.3e-15  8.9e-16  3.4e-16    0      0    32
+   gates 0.5-1 T96 d128 dv16 ridge 0.05-1 a0  32    two  2.8e+01  6.7e-15  2.9e-14  8.9e-16  7.4e-15   24      0    25
+   gates 0.5-1 T96 d128 dv16 ridge 0.05-1 a2  32  start  1.9e+01  1.3e-15  9.4e-16  7.3e-16  2.8e-16    0      0    32
+   gates 0.5-1 T96 d128 dv16 ridge 0.05-1 a2  32    two  1.9e+01  1.3e-15  9.4e-16  7.3e-16  2.8e-16   23      0    26
+gates 0.5-1 T96 d128 dv16 ridge 1e-6-1e-4 a0  32  start  9.5e+05  1.4e-11  5.4e-12  7.1e-12  1.6e-15    0      0    32
+gates 0.5-1 T96 d128 dv16 ridge 1e-6-1e-4 a0  32    two  9.5e+05  1.5e-10  1.9e-10  7.1e-12  2.3e-14   19      0    27
+gates 0.5-1 T96 d128 dv16 ridge 1e-6-1e-4 a2  32  start  4.3e+04  6.7e-13  2.3e-12  7.4e-16  2.0e-15    0      0    32
+gates 0.5-1 T96 d128 dv16 ridge 1e-6-1e-4 a2  32    two  4.3e+04  2.0e-11  2.5e-11  7.4e-16  1.0e-13   22      0    25
+ gates 0.01-0.2 T200 d16 dv8 ridge 0.05-1 a0  32  start  2.9e+01  1.0e-15  8.2e-16  3.3e-16  3.0e-16    0    102    16
+ gates 0.01-0.2 T200 d16 dv8 ridge 0.05-1 a0  32    two  2.9e+01  1.0e-15  1.1e-15  3.3e-16  1.0e-15    8     95    16
+ gates 0.01-0.2 T200 d16 dv8 ridge 0.05-1 a2  32  start  2.0e+01  7.1e-16  6.9e-16  2.6e-16  2.5e-16    0    102    16
+ gates 0.01-0.2 T200 d16 dv8 ridge 0.05-1 a2  32    two  2.0e+01  7.1e-16  6.9e-16  2.6e-16  2.5e-16   13     91    16
+gates 0.01-0.2 T200 d16 dv8 ridge 1e-6-1e-4 a0  32  start  1.0e+06  3.0e-11  8.8e-12  4.2e-12  6.6e-16    0    102    16
+gates 0.01-0.2 T200 d16 dv8 ridge 1e-6-1e-4 a0  32    two  1.0e+06  4.0e-11  2.3e-11  4.2e-12  1.7e-15   10     93    16
+gates 0.01-0.2 T200 d16 dv8 ridge 1e-6-1e-4 a2  32  start  3.4e+05  6.7e-12  1.8e-13  4.6e-15  4.7e-15    0    102    16
+gates 0.01-0.2 T200 d16 dv8 ridge 1e-6-1e-4 a2  32    two  3.4e+05  6.7e-12  1.8e-13  4.6e-15  4.7e-15   10     93    16
+gates 0.01-0.2 T200 d64 dv16 ridge 0.05-1 a0  16  start  3.0e+01  1.8e-15  8.8e-16  6.6e-16  3.0e-16    0      0    16
+gates 0.01-0.2 T200 d64 dv16 ridge 0.05-1 a0  16    two  3.0e+01  2.9e-15  7.0e-15  6.6e-16  1.1e-15   18      0    15
+gates 0.01-0.2 T200 d64 dv16 ridge 0.05-1 a2  16  start  1.8e+01  5.9e-16  9.4e-16  9.4e-16  3.1e-16    0      0    16
+gates 0.01-0.2 T200 d64 dv16 ridge 0.05-1 a2  16    two  1.8e+01  5.9e-16  1.2e-15  9.4e-16  3.2e-16   18      0    15
+gates 0.01-0.2 T200 d64 dv16 ridge 1e-6-1e-4 a0  16  start  1.1e+06  2.7e-11  3.5e-12  7.6e-12  3.5e-16    0      0    16
+gates 0.01-0.2 T200 d64 dv16 ridge 1e-6-1e-4 a0  16    two  1.1e+06  4.7e-11  2.8e-10  7.6e-12  2.2e-14   19      0    15
+gates 0.01-0.2 T200 d64 dv16 ridge 1e-6-1e-4 a2  16  start  8.4e+04  1.1e-13  8.9e-16  8.5e-16  8.5e-17    0      0    16
+gates 0.01-0.2 T200 d64 dv16 ridge 1e-6-1e-4 a2  16    two  8.4e+04  1.6e-13  3.7e-14  8.5e-16  1.4e-16   19      0    15
+  gates 0.01-0.2 T150 d8 dv4 ridge 0.05-1 a0  64  start  3.2e+01  3.5e-15  1.1e-15  2.1e-16  6.2e-16    0    129     8
+  gates 0.01-0.2 T150 d8 dv4 ridge 0.05-1 a0  64    two  3.2e+01  3.5e-15  1.3e-15  2.1e-16  7.9e-16    5    124     8
+  gates 0.01-0.2 T150 d8 dv4 ridge 0.05-1 a2  64  start  1.8e+01  1.4e-15  7.0e-16  2.8e-16  3.5e-16    0    129     8
+  gates 0.01-0.2 T150 d8 dv4 ridge 0.05-1 a2  64    two  1.8e+01  1.4e-15  7.0e-16  2.8e-16  3.5e-16    6    123     8
+gates 0.01-0.2 T150 d8 dv4 ridge 1e-6-1e-4 a0  64  start  5.2e+05  8.8e-12  1.2e-12  3.7e-12  4.1e-15    0    129     8
+gates 0.01-0.2 T150 d8 dv4 ridge 1e-6-1e-4 a0  64    two  5.2e+05  8.8e-12  4.3e-12  3.7e-12  4.3e-15    5    124     8
+gates 0.01-0.2 T150 d8 dv4 ridge 1e-6-1e-4 a2  64  start  3.8e+05  2.1e-13  1.5e-13  2.2e-14  3.6e-16    0    129     8
+gates 0.01-0.2 T150 d8 dv4 ridge 1e-6-1e-4 a2  64    two  3.8e+05  2.1e-13  2.2e-13  2.2e-14  3.6e-16    6    123     8
+gates 0.01-0.2 T257 d32 dv32 ridge 0.05-1 a0  64  start  3.7e+01  3.7e-15  1.3e-15  4.8e-16  2.7e-16    0    132    32
+gates 0.01-0.2 T257 d32 dv32 ridge 0.05-1 a0  64    two  3.7e+01  3.7e-15  1.3e-15  4.8e-16  3.0e-16    7    126    32
+gates 0.01-0.2 T257 d32 dv32 ridge 0.05-1 a2  64  start  1.9e+01  6.8e-16  6.6e-16  5.3e-16  2.7e-16    0    132    32
+gates 0.01-0.2 T257 d32 dv32 ridge 0.05-1 a2  64    two  1.9e+01  6.8e-16  6.6e-16  5.3e-16  2.7e-16    5    128    32
+gates 0.01-0.2 T257 d32 dv32 ridge 1e-6-1e-4 a0  64  start  9.8e+05  4.2e-11  6.1e-12  5.9e-12  3.0e-16    0    132    32
+gates 0.01-0.2 T257 d32 dv32 ridge 1e-6-1e-4 a0  64    two  9.8e+05  4.3e-11  2.6e-10  5.9e-12  4.8e-15    7    126    32
+gates 0.01-0.2 T257 d32 dv32 ridge 1e-6-1e-4 a2  64  start  1.5e+05  6.4e-13  6.6e-14  6.2e-15  7.8e-16    0    132    32
+gates 0.01-0.2 T257 d32 dv32 ridge 1e-6-1e-4 a2  64    two  1.5e+05  6.4e-13  6.6e-14  6.2e-15  7.8e-16    7    126    32
+gates 0.01-0.2 T96 d128 dv16 ridge 0.05-1 a0  32  start  3.1e+01  2.2e-15  8.2e-16  6.8e-16  2.8e-16    0      0    32
+gates 0.01-0.2 T96 d128 dv16 ridge 0.05-1 a0  32    two  3.1e+01  2.2e-15  1.9e-15  6.8e-16  2.7e-16    4      0    31
+gates 0.01-0.2 T96 d128 dv16 ridge 0.05-1 a2  32  start  1.9e+01  4.0e-16  8.5e-16  7.5e-16  2.9e-16    0      0    32
+gates 0.01-0.2 T96 d128 dv16 ridge 0.05-1 a2  32    two  1.9e+01  4.0e-16  8.5e-16  7.5e-16  2.9e-16    3      0    31
+gates 0.01-0.2 T96 d128 dv16 ridge 1e-6-1e-4 a0  32  start  1.2e+06  3.2e-11  2.0e-12  5.6e-12  1.1e-16    0      0    32
+gates 0.01-0.2 T96 d128 dv16 ridge 1e-6-1e-4 a0  32    two  1.2e+06  4.1e-11  5.3e-11  5.6e-12  1.1e-15    4      0    31
+gates 0.01-0.2 T96 d128 dv16 ridge 1e-6-1e-4 a2  32  start  6.3e+04  3.2e-13  3.1e-15  8.4e-16  2.2e-16    0      0    32
+gates 0.01-0.2 T96 d128 dv16 ridge 1e-6-1e-4 a2  32    two  6.3e+04  3.2e-13  3.1e-15  8.4e-16  2.2e-16    5      0    31
+
+== A2. float64 edge cases
+                                        case   C policy cond max    err o    err x  dense x  bwd err  end primal max m
+                                       T = 1  16    two  1.8e+01  6.4e-16  1.4e-16  1.4e-16  9.1e-17    1      0     0
+                                chunk size 1   1    two  2.7e+01  1.5e-15  3.3e-16  1.6e-16  4.4e-16   40      0     0
+          one chunk longer than the sequence  64    two  2.7e+01  6.0e-15  2.1e-15  1.6e-16  2.0e-15    8     25     8
+             T = 40, C = 7 (does not divide)   7    two  2.7e+01  3.4e-15  6.0e-16  1.6e-16  9.4e-16   23      0     3
+   always downdate (policy end), gates 0.5-1   7    end  2.7e+01  2.9e-14  5.0e-14  1.6e-16  3.9e-15   40      0     6
+                   one key repeated 20 times   8    two  4.3e+01  9.1e-15  2.1e-15  2.7e-16  6.2e-16   20      0     4
+               beta = 0 on every third token   8    two  2.1e+01  2.1e-15  5.8e-16  1.0e-16  6.2e-16   20      0     4
+              three near-resets (gate 1e-12)  16    two  3.3e+01  1.3e-14  8.0e-15  1.6e-16  4.4e-15   19      3     8
+       large write strengths (beta up to 50)  32    two  8.0e+02  3.0e-14  6.9e-15  7.6e-15  1.3e-15   64      4    16
+            ridge 1e-8, key spectrum alpha 4  32  start  1.3e+08  1.0e-09  1.9e-10  8.6e-14  5.8e-14    0     68    16
+            ridge 1e-8, key spectrum alpha 4  32    two  1.3e+08  1.0e-09  1.9e-10  8.6e-14  5.8e-14   64      4    16
+
+A summary: {'cases': 240, 'well_conditioned_cases': 120, 'worst_err_o_well': 4.483797083305143e-14, 'worst_err_x_well': 6.700810720520991e-14, 'worst_bwd_err_well': 1.262080779936201e-14, 'ill_conditioned_cases': 120, 'worst_cond': 1392140.3702448236, 'worst_err_x_ill': 1.1450845832286851e-09, 'worst_err_x_dense_ill': 1.6835992543226604e-11, 'worst_bwd_err_ill': 2.63339229259714e-13, 'worst_err_x_over_cond_eps': 4.622326663293488}
+
+A2 summary: {'cases': 11, 'well_conditioned_cases': 9, 'worst_err_o_well': 3.04644033123463e-14, 'worst_err_x_well': 4.9593065086688326e-14, 'worst_bwd_err_well': 4.414425456636845e-15, 'ill_conditioned_cases': 2, 'worst_cond': 131197495.15020993, 'worst_err_x_ill': 1.9499979797176235e-10, 'worst_err_x_dense_ill': 8.604685342310085e-14, 'worst_bwd_err_ill': 5.789603972087344e-14, 'worst_err_x_over_cond_eps': 0.006755942383188457}
+
+== B. float32 output error against the float64 reference (max error / max |reference|), T = 512, d = 64, dv = 32, C = 64
+     gates      ridge alpha cond max chunk start chunk two     dense     CG 10     CG 30    CG 100
+  none (1)     0.05-1   0.0  3.0e+01     1.3e-06   7.0e-07   6.9e-07   2.0e-02   2.0e-06   6.6e-07
+  none (1) 0.001-0.01   2.0  3.8e+03     1.2e-06   7.3e-07   5.8e-07   1.6e-01   1.6e-04   6.0e-07
+    0.99-1     0.05-1   0.0  2.8e+01     7.5e-07   6.0e-07   6.7e-07   1.7e-02   1.4e-06   6.3e-07
+    0.99-1 0.001-0.01   2.0  1.7e+03     3.8e-06   1.2e-06   7.5e-07   1.1e-01   3.3e-05   7.2e-07
+     0.9-1     0.05-1   0.0  3.1e+01     7.8e-07   1.3e-06   3.6e-07   1.2e-02   9.8e-07   5.6e-07
+     0.9-1 0.001-0.01   2.0  2.6e+02     2.3e-06   7.5e-07   2.5e-07   2.1e-02   8.2e-07   7.7e-07
+     0.5-1     0.05-1   0.0  3.3e+01     9.1e-07   1.4e-06   4.6e-07   2.0e-02   1.3e-06   1.1e-06
+     0.5-1 0.001-0.01   2.0  1.4e+02     5.6e-07   2.0e-06   1.9e-07   8.7e-03   8.0e-07   8.0e-07
+
+saved results/check_forward_20261029_004818.json

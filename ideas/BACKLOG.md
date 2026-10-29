@@ -27,6 +27,18 @@ A ranked queue of testable ideas. `/research` with no argument takes the highest
 - **Hypothesis:** exact in float64, and in float32 more accurate than 30 CG steps at lower cost, for gates from 0.9 to 0.999.
 - **Decisive test:** a float64 check against a token-by-token gated recurrence, then float32 drift over 65k tokens for several gate values.
 
+## I-011 · GPU benchmark of study 0002's exact gated MesaNet solver
+- **Runs on** GPU · **Track** A, B · **Priority** 2 · **Status** ready · **Builds on** 0002 (E2: exact chunk solve and closed-form backward)
+- **What:** implement 0002's solver in PyTorch:
+  - boundary states by the chunk recurrence;
+  - one batched `torch.linalg.eigh` per chunk boundary;
+  - batched capacitance Cholesky padded to the largest size (two anchors, ρ ≤ 10), or the d×d form when m ≥ d;
+  - the closed-form backward of 0002's Proposition 3.
+  Time forward and forward + backward against flash-linear-attention's MesaNet kernels (fixed 30-step CG in both passes) and against CG with MesaNet's diagonal start or Jacobi preconditioning, at equal output error, for gates near 1, 0.9–1 and 0.5–1, d = 64 and 128, chunks 32–128. Where possible, use key statistics taken from a trained MesaNet, because Jacobi-type preconditioners depend on how anisotropic the keys are along the axes. Also measure float32 error on the GPU.
+- **Hypothesis:** at d = 128 the exact training pass is faster than 30 + 30-step CG. 0002's FLOP model (claim 8, E1) puts a training pass at 7.7–15.9 CG-step equivalents against 60, and the forward solve at 3.8–19.0.
+- **Decisive test:** wall-clock time per training pass at matched error, and the share of time spent in `eigh`.
+- **Compute:** about 1–2 GPU hours.
+
 ## I-005 · Shared tiny-LM baseline (milestone M2, infrastructure)
 - **Runs on** GPU · **Track** all · **Priority** 2 · **Status** ready
 - **What:** a Llama-style Transformer, a data pipeline (for example a FineWeb-Edu or TinyStories sample in `data/`), a training loop and evaluation in `lab/`, with a tuned learning rate at 10–30M parameters and 3 seeds. Every E5 claim compares against it.
@@ -42,12 +54,26 @@ A ranked queue of testable ideas. `/research` with no argument takes the highest
 - **What:** use the exact-chunk preconditioner for slowly forgetting heads and plain CG for fast-forgetting ones, chosen per head by the condition-number bound.
 - **Decisive test:** total solve time and error against all-CG, on gate distributions like MesaNet's.
 - **Compute:** about 1 GPU hour.
+- **Note (2026-10-29):** study 0002 gives an exact solver whose cost doesn't depend on the gates (E2). That makes it a candidate for the fast-forgetting heads where this preconditioner's bound fails. The policy question becomes exact solver against preconditioned CG, decided per head; I-011 measures the inputs to that choice.
 
 ## I-004 · Fused Triton kernel for the carried-inverse layer
 - **Runs on** GPU · **Track** B · **Priority** 4 · **Status** ready · **Builds on** 0001
 - **What:** one program per head that keeps P and the value memory on chip, replacing the many small PyTorch kernels per chunk.
 - **Decisive test:** forward and backward time against the PyTorch version and against flash-linear-attention's Gated DeltaNet kernels at equal sizes.
 - **Compute:** mostly development time, little GPU time.
+
+## I-012 · Iterative refinement for ill-conditioned heads in study 0002
+- **Runs on** CPU · **Track** B · **Priority** 3 · **Status** ready · **Builds on** 0002 (E2)
+- **What:** 0002's solver loses accuracy as conditioning worsens. Its backward error rises to about 1.2e3·eps at condition 1e6, against ≤ 0.5·eps for dense LU. In float32 its error is up to 103× the dense solve's at condition 1e3–1e4 and up to 2000× at 1e4–1e5. Add one refinement step: form the residual q_t − (H_t + Λ)x_t with the chunk product (about one CG step), then re-solve with the same eigendecompositions and capacitance factors.
+- **Decisive test:** forward error against the refined reference at condition numbers 1e2–1e8, in float64 and float32, compared with the dense solve.
+
+## I-013 · Exact chunkwise least-squares memory with per-channel gates
+- **Runs on** phone for the theory, CPU for the check · **Track** A, E · **Priority** 4 · **Status** ready · **Builds on** 0002
+- **What:** with diagonal (per-channel) gates, as in GLA or KDA, 0002's per-token ridge becomes a diagonal matrix that varies per token. The boundary eigenbasis doesn't diagonalize it. Find an exact chunk method costing less than a dense solve per token, or show that none exists of the form "one factorization per chunk plus low-rank work per token".
+
+## I-014 · Capacity-optimal associative memory against least squares
+- **Runs on** phone, CPU · **Track** E · **Priority** 4 · **Status** ready (no novelty check yet)
+- **What:** least-squares (pseudo-inverse) memory stores d random pairs perfectly. Cover's and Gardner's capacity bounds allow about 2d pairs with binary values for a linear readout. Quantify the gap for MQAR-style retrieval (argmax over a vocabulary). Test whether a cheap recurrent rule, for example a few reweighted least-squares steps on the stored pairs, closes part of it. Related to I-010.
 
 ## I-007 · Open tracks C–E
 - **Runs on** phone · **Priority** 4 · **Status** ready

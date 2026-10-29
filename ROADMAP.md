@@ -16,8 +16,8 @@ Every step cites the claims it relies on (study id and evidence level), so a lat
 
 | Track | Question | Studies |
 |---|---|---|
-| A. Sequence memory and attention | Can fixed-size memories (linear attention, delta rule, least-squares memory) approach softmax attention's recall at lower cost? | 0001 |
-| B. Solvers and numerics | Exact or better-conditioned algebra for layers that now iterate or approximate, and stability in low precision | 0001 (partly) |
+| A. Sequence memory and attention | Can fixed-size memories (linear attention, delta rule, least-squares memory) approach softmax attention's recall at lower cost? | 0001, 0002 |
+| B. Solvers and numerics | Exact or better-conditioned algebra for layers that now iterate or approximate, and stability in low precision | 0001 (partly), 0002 (partly) |
 | C. Optimization | Optimizers and preconditioners that reach the same loss with fewer FLOPs at small scale | – |
 | D. Parameterization and stability | Initialization, normalization and scaling rules that transfer across width and depth | – |
 | E. Theory probes | Capacity and expressivity results, and synthetic tasks that predict language-model quality | – |
