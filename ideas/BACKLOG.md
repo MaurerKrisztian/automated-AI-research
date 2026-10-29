@@ -10,6 +10,7 @@ A ranked queue of testable ideas. `/research` with no argument takes the highest
 - **Runs on** phone · **Track** A, B · **Priority** 1 · **Status** ready · **Builds on** 0001
 - **What:** review issues 1, 3, 6, 10, 11 and 12 in `studies/0001-prefix-cholesky/REVIEW.md` need no new runs. Refresh the stale Summary from the existing logs, soften "no float32 drift", discuss DeltaNet's chunkwise UT/WY transform and block recursive least squares in the novelty check, update Limitations, say which timing run is quoted, and add a References section listing only works actually opened.
 - **Done when:** those issues are marked fixed, each naming the file that shows it.
+- **Note (2026-10-29):** the closest block-RLS precedent is now known: Slock and Maouche's subsampled-updating RLS (1994), which gives every in-block RLS output exactly from one L×L factorization per block. See the erratum at the top of 0001's README and study 0003's Novelty check. The novelty wording must change accordingly.
 
 ## I-008 · Rerun study 0001's CPU exactness checks with saved logs
 - **Runs on** CPU · **Track** B · **Priority** 1 · **Status** ready · **Builds on** 0001
@@ -20,6 +21,20 @@ A ranked queue of testable ideas. `/research` with no argument takes the highest
 - **Runs on** GPU · **Track** A, B · **Priority** 1 · **Status** ready · **Builds on** 0001
 - **What:** review issues 2, 4, 5, 7 and 8. Give the CG baseline an implicit backward (one extra CG solve), run 3+ seeds at 64 pairs with a tuned DeltaNet, sweep learning rate and ridge at 128 pairs to tell a failure to train from a capacity limit, and time the layers at head dim 32 and at small batch.
 - **Compute:** about 2 GPU hours.
+
+## I-015 · Float64 check of study 0003's chunkwise Kalman memory
+- **Runs on** CPU · **Track** A, B · **Priority** 1 · **Status** done: 0003 (claims 1–5 and 7–10 at E2; `logs/check_chunk_v4.log`, `logs/check_float32.log`) · **Builds on** 0003 (E1: Propositions 1–6)
+- **What:** `check_chunk.py` in study 0003. Compare Propositions 2–3 (chunk readout and boundary update) with the token-by-token Kalman recursion of Proposition 1(b). Use random inputs, scalar and per-channel gates in [0.01, 1] and [0.999, 1], C = 1, sequence lengths that are not a multiple of C, d below and above C, tiny β and badly conditioned keys. Check the gate-free limit against 0001's Mesa readout. Check Proposition 6's adjoint, then full gradients for q, k, v, β, gates and Λ against autograd in float64. Then float32 against float64 over long sequences, to see whether the covariance update drifts (Proposition 4c).
+- **Done when:** errors at float64 round-off with saved logs, or the identity is refuted.
+- **Compute:** minutes on a CPU.
+
+## I-018 · Accuracy of study 0003's chunk form on ill-conditioned chunks
+- **Runs on** CPU · **Track** B · **Priority** 2 · **Status** ready · **Builds on** 0003 (E2: claims 8–9)
+- **What:** the chunk form is exact, but its rounding error is about cond(𝒦)·eps. The token-by-token filter is usually more accurate: 2.1–195× in float64, depending on the keys, and 2.3–56× in float32 at cond(𝒦) 430–1.35e4, where the chunk form reached 3.7e-4. Running only the C×C stage in float64 barely helps. Forming 𝒦 itself in float64 cut the float32 error 2–10× but left one configuration 11× above the filter, so the other chunk matrices (X, Z, R) and products matter too. Try:
+  - forming 𝒦, X, Z and R at higher precision, or through a Cholesky factor of P_0 (square-root form);
+  - iterative refinement, which helps only if its residual uses a more accurate 𝒦;
+  - a per-head fallback to the token-by-token filter. Chosen by cond(𝒦), it would miss the cases where the prior-to-posterior downdate dominates. Note too that without forgetting the float32 token-by-token filter drifts and the chunk form does not.
+- **Decisive test:** `check_float32.py`'s five ill-conditioned configurations and `check_chunk.py`'s part A2. Success means errors within 2× of the token-by-token filter at a small extra cost.
 
 ## I-002 · Exact forgetting with the carried inverse
 - **Runs on** phone for the derivation (E1), CPU for the float64 check (E2), GPU for the long float32 drift test · **Track** A, B · **Priority** 2 · **Status** ready · **Builds on** 0001 (E2: carried-inverse identity)
@@ -38,6 +53,18 @@ A ranked queue of testable ideas. `/research` with no argument takes the highest
 - **Hypothesis:** at d = 128 the exact training pass is faster than 30 + 30-step CG. 0002's FLOP model (claim 8, E1) puts a training pass at 7.7–15.9 CG-step equivalents against 60, and the forward solve at 3.8–19.0.
 - **Decisive test:** wall-clock time per training pass at matched error, and the share of time spent in `eigh`.
 - **Compute:** about 1–2 GPU hours.
+
+## I-016 · GPU benchmark of study 0003's Kalman memory
+- **Runs on** GPU · **Track** A, B · **Priority** 2 · **Status** ready (I-015 done) · **Builds on** 0003 (E2)
+- **What:** a PyTorch chunk implementation (a batched C×C Cholesky inside the loop over chunks). The main baseline is the Bayesian Layer's published chunk algorithm (Dowling et al. 2026, Appendix C.2, Eqs. 23–27: sequential gain loop and mean pass), written with the same care, since its code is not public. Also time 0001's carried inverse (`lab.layers.mesa`), 0002's exact solver, and flash-linear-attention's MesaNet (CG), Gated DeltaNet and KDA kernels. Measure forward and forward + backward at d = 64 and 128, chunks 16–128, with scalar and per-channel gates. Also measure float32 drift of the covariance over 65k tokens.
+- **Hypothesis:** the chunk-parallel form is faster than the sequential Bayesian Layer algorithm at d = 128 and chunks of 32–64, despite 1.3–1.5× more FLOPs, because its order-dependent work is 6–13× smaller (0003, claim 6, E1). It is also faster than 30 + 30-step CG.
+- **Compute:** about 1–2 GPU hours.
+
+## I-017 · Stationary against free process noise in the Kalman memory
+- **Runs on** GPU · **Track** A · **Priority** 3 · **Status** ready (I-015 done) · **Builds on** 0003 (E2)
+- **What:** the Bayesian Layer (Dowling et al. 2026) learns its process noise freely. Study 0003's stationary choice ties it to the gates, so the prior stays N(0, Λ⁻¹), MesaNet's fixed ridge, with one fewer learned quantity per token. Both forget like Gated DeltaNet, while MesaNet's forgetting saturates (0003, Proposition 1(d)). Train MQAR and selective-copying models, 3 seeds, with both parametrizations (scalar and per-channel gates), against MesaNet (CG) and Gated DeltaNet, at equal parameters and an equal tuning budget. The chunk-parallel form computes either one exactly, so this tests the parametrization, not the algorithm.
+- **Decisive test:** recall and loss against the seed spread.
+- **Compute:** about 2 GPU hours.
 
 ## I-005 · Shared tiny-LM baseline (milestone M2, infrastructure)
 - **Runs on** GPU · **Track** all · **Priority** 2 · **Status** ready
@@ -70,6 +97,7 @@ A ranked queue of testable ideas. `/research` with no argument takes the highest
 ## I-013 · Exact chunkwise least-squares memory with per-channel gates
 - **Runs on** phone for the theory, CPU for the check · **Track** A, E · **Priority** 4 · **Status** ready · **Builds on** 0002
 - **What:** with diagonal (per-channel) gates, as in GLA or KDA, 0002's per-token ridge becomes a diagonal matrix that varies per token. The boundary eigenbasis doesn't diagonalize it. Find an exact chunk method costing less than a dense solve per token, or show that none exists of the form "one factorization per chunk plus low-rank work per token".
+- **Note (2026-10-29):** study 0003 (E1) gives an exact chunk method for per-channel gates in a closely related model, the Kalman-filter memory of the Bayesian Layer (Dowling et al. 2026). There, forgetting is decay plus process noise on the memory instead of MesaNet's down-weighting of old pairs, and one C×C Cholesky per chunk suffices. MesaNet's own model with per-channel gates remains open.
 
 ## I-014 · Capacity-optimal associative memory against least squares
 - **Runs on** phone, CPU · **Track** E · **Priority** 4 · **Status** ready (no novelty check yet)
@@ -82,3 +110,4 @@ A ranked queue of testable ideas. `/research` with no argument takes the highest
 ## I-006 · Least-squares memory in a tiny LM
 - **Runs on** GPU · **Track** A · **Priority** 5 · **Status** blocked (needs I-005, and I-002 for forgetting) · **Builds on** 0001
 - **What:** replace attention in some or all layers with `lab.layers.mesa`, and compare with Gated DeltaNet and the Transformer baseline at equal parameters and tokens.
+- **Note (2026-10-29):** study 0003's Kalman memory is another route to forgetting (exact chunk form verified at E2 in float64; quality untested, see I-017).

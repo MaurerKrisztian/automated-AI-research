@@ -15,6 +15,8 @@ updated: 2026-10-29
 
 Oct 26, 2026 · @Krisztian
 
+> **Erratum (2026-10-29, found during study 0003).** The Novelty check says that no published method computes exact least-squares memory chunk by chunk. Slock and Maouche's subsampled-updating RLS does exactly that (Signal Processing 40(1), 1994, doi:10.1016/0165-1684(94)90018-3; preprint §§2.5–2.6, https://www.eurecom.fr/publication/99/download/cm-slocdi-941214.pdf). It handles exponentially weighted RLS with a fading prior, or a fixed ridge when its weighting factor is 1. It carries R⁻¹ across blocks of L samples with one L×L "likelihood variable" matrix per block (its eqs. 28–33), and recovers every in-block RLS error exactly from that matrix's UDL factorization (eqs. 41, 47). That is this study's chunk identity, evaluated at the keys instead of at separate queries, and the readout at queries is a small extension. Read the Summary's "probably new", the Verdict and the Novelty conclusion with this in mind. The measured speed and accuracy results are unaffected. See study 0003's Novelty check and backlog I-001.
+
 > **Under review.** The review in [REVIEW.md](REVIEW.md) found stale and overstated claims that are not fixed yet. In particular, the Summary describes the first version; the faster improved layer is in [Improvements](#improvements). The note moved into this repository on 2026-10-29. Its text is unchanged apart from formatting and the parts marked *added*; the original is [archive/note-original.txt](archive/note-original.txt).
 
 ## Summary
