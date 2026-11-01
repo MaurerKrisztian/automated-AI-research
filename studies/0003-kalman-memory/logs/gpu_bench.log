@@ -1,0 +1,141 @@
+Environment: torch 2.11.0+cu128, cpu_threads 6, triton_f32_default ieee, gpu NVIDIA GeForce RTX 5060 Ti, gpu_mem_gib 15.47637939453125, sms 36, triton 3.6.0, fla 0.6.0
+Kalman methods: ['chunk', 'chunk_magma', 'chunk_inv', 'bl_triton', 'bl_triton_wy', 'bl', 'bl_wy', 'recurrent']; references: ['mesa_carry', 'mesanet_cg30', 'mesanet_exact', 'fla_gdn', 'fla_kda', 'fla_mesanet']
+
+Part A. float64 on cuda: every Kalman method against the extended-precision token-by-token filter (CPU).
+Errors are max|x - x_ref| / max|x_ref| over all heads: outputs O, then the final M_T and P_T.
+[W1030 00:45:31.370999915 Context.cpp:444] Warning: torch.backends.cuda.preferred_linalg_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+[W1030 00:45:31.371027177 Context.cpp:422] Warning: The usage of MAGMA backend for linear algebra operations is deprecated and will be removed in future releases. cuSOLVER stays as the default backend.If you see any error messages with cuSOLVER but not MAGMA, please, file an issue on GitHub. (function operator())
+/media/zero/EXTERNAL_MAIN/code/automated-AI-research/studies/0003-kalman-memory/kalman_batched.py:142: UserWarning: linalg.eig: MAGMA, as a linear algebra backend, is deprecated and will be removed in future releases. linalg.eig will try dispatching to cuSOLVER instead. If you see any error messages, please, file an issue on GitHub. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/linalg/BatchLinearAlgebra.cpp:724.)
+  L = torch.linalg.cholesky_ex(Kmat).L
+scalar gates 0.9-1, T = 300, d = 32, C = 64
+          chunk: O 6.8e-16   M_T 5.5e-16   P_T 2.5e-16
+    chunk_magma: O 6.8e-16   M_T 5.5e-16   P_T 2.5e-16
+      chunk_inv: O 7.7e-16   M_T 4.2e-16   P_T 2.5e-16
+      bl_triton: O 3.7e-16   M_T 2.7e-16   P_T 2.0e-16
+   bl_triton_wy: O 6.3e-16   M_T 3.2e-16   P_T 2.0e-16
+             bl: O 3.6e-16   M_T 2.5e-16   P_T 1.6e-16
+          bl_wy: O 5.2e-16   M_T 3.2e-16   P_T 1.6e-16
+      recurrent: O 3.3e-16   M_T 3.0e-16   P_T 4.3e-16
+  chunk_magma's O, M_T and P_T bitwise equal to chunk's: True
+per-channel gates 0.5-1, T = 200, d = 32, C = 32
+          chunk: O 4.6e-16   M_T 3.5e-16   P_T 1.5e-16
+    chunk_magma: O 4.6e-16   M_T 3.5e-16   P_T 1.5e-16
+      chunk_inv: O 4.8e-16   M_T 3.7e-16   P_T 1.5e-16
+      bl_triton: O 2.0e-16   M_T 2.6e-16   P_T 1.6e-16
+   bl_triton_wy: O 4.7e-16   M_T 3.6e-16   P_T 1.6e-16
+             bl: O 3.0e-16   M_T 2.6e-16   P_T 1.6e-16
+          bl_wy: O 4.7e-16   M_T 3.6e-16   P_T 1.6e-16
+      recurrent: O 3.3e-16   M_T 2.8e-16   P_T 1.8e-16
+  chunk_magma's O, M_T and P_T bitwise equal to chunk's: True
+per-channel gates 0.9-1, d = 128 > C = 16
+          chunk: O 7.9e-16   M_T 5.7e-16   P_T 2.0e-16
+    chunk_magma: O 7.9e-16   M_T 5.7e-16   P_T 2.0e-16
+      chunk_inv: O 1.1e-15   M_T 4.9e-16   P_T 1.8e-16
+      bl_triton: O 3.9e-16   M_T 3.9e-16   P_T 1.8e-16
+   bl_triton_wy: O 7.9e-16   M_T 4.6e-16   P_T 1.8e-16
+             bl: O 4.3e-16   M_T 3.9e-16   P_T 1.8e-16
+          bl_wy: O 7.9e-16   M_T 4.6e-16   P_T 1.8e-16
+      recurrent: O 4.6e-16   M_T 6.1e-16   P_T 3.6e-16
+  chunk_magma's O, M_T and P_T bitwise equal to chunk's: True
+scalar gates 0.99-1, T = 260 (padded), C = 128
+          chunk: O 1.0e-15   M_T 9.6e-16   P_T 7.6e-16
+    chunk_magma: O 1.0e-15   M_T 9.6e-16   P_T 7.6e-16
+      chunk_inv: O 1.1e-15   M_T 9.6e-16   P_T 6.0e-16
+      bl_triton: O 6.5e-16   M_T 1.0e-15   P_T 6.4e-16
+   bl_triton_wy: O 8.2e-16   M_T 7.6e-16   P_T 6.4e-16
+             bl: O 6.5e-16   M_T 6.3e-16   P_T 5.3e-16
+          bl_wy: O 9.8e-16   M_T 9.8e-16   P_T 5.3e-16
+      recurrent: O 6.6e-16   M_T 8.1e-16   P_T 5.9e-16
+  chunk_magma's O, M_T and P_T bitwise equal to chunk's: True
+free diagonal noise, dense P_init, M_0 != 0
+          chunk: O 1.6e-16   M_T 2.9e-16   P_T 2.2e-16
+    chunk_magma: O 1.6e-16   M_T 2.9e-16   P_T 2.2e-16
+      chunk_inv: O 1.6e-16   M_T 3.7e-16   P_T 2.2e-16
+      bl_triton: O 1.1e-16   M_T 4.4e-16   P_T 2.2e-16
+   bl_triton_wy: O 1.2e-16   M_T 2.9e-16   P_T 2.2e-16
+             bl: O 1.5e-16   M_T 4.4e-16   P_T 2.2e-16
+          bl_wy: O 1.2e-16   M_T 2.9e-16   P_T 2.2e-16
+      recurrent: O 1.7e-16   M_T 2.4e-16   P_T 1.7e-16
+  chunk_magma's O, M_T and P_T bitwise equal to chunk's: True
+worst error over all cases and methods: 1.1e-15
+
+(part A: 6 s)
+Part B. Timing on NVIDIA GeForce RTX 5060 Ti: float32, TF32 off, T = 2048, e = d; gates uniform on 0.9-1; unit keys, ridge 1, beta 0.5-2. Medians in ms (lab.bench; warmup 3, reps 10, or 3 reps for calls over 0.5 s). err: float32 output error against the float64 token-by-token filter on the device. mem: peak GiB above the inputs, forward (and forward + backward). Memory cap 14.0 GiB.
+
+  N=16 d=64 C=16 scalar gates  (362 s)
+            chunk  fwd     41.67 ms  graph      9.06  fwd+bwd    177.04 ms  err 4.1e-07  mem 0.07 / 0.26
+        chunk_inv  fwd     44.74 ms  graph      9.27  fwd+bwd    187.03 ms  err 3.2e-07  mem 0.07 / 0.28
+        bl_triton  fwd     29.45 ms  graph      5.52  err 2.9e-07  mem 0.06
+     bl_triton_wy  fwd     61.05 ms  graph     10.63  err 3.1e-07  mem 0.06
+               bl  fwd    480.31 ms  graph     43.94  fwd+bwd   2371.81 ms  err 2.5e-07  mem 0.06 / 1.32
+            bl_wy  fwd    335.41 ms  graph     43.10  fwd+bwd   1519.52 ms  err 3.8e-07  mem 0.06 / 0.42
+        recurrent  fwd    460.57 ms  graph     49.10  fwd+bwd   2316.75 ms  err 3.7e-07  mem 0.02 / 3.08
+       mesa_carry  fwd     26.98 ms  fwd+bwd     32.20 ms  mem 0.10 / 0.25  [graph capture failed: AcceleratorError("CUDA error: operation failed due to a previous error during capture\nSearch for `cudaErrorStreamCaptur]
+     mesanet_cg30  fwd     30.41 ms  graph     26.99  mem 0.16
+    mesanet_exact  fwd     72.22 ms  mem 0.28
+          fla_gdn  fwd      0.96 ms  fwd+bwd     18.35 ms  mem 0.05 / 0.11
+      fla_mesanet  fwd      1.76 ms  fwd+bwd      7.21 ms  mem 0.03 / 0.07
+
+  N=16 d=64 C=32 scalar gates  (51 s)
+            chunk  fwd     21.49 ms  graph      6.48  fwd+bwd     95.26 ms  err 3.4e-07  mem 0.07 / 0.23
+        chunk_inv  fwd     22.98 ms  graph      6.62  fwd+bwd     97.26 ms  err 3.1e-07  mem 0.07 / 0.25
+        bl_triton  fwd     15.40 ms  graph      4.54  err 2.9e-07  mem 0.06
+     bl_triton_wy  fwd     30.01 ms  graph      7.49  err 2.9e-07  mem 0.06
+               bl  fwd    481.71 ms  graph     43.78  fwd+bwd   2560.91 ms  err 3.2e-07  mem 0.06 / 1.42
+            bl_wy  fwd    318.38 ms  graph     31.44  fwd+bwd   1468.27 ms  err 2.9e-07  mem 0.06 / 0.51
+        recurrent  fwd    460.57 ms  graph     49.10  fwd+bwd   2316.75 ms  err 3.7e-07  mem 0.02 / 3.08
+       mesa_carry  fwd     14.54 ms  fwd+bwd     17.19 ms  mem 0.07 / 0.16  [graph capture failed: AcceleratorError("CUDA error: operation failed due to a previous error during capture\nSearch for `cudaErrorStreamCaptur]
+     mesanet_cg30  fwd     19.16 ms  graph     16.66  mem 0.10
+    mesanet_exact  fwd     45.37 ms  mem 0.59
+          fla_gdn  fwd      0.96 ms  fwd+bwd     18.35 ms  mem 0.05 / 0.11
+      fla_mesanet  fwd      1.76 ms  fwd+bwd      7.21 ms  mem 0.03 / 0.07
+
+  N=16 d=64 C=64 scalar gates  (48 s)
+            chunk  fwd     11.44 ms  graph      5.09  fwd+bwd     47.68 ms  err 5.1e-07  mem 0.09 / 0.25
+        chunk_inv  fwd     12.19 ms  graph      5.05  fwd+bwd     52.08 ms  err 4.2e-07  mem 0.09 / 0.28
+        bl_triton  fwd      8.40 ms  graph      4.16  err 2.9e-07  mem 0.06
+     bl_triton_wy  fwd     15.93 ms  graph      5.77  err 3.8e-07  mem 0.06
+               bl  fwd    481.44 ms  graph     56.13  fwd+bwd   2479.51 ms  err 2.9e-07  mem 0.06 / 1.66
+            bl_wy  fwd    316.07 ms  graph     39.03  fwd+bwd   1445.10 ms  err 4.1e-07  mem 0.06 / 0.75
+        recurrent  fwd    460.57 ms  graph     49.10  fwd+bwd   2316.75 ms  err 3.7e-07  mem 0.02 / 3.08
+       mesa_carry  fwd      8.22 ms  fwd+bwd     10.38 ms  mem 0.06 / 0.11  [graph capture failed: AcceleratorError("CUDA error: operation failed due to a previous error during capture\nSearch for `cudaErrorStreamCaptur]
+     mesanet_cg30  fwd     18.48 ms  graph     16.52  mem 0.08
+    mesanet_exact  fwd     49.64 ms  mem 2.08
+          fla_gdn  fwd      0.96 ms  fwd+bwd     18.35 ms  mem 0.05 / 0.11
+      fla_mesanet  fwd      1.76 ms  fwd+bwd      7.21 ms  mem 0.03 / 0.07
+
+  N=16 d=64 C=128 scalar gates  (47 s)
+            chunk  fwd      6.74 ms  graph      5.57  fwd+bwd     30.89 ms  err 8.2e-07  mem 0.14 / 0.32
+        chunk_inv  fwd      6.96 ms  graph      5.33  fwd+bwd     31.60 ms  err 7.9e-07  mem 0.14 / 0.36
+        bl_triton  fwd      5.56 ms  graph      5.09  err 2.9e-07  mem 0.06
+     bl_triton_wy  fwd      8.17 ms  graph      6.19  err 6.5e-07  mem 0.06
+               bl  fwd    481.67 ms  graph     56.73  fwd+bwd   2397.11 ms  err 2.9e-07  mem 0.06 / 2.16
+            bl_wy  fwd    313.04 ms  graph     39.05  fwd+bwd   1418.97 ms  err 6.9e-07  mem 0.06 / 1.28
+        recurrent  fwd    460.57 ms  graph     49.10  fwd+bwd   2316.75 ms  err 3.7e-07  mem 0.02 / 3.08
+       mesa_carry  fwd      5.62 ms  fwd+bwd      7.97 ms  mem 0.05 / 0.13  [graph capture failed: AcceleratorError("CUDA error: operation failed due to a previous error during capture\nSearch for `cudaErrorStreamCaptur]
+     mesanet_cg30  fwd     21.16 ms  graph     19.61  mem 0.10
+          fla_gdn  fwd      0.96 ms  fwd+bwd     18.35 ms  mem 0.05 / 0.11
+      fla_mesanet  fwd      1.76 ms  fwd+bwd      7.21 ms  mem 0.03 / 0.07
+    mesanet_exact  fwd       n/a     [out of memory]
+
+  N=16 d=64 C=16 channel gates  (438 s)
+            chunk  fwd     44.88 ms  graph      9.33  fwd+bwd    198.58 ms  err 3.1e-07  mem 0.08 / 0.30
+        chunk_inv  fwd     48.81 ms  graph      9.55  fwd+bwd    207.68 ms  err 3.1e-07  mem 0.08 / 0.32
+        bl_triton  fwd     31.56 ms  graph      5.89  err 2.3e-07  mem 0.08
+     bl_triton_wy  fwd     62.62 ms  graph     10.62  err 3.3e-07  mem 0.08
+               bl  fwd    513.44 ms  graph     57.99  fwd+bwd   2487.25 ms  err 2.6e-07  mem 0.08 / 1.36
+            bl_wy  fwd    351.55 ms  graph     43.41  fwd+bwd   1592.39 ms  err 3.0e-07  mem 0.08 / 0.48
+        recurrent  fwd    502.85 ms  graph     50.80  err 2.6e-07  mem 0.02  [out of memory]
+       mesa_carry  fwd     30.50 ms  fwd+bwd     34.25 ms  mem 0.10 / 0.25  [graph capture failed: OutOfMemoryError('CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 15.48 GiB of which 119.]
+          fla_kda  fwd      1.07 ms  fwd+bwd      3.89 ms  mem 0.07 / 0.16
+
+  N=16 d=64 C=32 channel gates  (41 s)
+            chunk  fwd     22.37 ms  fwd+bwd    102.36 ms  err 3.6e-07  mem 0.08 / 0.26  [graph capture failed: OutOfMemoryError('CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 15.48 GiB of which 21.4]
+        chunk_inv  fwd     23.91 ms  fwd+bwd    104.39 ms  err 3.3e-07  mem 0.08 / 0.28  [graph capture failed: OutOfMemoryError('CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 15.48 GiB of which 21.4]
+        bl_triton  fwd     16.02 ms  err 2.3e-07  mem 0.08  [graph capture failed: OutOfMemoryError('CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 15.48 GiB of which 23.4]
+     bl_triton_wy  fwd     31.31 ms  err 2.9e-07  mem 0.08  [graph capture failed: OutOfMemoryError('CUDA out of memory. Tried to allocate 16.00 MiB. GPU 0 has a total capacity of 15.48 GiB of which 23.4]
+               bl  fwd    499.70 ms  fwd+bwd   2557.26 ms  err 2.5e-07  mem 0.08 / 1.45  [graph capture failed: OutOfMemoryError('CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 15.48 GiB of which 23.4]
+            bl_wy  fwd    328.93 ms  fwd+bwd   1585.77 ms  err 3.0e-07  mem 0.08 / 0.56  [graph capture failed: OutOfMemoryError('CUDA out of memory. Tried to allocate 16.00 MiB. GPU 0 has a total capacity of 15.48 GiB of which 23.4]
+        recurrent  fwd    502.85 ms  graph     50.80  err 2.6e-07  mem 0.02  [out of memory]
+       mesa_carry  fwd     14.96 ms  fwd+bwd     17.40 ms  mem 0.07 / 0.16  [graph capture failed: OutOfMemoryError('CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 15.48 GiB of which 21.4]
+          fla_kda  fwd      1.07 ms  fwd+bwd      3.89 ms  mem 0.07 / 0.16

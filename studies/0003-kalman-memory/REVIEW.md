@@ -1,10 +1,59 @@
 # Review of 0003
 
+Reviewer: @MaurerKrisztian with the `reviewer` subagent (Claude Opus 5.5) · Date: 2026-10-30 · Reviewed: README as of 2026-10-30. That covers the E3 additions: claims 13–16, claim 11's GPU part, the Results subsection "GPU benchmark (E3)", and the code `kalman_batched.py`, `bl_triton.py`, `gpu_bench.py`, `aggregate_gpu_bench.py`, `run_gpu.sh` and `check_batched.py`.
+
+This review ran in the same session that wrote the E3 additions, so it is a self-check (docs/PROTOCOL.md, section 8). The reviewer wrote nothing into the repository. Its scratch checks are in `/tmp/rev0003/` on the reference workstation and are not part of the study's evidence:
+- a recomputation of every quoted range from the JSONs, without the aggregator;
+- a CUDA-graph timing of forward + backward in two cells, whose gradients are bitwise equal to the eager ones;
+- a CPU float32 check of BL's two mean passes with identical gains.
+
+Every issue was checked against the cited files before this was written, and none was dropped.
+
+## Verdict
+**Revise.** The forward-pass result holds and is fair to BL. In plain PyTorch, the chunk form is mostly not faster than BL's chunk algorithm with this study's Triton loops, and backlog I-016's hypothesis is refuted at these sizes. Every quoted GPU number traces to the JSONs, and the aggregation reproduces the quoted log byte for byte. The training claim, though, is not supported as worded. "Through autograd it trains 9–47× faster than BL's loops" compares eager timings, and BL's PyTorch loops over positions are bound by kernel launches in eager mode. The effect of BL's fused backward, which this study does not have, is not estimated either.
+
+## Issues
+| # | Severity | Issue | Evidence | Resolution |
+|---|---|---|---|---|
+| 1 | major | Forward + backward is timed eager only, where BL's PyTorch loops and the token-by-token filter are launch-bound. The study graph-times the forward for exactly that reason. Yet it quotes the eager forward + backward ratios without saying "eager": 2.9–47× per cell, 9.0–47× at each method's fastest C, and 12–84× for the filter. Part C's stage split is eager too | • `gpu_bench.py` lines 421 and 436: only the forward is captured as a graph. <br>• In the study's own forward times (`results/gpu_bench_20261030_021340.json`), eager is 3.69–8.29× slower than graphs for bl, 4.19–8.93× for bl_wy and 2.31–9.13× for the filter, against 1.04–5.45× for the chunk form. <br>• Reviewer's scratch check: at N = 16, d = 64, scalar, C = 128, bl_wy goes from 1328.85 to 137.41 ms as a graph and chunk_inv from 30.64 to 24.85 ms, so 43.6× becomes 5.5×. At N = 64, d = 128, C = 64, 7.5× becomes 2.1×. <br>• Between the runs, bl_wy's eager forward + backward moved by 0.841–0.999×, against 0.948–1.008× for the chunk form (`logs/aggregate_gpu_bench_v3.log`) | fixed: `gpu_bench.py` now also times forward + backward as CUDA graphs. Captures needing over 5.6 GiB are skipped, since a failed capture breaks the allocator. As graphs, BL's WY form takes 1.83–6.02× the chunk form's time over 28 cells, against 2.93–47.38× eager (`logs/gpu_bench_graph_bwd_n16.log`, `logs/gpu_bench_graph_bwd_n64.log`, `logs/aggregate_gpu_bench_v5.log`). Claim 14, the Summary, the Verdict and the Results quote both, labeled. Part C was not re-timed: the Results now say its shares are eager and include launch gaps, and that a fused kernel should be compared as graphs |
+| 2 | major | BL's real, fused backward is left out and its effect is not estimated, which docs/PROTOCOL.md section 6 requires. The front matter, the Verdict, STUDIES.md and backlog I-016 put "trains 9–47× faster than BL's loops" next to "BL's chunk algorithm with Triton loops", so it reads as a claim against BL's Triton implementation | • `logs/aggregate_gpu_bench_v3.log`, each method at its fastest C: bl_triton's forward takes 5.52–19.72 ms, and the chunk form's autograd forward + backward 27.45–160.00 ms. That is 4.6–12.2× per setting. <br>• Suppose a fused BL backward costs k times BL's forward. Then BL's training step beats the chunk form's autograd step in all 8 settings for any k < 3.6, and at k = 2 by 1.5–4.1× | fixed: the ratio is gone from the front matter, and STUDIES.md and backlog I-016 are reworded. Claim 14, the Summary, the Verdict and the Results say this compares autograd paths only, and give the estimate from `logs/aggregate_gpu_bench_v5.log`: BL's step wins in all 8 settings for k < 3.64 eager and k < 4.17 as graphs. Fused kernels in this benchmark have k = 2.7–3.1 (KDA), 3.1–3.6 (MesaNet) and 12.7–24.8 (Gated DeltaNet), so training speed against BL is stated as open |
+| 3 | minor | The decision rule (NOTEBOOK.md, 2026-10-30) is applied to the eager cells but not to the CUDA-graph cells, and 4–9% differences are called "faster" | • Graph ratios in the 8 hypothesis cells: 0.80, 1.09, 0.79, 1.05, 0.83, 0.88, 0.81 and 0.89. Across all cells the graph ratio moved by 0.848–1.032× between the runs. <br>• Beyond that spread, BL is faster in 4 of the 8 graph cells and in 7 of the 8 eager cells. The other cells show no measurable difference, and the hypothesis holds in no cell. <br>• With each method at its fastest C, the eager 1.04 (rerun 1.05) at N = 16, d = 128, per-channel gates lies inside the eager spread of 0.955–1.073. <br>• In all four N = 16 settings, the chunk form's fastest eager C is 128, the edge of the grid | fixed: `aggregate_gpu_bench.py` applies the rule to each timing, with a spread of 7.3% eager and 15.2% as graphs. BL is faster beyond it in 7 of 8 eager and 4 of 8 graph cells, the chunk form in none, and the rest show no measurable difference. The Results, claim 13, the Summary, the Verdict and I-016 say so, and scope "refuted" to the plain-PyTorch form against Triton loops. The C = 128 grid edge is in the Results and the Limitations |
+| 4 | minor | The Verdict compares accuracy ranges that are not like for like, and the new front matter dropped the accuracy caveat | • "2.3–56× worse on the CPU" is the worse chunk variant, the explicit L⁻¹ (claim 9). "1.8–30× on the GPU" is triangular solves only. With the explicit L⁻¹, the GPU gives 2.03–41.38× (`logs/aggregate_gpu_bench_v3.log`), and that variant is the fastest timed one in 14 of 16 entries. <br>• "The errors match the CPU runs" gives no ratio, and the GPU runs use 4 heads against 1 on the CPU | fixed: the Verdict quotes the explicit L⁻¹ on both (2.3–56× on the CPU, 2.0–41× on the GPU) and triangular solves on the GPU (1.8–30×). The CPU's triangular-solve range is not quoted, because no log prints it. The Summary replaces "match" with the GPU's ranges and states the 4 heads. The accuracy caveat is back in the front matter |
+| 5 | minor | The per-channel timings use the GLA-style matrix-product Gram, which overflows once the in-chunk log decay falls below about −88. Claim 16's "P stays positive definite at every chunk boundary" lacks "with finite output" | • `kalman_batched.py` lines 90–91: "auto" picks "matmul" for per-channel gates. Line 104 multiplies by `exp(-logA)`. <br>• At per-channel gates 0.1–0.3, part D gives non-finite chunk outputs and P (`logs/gpu_bench_cd.log`). <br>• The Results subsection already says "with finite output" | fixed: claim 16 says "of every run with finite output". The Limitations say the per-channel timings use this form, valid only while a chunk's log decay stays above about −88 (a mean gate above about 0.25 at C = 64 and 0.50 at C = 128), and that a safe form would cost more and was not timed |
+| 6 | minor | fla's Gated DeltaNet and KDA kernels did not run in strict float32, as the README says they did | fla 0.6.0 sets `SOLVE_TRIL_DOT_PRECISION = 'tf32'` on GPUs with TF32: `fla/ops/gated_delta_rule/chunk_fwd.py` line 21 and `fla/ops/kda/chunk_intra.py` line 23. That explicit input precision overrides `TRITON_F32_DEFAULT=ieee`. These are reference timings, so no conclusion changes | fixed: the Results and the Limitations say fla 0.6.0 runs Gated DeltaNet's and KDA's intra-chunk triangular solves in TF32 on this GPU |
+| 7 | minor | The scripts' docstrings tell readers to `tee` into the immutable logs. `gpu_bench.py` also says that `run_gpu.sh` runs four benchmark commands; it now runs five | • `gpu_bench.py` lines 32–35, where `logs/gpu_bench_cd.log` is a quoted record. <br>• `aggregate_gpu_bench.py` line 15 | fixed: the docstrings of `gpu_bench.py` and `aggregate_gpu_bench.py` write to /tmp and point to `run_gpu.sh`, and no longer give a count of its runs |
+
+The fixes in the table above were made after this review, on 2026-10-30 and 2026-11-01, and have not been reviewed again. Because this is a self-check, the study stays at status `review` until a review from another session or contributor. The reviewer also suggested adding BL's token-by-token PyTorch mean to part D, so that the study's own log isolates the mean pass; that is done in `logs/gpu_bench_drift_bl.log`.
+
+## What holds up
+- **Every GPU number.** The numbers in the front matter, Summary, Verdict, claims 13–16 and the GPU Results tables match `logs/aggregate_gpu_bench_v3.log`. Rerunning `aggregate_gpu_bench.py` on the four JSONs reproduces that log byte for byte.
+- **Independent recomputation.** Recomputed from the JSONs without the aggregator, the ranges agree:
+  - per cell, 0.626–1.689 eager and 0.591–1.914 as graphs;
+  - with each method at its fastest C, 0.664–1.084 and 0.681–0.994;
+  - in the hypothesis cells, 0.732–0.923 eager and 0.788–1.089 as graphs;
+  - between the runs, the ratios moved by 0.955–1.073× eager, 0.848–1.032× as graphs and 0.841–1.016× for forward + backward;
+  - no cell changes its faster family.
+- **Claim 11's GPU part.** The worst float64 error in part A is 1.13e-15, and chunk_magma is bitwise equal to chunk in 5 of 5 cases (`logs/gpu_bench_v2.log`). Part A also checks the Triton kernels in their current form, keyed on n_heads, which changed after the CPU check ran.
+- **Claims 11 and 12 on the CPU.** They match `logs/check_batched.log`: 8.9e-16, 1.2e-15 and 9.1e-16 in part P1; ≤ 9.1e-16, and 1.6e-13 when ill-conditioned, in part P2; 1.3×, 1.7× and 5.1× in part P4.
+- **The BL baseline computes the same filter and is a strong speed baseline.** Its float64 error is ≤ 1.0e-15 on the GPU. The transported-direction recursion is algebraically right. Its loops are Triton kernels autotuned for each shape and N, against plain PyTorch for the chunk form. Every method gets the same inputs with TF32 off, its own precomputation is timed, and the forward is also timed as graphs. So the forward result is, if anything, generous to BL. The table of each method at its fastest C, added after the first run, slightly favors the chunk form, so it does not bias the outcome against the hypothesis.
+- **I-016.** "Mostly not faster" and "refuted at these sizes" are supported: the hypothesis holds in no cell, and fails beyond the spread in 7 of 8 eager cells.
+- **The timing harness.** It syncs after every call and takes medians after warmup, and the 0.5 s rule and the one shared capture stream are sound. The quoted logs contain no failed capture or WARNING, and leaving MAGMA out is justified. The reviewer's GPU run reproduced the logged eager forward + backward times within 2–6%.
+- **Memory.** The chunk form's autograd peak is below that of both BL PyTorch forms in 32 of 32 cells.
+- **Part D and claim 16.** They match `logs/gpu_bench_cd.log`. The reviewer's CPU check isolates the mean pass, using the same PyTorch gains in both. It confirms that BL's token-by-token mean drifts without forgetting (4.9e-7 to 4.9e-6) while the WY mean stays ≤ 7.4e-7, both with a covariance error of 1.6e-6.
+- **Claim 15.** The references match the logs, and the CG conclusion is correctly limited to the forward pass.
+- **Reproducibility.** `run_gpu.sh` matches the Reproduce row, and each script was last modified before the runs it produced.
+- **Novelty.** Four searches of the reviewer's own found nothing closer than BL, Kalman Linear Attention, Gated KalmaNet and Preconditioned DeltaNet. "No prior publication found as of 2026-10-29" stands.
+- **E3** is the right level for the front matter, on the strength of claims 13, 15 and 16.
+
+## Earlier reviews
+
+### Review of the E2 additions (2026-10-29)
+
 Reviewer: @MaurerKrisztian with the `reviewer` subagent (Claude Opus 5.5) · Date: 2026-10-29 · Reviewed: README as of 2026-10-29 (the E2 additions: `kalman_memory.py`, `check_chunk.py`, `check_float32.py`, their logs, and the README and NOTEBOOK changes)
 
 This review ran in the same session that wrote the study, so it is a self-check (docs/PROTOCOL.md, section 8). The reviewer wrote nothing into the repository; its own numerical checks are in the session's scratchpad (`rev/`), not in the study's evidence. Where its issues needed new numbers, the study's own checks were extended and rerun: `logs/check_chunk_v5.log` and `logs/check_float32_v2.log`.
 
-## Verdict
+#### Verdict
 **Revise.** The float64 evidence for claims 1–5 and 7 holds:
 - the reference is an independent token-by-token recursion in genuine x87 long double;
 - both checks reproduce their logs;
@@ -12,7 +61,7 @@ This review ran in the same session that wrote the study, so it is a self-check 
 - every quoted number matched the logs.
 The float32 claims, though, had been tested only where forgetting keeps the memory short. In the regimes Proposition 4(c) flags, the reviewer's scratch runs showed chunk errors up to 6.1e-4, and drift in the float32 token-by-token filter. All issues are now resolved with new runs and narrower wording.
 
-## Issues
+#### Issues
 | # | Severity | Issue | Evidence | Resolution |
 |---|---|---|---|---|
 | 1 | major | The float32 claims ("nothing drifts over 65,536 tokens", "up to 1.5e-5", "the covariance stays positive definite") rested on easy inputs. The two 65,536-token configurations had cond(𝒦) ≈ 5 and memory horizons of 19–200 tokens. Nothing ran without forgetting or at gates ≥ 0.9999, and positive definiteness was checked only on the final P | README Summary, claim 9, the float32 table; `check_float32.py` v1; reviewer's `drift_f32.log` | fixed: `check_float32.py` v2 adds four 65,536-token configurations: no forgetting with ordinary writes, strong writes or a decaying key spectrum, and strong writes at gates 0.9999–1. It checks P's eigenvalue ratio at every chunk boundary (`logs/check_float32_v2.log`). Claim 9, the Summary, the table, the Limitations and backlog I-018 now say: up to 3.7e-4, 2.3–56× the token-by-token filter at cond(𝒦) 430–1.35e4; without forgetting the token-by-token filter drifts to 6.8e-6 while the chunk form stays ≤ 7.9e-7; P stays positive definite at every boundary |
@@ -21,7 +70,7 @@ The float32 claims, though, had been tested only where forgetting keeps the memo
 | 4 | minor | "The error enters when 𝒦 is formed" was inferred, not tested | reviewer's `attrib_f32.log` | fixed: a variant that forms 𝒦 in float64 (`kmat_dtype`) is in `check_float32.py` v2. It cuts the error 2–10×, but one configuration stays 11× above the token-by-token filter, so the README now says the rest comes from the other chunk matrices and products, which were not isolated. I-018 lists higher-precision formation of 𝒦, X, Z and R, and says refinement needs a higher-precision residual |
 | 5 | minor | "Matches" and "comparable" overstated ratios of up to 3.5× and 5.4×. STUDIES.md and backlog I-006 still said E1. The Reproduce note missed float32's timing lines, and the Files row said v1 had a smaller part A2 | README Verdict, Results, Reproduce, Files; STUDIES.md; ideas/BACKLOG.md | fixed: ratios are given instead (0.84–3.5×, 0.69–5.4×), STUDIES.md is regenerated, I-006 updated, and the Reproduce and Files rows corrected |
 
-## What holds up
+#### What holds up
 - **The reference is independent and genuinely extended precision.** `kalman_reference_np` shares no code with the chunk implementation and runs in long double from the float64 inputs. The one shared input, `stationary_noise`, is checked separately by the one-pair formulas and the closed-form φ.
 - **No shared bug behind the four-form agreement.** A brute-force construction of 𝒦, X, Z and R from direct gate products and the state-space covariances agrees to ≤ 6.1e-16 over 12 random chunks, for both Gram paths. Per-token relative errors stay ≤ 1.7e-15.
 - **Reproducibility.** `check_chunk.py` and `check_float32.py` reproduce their logs (float32 apart from timing lines), and parts A–D are identical across the float64 log versions.
@@ -31,8 +80,6 @@ The float32 claims, though, had been tested only where forgetting keeps the memo
 - **Claim 10's mechanism is confirmed.** The log cumulative decay reaches −111.5, A underflows to 0, and the matrix-product 𝒦 fills with infinities and NaNs before the Cholesky fails.
 - **Evidence levels and wording are calibrated.** E2 for CPU numerics, E1 for the FLOP model, nothing on a GPU.
 - **Novelty.** The reviewer's searches found nothing closer than the Bayesian Layer and Kalman Linear Attention.
-
-## Earlier reviews
 
 ### Review of the E1 write-up and FLOP model (2026-10-29)
 

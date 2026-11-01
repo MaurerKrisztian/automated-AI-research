@@ -1,0 +1,213 @@
+Environment: torch 2.11.0+cu128, cpu_threads 6, triton_f32_default ieee, gpu NVIDIA GeForce RTX 5060 Ti, gpu_mem_gib 15.47637939453125, sms 36, triton 3.6.0, fla 0.6.0
+Kalman methods: ['chunk', 'chunk_magma', 'chunk_inv', 'bl_triton', 'bl_triton_wy', 'bl', 'bl_wy', 'recurrent']; references: ['mesa_carry', 'mesanet_cg30', 'mesanet_exact', 'fla_gdn', 'fla_kda', 'fla_mesanet']
+
+Part A. float64 on cuda: every Kalman method against the extended-precision token-by-token filter (CPU).
+Errors are max|x - x_ref| / max|x_ref| over all heads: outputs O, then the final M_T and P_T.
+[W1030 01:10:48.891168511 Context.cpp:444] Warning: torch.backends.cuda.preferred_linalg_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+[W1030 01:10:48.891180291 Context.cpp:422] Warning: The usage of MAGMA backend for linear algebra operations is deprecated and will be removed in future releases. cuSOLVER stays as the default backend.If you see any error messages with cuSOLVER but not MAGMA, please, file an issue on GitHub. (function operator())
+/media/zero/EXTERNAL_MAIN/code/automated-AI-research/studies/0003-kalman-memory/kalman_batched.py:142: UserWarning: linalg.eig: MAGMA, as a linear algebra backend, is deprecated and will be removed in future releases. linalg.eig will try dispatching to cuSOLVER instead. If you see any error messages, please, file an issue on GitHub. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/linalg/BatchLinearAlgebra.cpp:724.)
+  L = torch.linalg.cholesky_ex(Kmat).L
+scalar gates 0.9-1, T = 300, d = 32, C = 64
+          chunk: O 6.8e-16   M_T 5.5e-16   P_T 2.5e-16
+    chunk_magma: O 6.8e-16   M_T 5.5e-16   P_T 2.5e-16
+      chunk_inv: O 7.7e-16   M_T 4.2e-16   P_T 2.5e-16
+      bl_triton: O 3.7e-16   M_T 2.7e-16   P_T 2.0e-16
+   bl_triton_wy: O 6.3e-16   M_T 3.2e-16   P_T 2.0e-16
+             bl: O 3.6e-16   M_T 2.5e-16   P_T 1.6e-16
+          bl_wy: O 5.2e-16   M_T 3.2e-16   P_T 1.6e-16
+      recurrent: O 3.3e-16   M_T 3.0e-16   P_T 4.3e-16
+  chunk_magma's O, M_T and P_T bitwise equal to chunk's: True
+per-channel gates 0.5-1, T = 200, d = 32, C = 32
+          chunk: O 4.6e-16   M_T 3.5e-16   P_T 1.5e-16
+    chunk_magma: O 4.6e-16   M_T 3.5e-16   P_T 1.5e-16
+      chunk_inv: O 4.8e-16   M_T 3.7e-16   P_T 1.5e-16
+      bl_triton: O 2.0e-16   M_T 2.6e-16   P_T 1.6e-16
+   bl_triton_wy: O 4.7e-16   M_T 3.6e-16   P_T 1.6e-16
+             bl: O 3.0e-16   M_T 2.6e-16   P_T 1.6e-16
+          bl_wy: O 4.7e-16   M_T 3.6e-16   P_T 1.6e-16
+      recurrent: O 3.3e-16   M_T 2.8e-16   P_T 1.8e-16
+  chunk_magma's O, M_T and P_T bitwise equal to chunk's: True
+per-channel gates 0.9-1, d = 128 > C = 16
+          chunk: O 7.9e-16   M_T 5.7e-16   P_T 2.0e-16
+    chunk_magma: O 7.9e-16   M_T 5.7e-16   P_T 2.0e-16
+      chunk_inv: O 1.1e-15   M_T 4.9e-16   P_T 1.8e-16
+      bl_triton: O 3.9e-16   M_T 3.9e-16   P_T 1.8e-16
+   bl_triton_wy: O 7.9e-16   M_T 4.6e-16   P_T 1.8e-16
+             bl: O 4.3e-16   M_T 3.9e-16   P_T 1.8e-16
+          bl_wy: O 7.9e-16   M_T 4.6e-16   P_T 1.8e-16
+      recurrent: O 4.6e-16   M_T 6.1e-16   P_T 3.6e-16
+  chunk_magma's O, M_T and P_T bitwise equal to chunk's: True
+scalar gates 0.99-1, T = 260 (padded), C = 128
+          chunk: O 1.0e-15   M_T 9.6e-16   P_T 7.6e-16
+    chunk_magma: O 1.0e-15   M_T 9.6e-16   P_T 7.6e-16
+      chunk_inv: O 1.1e-15   M_T 9.6e-16   P_T 6.0e-16
+      bl_triton: O 6.5e-16   M_T 1.0e-15   P_T 6.4e-16
+   bl_triton_wy: O 8.2e-16   M_T 7.6e-16   P_T 6.4e-16
+             bl: O 6.5e-16   M_T 6.3e-16   P_T 5.3e-16
+          bl_wy: O 9.8e-16   M_T 9.8e-16   P_T 5.3e-16
+      recurrent: O 6.6e-16   M_T 8.1e-16   P_T 5.9e-16
+  chunk_magma's O, M_T and P_T bitwise equal to chunk's: True
+free diagonal noise, dense P_init, M_0 != 0
+          chunk: O 1.6e-16   M_T 2.9e-16   P_T 2.2e-16
+    chunk_magma: O 1.6e-16   M_T 2.9e-16   P_T 2.2e-16
+      chunk_inv: O 1.6e-16   M_T 3.7e-16   P_T 2.2e-16
+      bl_triton: O 1.1e-16   M_T 4.4e-16   P_T 2.2e-16
+   bl_triton_wy: O 1.2e-16   M_T 2.9e-16   P_T 2.2e-16
+             bl: O 1.5e-16   M_T 4.4e-16   P_T 2.2e-16
+          bl_wy: O 1.2e-16   M_T 2.9e-16   P_T 2.2e-16
+      recurrent: O 1.7e-16   M_T 2.4e-16   P_T 1.7e-16
+  chunk_magma's O, M_T and P_T bitwise equal to chunk's: True
+worst error over all cases and methods: 1.1e-15
+
+(part A: 6 s)
+Part B. Timing on NVIDIA GeForce RTX 5060 Ti: float32, TF32 off, T = 256, e = d; gates uniform on 0.9-1; unit keys, ridge 1, beta 0.5-2. Medians in ms (lab.bench; warmup 1, reps 3, or 3 reps for calls over 0.5 s). err: float32 output error against the float64 token-by-token filter on the device. mem: peak GiB above the inputs, forward (and forward + backward). Memory cap 14.0 GiB.
+
+  N=2 d=32 C=16 scalar gates  (10 s)
+            chunk  fwd      5.67 ms  graph      0.81  fwd+bwd     22.54 ms  err 2.4e-07  mem 0.00 / 0.00
+        chunk_inv  fwd      6.10 ms  graph      0.86  fwd+bwd     23.63 ms  err 1.7e-07  mem 0.00 / 0.00
+        bl_triton  fwd      3.80 ms  graph      0.44  err 1.7e-07  mem 0.00
+     bl_triton_wy  fwd      7.75 ms  graph      0.90  err 1.7e-07  mem 0.00
+               bl  fwd     59.50 ms  graph      5.23  fwd+bwd    279.13 ms  err 1.8e-07  mem 0.00 / 0.01
+            bl_wy  fwd     43.59 ms  graph      4.16  fwd+bwd    181.89 ms  err 1.6e-07  mem 0.00 / 0.00
+        recurrent  fwd     60.04 ms  graph      5.55  fwd+bwd    268.15 ms  err 2.2e-07  mem 0.00 / 0.01
+       mesa_carry  fwd      3.71 ms  fwd+bwd      4.88 ms  mem 0.00 / 0.00
+     mesanet_cg30  fwd      9.40 ms  graph      1.28  mem 0.00
+    mesanet_exact  fwd      1.76 ms  mem 0.00
+          fla_gdn  fwd      0.42 ms  fwd+bwd      1.71 ms  mem 0.00 / 0.00
+      fla_mesanet  fwd      0.23 ms  fwd+bwd      1.01 ms  mem 0.00 / 0.00
+
+  N=2 d=32 C=32 scalar gates  (6 s)
+            chunk  fwd      2.99 ms  graph      0.57  fwd+bwd     11.90 ms  err 2.3e-07  mem 0.00 / 0.00
+        chunk_inv  fwd      3.20 ms  graph      0.61  fwd+bwd     12.11 ms  err 2.9e-07  mem 0.00 / 0.00
+        bl_triton  fwd      1.98 ms  graph      0.35  err 1.7e-07  mem 0.00
+     bl_triton_wy  fwd      3.87 ms  graph      0.60  err 1.8e-07  mem 0.00
+               bl  fwd     60.24 ms  graph      5.16  fwd+bwd    286.31 ms  err 1.7e-07  mem 0.00 / 0.01
+            bl_wy  fwd     40.07 ms  graph      3.93  fwd+bwd    173.78 ms  err 1.8e-07  mem 0.00 / 0.00
+        recurrent  fwd     60.04 ms  graph      5.55  fwd+bwd    268.15 ms  err 2.2e-07  mem 0.00 / 0.01
+       mesa_carry  fwd      1.99 ms  fwd+bwd      3.03 ms  mem 0.00 / 0.00
+     mesanet_cg30  fwd      9.03 ms  graph      1.34  mem 0.00
+    mesanet_exact  fwd      1.58 ms  mem 0.01
+          fla_gdn  fwd      0.42 ms  fwd+bwd      1.71 ms  mem 0.00 / 0.00
+      fla_mesanet  fwd      0.23 ms  fwd+bwd      1.01 ms  mem 0.00 / 0.00
+
+  N=2 d=32 C=16 channel gates  (9 s)
+            chunk  fwd      5.42 ms  graph      0.79  fwd+bwd     22.61 ms  err 1.9e-07  mem 0.00 / 0.00
+        chunk_inv  fwd      6.07 ms  graph      0.86  fwd+bwd     23.48 ms  err 1.9e-07  mem 0.00 / 0.00
+        bl_triton  fwd      3.76 ms  graph      0.45  err 1.5e-07  mem 0.00
+     bl_triton_wy  fwd      7.39 ms  graph      0.87  err 1.9e-07  mem 0.00
+               bl  fwd     60.33 ms  graph      5.25  fwd+bwd    283.62 ms  err 1.7e-07  mem 0.00 / 0.01
+            bl_wy  fwd     42.49 ms  graph      4.15  fwd+bwd    184.99 ms  err 1.5e-07  mem 0.00 / 0.00
+        recurrent  fwd     59.42 ms  graph      5.58  fwd+bwd    282.12 ms  err 2.0e-07  mem 0.00 / 0.01
+       mesa_carry  fwd      3.53 ms  fwd+bwd      4.72 ms  mem 0.00 / 0.00
+          fla_kda  fwd      0.50 ms  fwd+bwd      1.40 ms  mem 0.00 / 0.00
+
+  N=2 d=32 C=32 channel gates  (5 s)
+            chunk  fwd      2.96 ms  graph      0.57  fwd+bwd     11.57 ms  err 2.2e-07  mem 0.00 / 0.00
+        chunk_inv  fwd      3.21 ms  graph      0.61  fwd+bwd     12.32 ms  err 2.0e-07  mem 0.00 / 0.00
+        bl_triton  fwd      2.06 ms  graph      0.35  err 1.9e-07  mem 0.00
+     bl_triton_wy  fwd      3.72 ms  graph      0.59  err 1.8e-07  mem 0.00
+               bl  fwd     59.38 ms  graph      5.27  fwd+bwd    292.36 ms  err 1.8e-07  mem 0.00 / 0.01
+            bl_wy  fwd     39.28 ms  graph      3.90  fwd+bwd    172.02 ms  err 1.9e-07  mem 0.00 / 0.00
+        recurrent  fwd     59.42 ms  graph      5.58  fwd+bwd    282.12 ms  err 2.0e-07  mem 0.00 / 0.01
+       mesa_carry  fwd      2.16 ms  fwd+bwd      3.25 ms  mem 0.00 / 0.00
+          fla_kda  fwd      0.50 ms  fwd+bwd      1.40 ms  mem 0.00 / 0.00
+(part B: 30 s)
+
+Part C. Stage times (CUDA events between stages; medians over 5 runs, ms), float32, per-channel gates.
+      chunk N=2 d=32 C=16: total 6.92 ms; prep 0.39 (6%), matrices 2.35 (34%), cholesky 0.71 (10%), solve 0.88 (13%), update 2.59 (37%)
+  bl_triton N=2 d=32 C=16: total 4.86 ms; prep 0.18 (4%), entry 1.11 (23%), gains 1.66 (34%), exit 1.75 (36%), mean 0.14 (3%)
+(part C: 0 s)
+
+Part D. float32 drift on cuda: the configurations of check_float32.py, 2 heads each, d = e = C = 64, sequences up to 1024 tokens, against the float64 token-by-token filter on the device.
+Per eighth of the sequence: max|o32 - o64| / max|o64| over the heads. P: final error; smallest/largest eigenvalue of P at the worst chunk boundary (float64 eigenvalues).
+scalar gates 0.99-1  (T = 1024; largest cond(K) over the chunks of 1 heads, float64: 5.87e+00)
+       chunk: 3.1e-07 3.7e-07 3.4e-07 2.9e-07 3.4e-07 3.6e-07 4.6e-07 3.5e-07   P err 1.7e-07, eig min/max (worst boundary) 2.4e-01
+   chunk_inv: 2.7e-07 4.0e-07 3.4e-07 3.2e-07 3.0e-07 3.4e-07 5.4e-07 3.2e-07   P err 1.6e-07, eig min/max (worst boundary) 2.4e-01
+   bl_triton: 3.5e-07 4.6e-07 3.9e-07 3.5e-07 3.8e-07 4.3e-07 4.9e-07 4.2e-07   P err 1.8e-07, eig min/max (worst boundary) 2.4e-01
+       bl_wy: 3.0e-07 3.9e-07 3.7e-07 3.0e-07 3.4e-07 3.1e-07 3.7e-07 3.3e-07   P err 1.9e-07, eig min/max (worst boundary) 2.4e-01
+   recurrent: 4.3e-07 4.8e-07 5.0e-07 3.9e-07 4.4e-07 4.2e-07 5.3e-07 5.6e-07   P err 6.9e-07, eig min/max (worst boundary) 2.4e-01
+  (2.0 s)
+scalar gates 0.9-1  (T = 1024; largest cond(K) over the chunks of 1 heads, float64: 4.12e+00)
+       chunk: 2.9e-07 4.3e-07 3.7e-07 2.7e-07 3.9e-07 4.7e-07 2.6e-07 3.3e-07   P err 7.5e-08, eig min/max (worst boundary) 3.1e-01
+   chunk_inv: 2.9e-07 4.0e-07 3.3e-07 2.4e-07 3.9e-07 4.4e-07 3.3e-07 4.3e-07   P err 7.3e-08, eig min/max (worst boundary) 3.1e-01
+   bl_triton: 1.8e-07 2.8e-07 2.0e-07 1.8e-07 2.0e-07 2.5e-07 1.7e-07 2.9e-07   P err 8.7e-08, eig min/max (worst boundary) 3.1e-01
+       bl_wy: 2.3e-07 3.2e-07 2.9e-07 2.4e-07 3.9e-07 4.2e-07 2.5e-07 2.9e-07   P err 8.7e-08, eig min/max (worst boundary) 3.1e-01
+   recurrent: 2.0e-07 3.8e-07 3.2e-07 3.7e-07 2.4e-07 3.1e-07 2.0e-07 3.0e-07   P err 5.8e-07, eig min/max (worst boundary) 3.1e-01
+  (1.1 s)
+per-channel gates 0.95-1  (T = 1024; largest cond(K) over the chunks of 1 heads, float64: 4.80e+00)
+       chunk: 3.4e-07 2.5e-07 2.5e-07 3.5e-07 3.1e-07 3.1e-07 4.4e-07 3.5e-07   P err 1.3e-07, eig min/max (worst boundary) 3.0e-01
+   chunk_inv: 2.9e-07 2.6e-07 2.9e-07 3.3e-07 3.6e-07 3.1e-07 4.2e-07 3.9e-07   P err 1.3e-07, eig min/max (worst boundary) 3.0e-01
+   bl_triton: 2.3e-07 2.1e-07 2.3e-07 2.7e-07 2.5e-07 2.6e-07 2.3e-07 2.7e-07   P err 1.2e-07, eig min/max (worst boundary) 3.0e-01
+       bl_wy: 2.6e-07 2.7e-07 2.3e-07 3.0e-07 3.2e-07 3.2e-07 2.4e-07 4.0e-07   P err 9.8e-08, eig min/max (worst boundary) 3.0e-01
+   recurrent: 3.2e-07 2.7e-07 3.2e-07 3.9e-07 3.2e-07 3.7e-07 3.7e-07 4.0e-07   P err 5.7e-07, eig min/max (worst boundary) 3.0e-01
+  (1.1 s)
+strong writes: beta 50, ridge 1e-2, gates 0.999-1  (T = 1024; largest cond(K) over the chunks of 1 heads, float64: 4.06e+02)
+       chunk: 5.1e-06 5.9e-06 1.0e-06 1.2e-06 1.2e-06 1.2e-06 1.1e-06 1.4e-06   P err 4.0e-07, eig min/max (worst boundary) 1.5e-04
+   chunk_inv: 6.9e-06 7.6e-06 1.1e-06 1.3e-06 1.1e-06 1.3e-06 1.2e-06 1.5e-06   P err 4.3e-07, eig min/max (worst boundary) 1.5e-04
+   bl_triton: 8.9e-06 5.3e-06 1.2e-06 1.3e-06 1.4e-06 1.3e-06 1.3e-06 1.7e-06   P err 1.9e-06, eig min/max (worst boundary) 1.5e-04
+       bl_wy: 8.3e-06 5.0e-06 1.1e-06 1.1e-06 8.0e-07 9.7e-07 9.6e-07 1.3e-06   P err 1.6e-06, eig min/max (worst boundary) 1.5e-04
+   recurrent: 2.6e-06 1.8e-06 9.8e-07 9.7e-07 9.8e-07 1.0e-06 9.8e-07 1.2e-06   P err 1.6e-06, eig min/max (worst boundary) 1.5e-04
+  (1.1 s)
+decaying key spectrum, beta 10, ridge 1e-2  (T = 1024; largest cond(K) over the chunks of 1 heads, float64: 2.94e+03)
+       chunk: 2.2e-05 1.1e-05 5.6e-06 7.1e-06 8.5e-06 6.1e-06 5.9e-06 7.9e-06   P err 6.1e-07, eig min/max (worst boundary) 6.8e-04
+   chunk_inv: 2.2e-05 1.2e-05 5.9e-06 6.5e-06 9.6e-06 6.0e-06 6.0e-06 7.4e-06   P err 5.8e-07, eig min/max (worst boundary) 6.8e-04
+   bl_triton: 2.4e-06 1.8e-06 7.7e-07 1.4e-06 1.3e-06 9.0e-07 1.0e-06 9.3e-07   P err 2.3e-07, eig min/max (worst boundary) 6.8e-04
+       bl_wy: 2.8e-06 2.0e-06 1.2e-06 2.4e-06 1.8e-06 1.1e-06 1.1e-06 1.2e-06   P err 2.5e-07, eig min/max (worst boundary) 6.8e-04
+   recurrent: 5.4e-07 6.8e-07 5.3e-07 5.5e-07 8.6e-07 5.4e-07 5.9e-07 6.5e-07   P err 5.4e-07, eig min/max (worst boundary) 6.8e-04
+  (1.1 s)
+per-channel gates 0.1-0.3 (fast; log decay over a chunk about -105)  (T = 1024; largest cond(K) over the chunks of 1 heads, float64: 2.73e+00)
+       chunk: non-finite output   P err nan, eig min/max (worst boundary) nan
+   chunk_inv: non-finite output   P err nan, eig min/max (worst boundary) nan
+   bl_triton: 1.1e-07 1.3e-07 1.2e-07 1.2e-07 1.4e-07 1.5e-07 8.5e-08 1.0e-07   P err 2.9e-08, eig min/max (worst boundary) 3.2e-01
+       bl_wy: non-finite output   P err 2.9e-08, eig min/max (worst boundary) 3.2e-01
+   recurrent: 2.2e-07 1.3e-07 1.9e-07 1.4e-07 2.1e-07 1.7e-07 1.4e-07 1.7e-07   P err 7.4e-08, eig min/max (worst boundary) 3.2e-01
+  (1.1 s)
+no forgetting (gates = 1), beta 0.5-2, ridge 1  (T = 1024; largest cond(K) over the chunks of 1 heads, float64: 6.98e+00)
+       chunk: 4.8e-07 4.1e-07 4.8e-07 4.4e-07 4.5e-07 4.3e-07 3.7e-07 3.7e-07   P err 2.1e-07, eig min/max (worst boundary) 1.4e-01
+   chunk_inv: 3.8e-07 4.5e-07 4.8e-07 5.3e-07 4.2e-07 4.5e-07 3.4e-07 3.6e-07   P err 2.1e-07, eig min/max (worst boundary) 1.4e-01
+   bl_triton: 2.7e-07 4.1e-07 4.6e-07 5.6e-07 5.7e-07 5.9e-07 6.5e-07 6.1e-07   P err 2.1e-07, eig min/max (worst boundary) 1.4e-01
+       bl_wy: 3.9e-07 4.2e-07 4.0e-07 3.9e-07 4.2e-07 4.2e-07 3.4e-07 5.1e-07   P err 1.8e-07, eig min/max (worst boundary) 1.4e-01
+   recurrent: 3.4e-07 4.1e-07 5.4e-07 5.8e-07 6.8e-07 6.7e-07 5.5e-07 6.7e-07   P err 1.0e-06, eig min/max (worst boundary) 1.4e-01
+  (1.1 s)
+no forgetting, strong writes: beta 50, ridge 1e-2  (T = 1024; largest cond(K) over the chunks of 1 heads, float64: 1.29e+04)
+       chunk: 2.6e-04 8.4e-04 8.2e-04 7.2e-04 6.5e-04 5.6e-04 5.2e-04 5.8e-04   P err 1.4e-04, eig min/max (worst boundary) 6.7e-05
+   chunk_inv: 2.7e-04 1.4e-03 1.7e-03 1.4e-03 1.3e-03 1.0e-03 9.3e-04 9.8e-04   P err 1.9e-04, eig min/max (worst boundary) 6.7e-05
+   bl_triton: 6.8e-05 4.4e-04 5.6e-04 4.9e-04 4.8e-04 3.7e-04 4.0e-04 4.0e-04   P err 1.2e-04, eig min/max (worst boundary) 6.7e-05
+       bl_wy: 5.9e-05 4.8e-04 6.1e-04 4.2e-04 4.1e-04 4.1e-04 3.8e-04 4.0e-04   P err 1.3e-04, eig min/max (worst boundary) 6.7e-05
+   recurrent: 4.6e-05 2.4e-04 2.6e-04 1.7e-04 1.7e-04 1.5e-04 1.6e-04 1.5e-04   P err 3.2e-05, eig min/max (worst boundary) 6.7e-05
+  (1.1 s)
+no forgetting, decaying key spectrum, beta 10, ridge 1e-2  (T = 1024; largest cond(K) over the chunks of 1 heads, float64: 1.35e+04)
+       chunk: 2.2e-04 3.8e-04 3.4e-04 2.7e-04 2.7e-04 2.3e-04 2.2e-04 2.1e-04   P err 1.5e-05, eig min/max (worst boundary) 6.6e-05
+   chunk_inv: 2.9e-04 5.2e-04 3.3e-04 3.4e-04 4.3e-04 3.0e-04 2.8e-04 2.6e-04   P err 2.2e-05, eig min/max (worst boundary) 6.6e-05
+   bl_triton: 1.7e-04 3.5e-04 3.4e-04 3.0e-04 4.0e-04 2.7e-04 3.8e-04 2.4e-04   P err 1.9e-05, eig min/max (worst boundary) 6.6e-05
+       bl_wy: 1.2e-04 1.8e-04 2.0e-04 1.9e-04 1.8e-04 2.1e-04 1.8e-04 1.7e-04   P err 8.2e-06, eig min/max (worst boundary) 6.6e-05
+   recurrent: 6.2e-06 6.0e-06 7.5e-06 5.7e-06 6.4e-06 4.3e-06 3.9e-06 4.2e-06   P err 8.3e-07, eig min/max (worst boundary) 6.6e-05
+  (1.1 s)
+gates 0.9999-1, strong writes: beta 50, ridge 1e-2  (T = 1024; largest cond(K) over the chunks of 1 heads, float64: 2.09e+03)
+       chunk: 4.0e-05 5.6e-05 3.5e-06 1.1e-06 9.7e-07 1.1e-06 1.1e-06 1.1e-06   P err 4.6e-07, eig min/max (worst boundary) 1.9e-04
+   chunk_inv: 5.8e-05 6.9e-05 4.3e-06 1.2e-06 1.0e-06 1.3e-06 1.2e-06 1.3e-06   P err 3.9e-07, eig min/max (worst boundary) 1.9e-04
+   bl_triton: 1.1e-04 6.1e-05 3.5e-06 1.5e-06 1.3e-06 1.3e-06 1.6e-06 1.2e-06   P err 1.4e-06, eig min/max (worst boundary) 1.9e-04
+       bl_wy: 1.1e-04 6.4e-05 3.8e-06 1.1e-06 1.1e-06 1.1e-06 1.3e-06 9.8e-07   P err 1.5e-06, eig min/max (worst boundary) 1.9e-04
+   recurrent: 1.5e-05 1.7e-05 9.3e-07 1.2e-06 1.2e-06 1.0e-06 1.3e-06 1.2e-06   P err 1.5e-06, eig min/max (worst boundary) 1.9e-04
+  (1.2 s)
+(part D: 13 s)
+
+Triton autotuning (kernel, shape key: chosen config):
+  gain (32, 64, 64, 32, 3, 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64'): num_warps: 4, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (32, 32, 32, 32, 3, 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64'): num_warps: 4, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (128, 16, 16, 128, 2, 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64'): num_warps: 4, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (64, 128, 128, 64, 2, 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64'): num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (16, 16, 16, 16, 3, 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64'): num_warps: 4, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (32, 16, 16, 32, 2, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (32, 32, 32, 32, 2, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (64, 64, 64, 64, 2, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None
+  mean (32, 16, 320, 16, 32, 3, 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64'): num_warps: 4, num_ctas: 1, num_stages: 3, maxnreg: None
+  mean (32, 16, 224, 16, 32, 3, 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64'): num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None
+  mean (128, 64, 96, 16, 128, 2, 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64'): num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None
+  mean (64, 64, 384, 16, 64, 2, 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64'): num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None
+  mean (16, 8, 80, 8, 16, 3, 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64', 'torch.float64'): num_warps: 2, num_ctas: 1, num_stages: 3, maxnreg: None
+  mean (32, 32, 256, 16, 32, 2, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 16, num_ctas: 1, num_stages: 3, maxnreg: None
+  mean (64, 64, 1024, 16, 64, 2, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 16, num_ctas: 1, num_stages: 3, maxnreg: None
+
+total 49 s
+saved results/gpu_bench_quick_20261030_011137.json

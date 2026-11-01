@@ -1,0 +1,258 @@
+torch 2.11.0+cu130; Triton kernels under the interpreter
+
+Part P1. Batched forms in float64 (3 heads per case) against the extended-precision token-by-token filter.
+Errors are max|x - x_ref| / max|x_ref| over all heads: outputs O, then the final M_T and P_T.
+scalar gates 0.5-1  (C = 8)
+            chunk, solve: O 4.7e-16   M_T 3.7e-16   P_T 1.9e-16
+         chunk, explicit: O 4.7e-16   M_T 3.7e-16   P_T 1.9e-16
+     chunk, matmul Grams: O 3.0e-16   M_T 3.7e-16   P_T 1.9e-16
+           BL, loop mean: O 2.7e-16   M_T 2.1e-16   P_T 1.9e-16
+             BL, WY mean: O 2.3e-16   M_T 2.6e-16   P_T 1.9e-16
+    BL Triton, loop mean: O 1.9e-16   M_T 1.6e-16   P_T 1.9e-16
+      BL Triton, WY mean: O 3.1e-16   M_T 3.7e-16   P_T 1.9e-16
+          token-by-token: O 5.5e-16   M_T 3.1e-16   P_T 2.2e-16
+per-channel gates 0.5-1  (C = 8)
+            chunk, solve: O 2.8e-16   M_T 3.5e-16   P_T 1.5e-16
+         chunk, explicit: O 2.7e-16   M_T 3.5e-16   P_T 1.5e-16
+     chunk, matmul Grams: O 2.8e-16   M_T 3.5e-16   P_T 1.5e-16
+           BL, loop mean: O 2.0e-16   M_T 2.2e-16   P_T 1.5e-16
+             BL, WY mean: O 4.5e-16   M_T 3.5e-16   P_T 1.5e-16
+    BL Triton, loop mean: O 2.1e-16   M_T 2.3e-16   P_T 1.5e-16
+      BL Triton, WY mean: O 4.5e-16   M_T 2.1e-16   P_T 1.5e-16
+          token-by-token: O 3.8e-16   M_T 2.7e-16   P_T 1.6e-16
+scalar gates 0.01-1  (C = 8)
+            chunk, solve: O 3.5e-16   M_T 3.1e-16   P_T 1.6e-16
+         chunk, explicit: O 2.9e-16   M_T 4.3e-16   P_T 1.5e-16
+     chunk, matmul Grams: O 4.3e-16   M_T 5.8e-16   P_T 1.6e-16
+           BL, loop mean: O 2.1e-16   M_T 1.8e-16   P_T 1.5e-16
+             BL, WY mean: O 2.6e-16   M_T 3.6e-16   P_T 1.5e-16
+    BL Triton, loop mean: O 1.7e-16   M_T 2.2e-16   P_T 1.5e-16
+      BL Triton, WY mean: O 2.6e-16   M_T 3.2e-16   P_T 1.5e-16
+          token-by-token: O 2.0e-16   M_T 3.3e-16   P_T 2.8e-16
+per-channel gates 0.01-1  (C = 8)
+            chunk, solve: O 2.9e-16   M_T 5.3e-16   P_T 1.7e-16
+         chunk, explicit: O 2.3e-16   M_T 6.3e-16   P_T 1.7e-16
+     chunk, matmul Grams: O 2.9e-16   M_T 5.3e-16   P_T 1.7e-16
+           BL, loop mean: O 1.5e-16   M_T 4.3e-16   P_T 1.6e-16
+             BL, WY mean: O 3.4e-16   M_T 5.0e-16   P_T 1.6e-16
+    BL Triton, loop mean: O 1.3e-16   M_T 4.3e-16   P_T 1.6e-16
+      BL Triton, WY mean: O 3.4e-16   M_T 4.8e-16   P_T 1.6e-16
+          token-by-token: O 1.8e-16   M_T 3.5e-16   P_T 2.2e-16
+scalar gates 0.999-1  (C = 8)
+            chunk, solve: O 5.6e-16   M_T 5.7e-16   P_T 5.4e-16
+         chunk, explicit: O 5.5e-16   M_T 6.0e-16   P_T 3.9e-16
+     chunk, matmul Grams: O 5.5e-16   M_T 5.7e-16   P_T 4.1e-16
+           BL, loop mean: O 7.7e-16   M_T 6.9e-16   P_T 5.8e-16
+             BL, WY mean: O 7.2e-16   M_T 5.9e-16   P_T 5.8e-16
+    BL Triton, loop mean: O 7.3e-16   M_T 6.9e-16   P_T 5.8e-16
+      BL Triton, WY mean: O 5.9e-16   M_T 5.8e-16   P_T 5.8e-16
+          token-by-token: O 6.3e-16   M_T 6.1e-16   P_T 8.7e-16
+no forgetting (gates = 1)  (C = 8)
+            chunk, solve: O 5.5e-16   M_T 1.2e-15   P_T 9.1e-16
+         chunk, explicit: O 4.9e-16   M_T 6.1e-16   P_T 5.8e-16
+     chunk, matmul Grams: O 5.5e-16   M_T 1.2e-15   P_T 9.1e-16
+           BL, loop mean: O 4.7e-16   M_T 4.2e-16   P_T 4.3e-16
+             BL, WY mean: O 4.0e-16   M_T 5.9e-16   P_T 4.3e-16
+    BL Triton, loop mean: O 3.4e-16   M_T 5.0e-16   P_T 3.5e-16
+      BL Triton, WY mean: O 3.9e-16   M_T 5.6e-16   P_T 3.5e-16
+          token-by-token: O 5.2e-16   M_T 5.7e-16   P_T 4.3e-16
+C does not divide T (T = 37, C = 8)  (C = 8)
+            chunk, solve: O 3.4e-16   M_T 3.9e-16   P_T 1.8e-16
+         chunk, explicit: O 2.6e-16   M_T 3.7e-16   P_T 1.8e-16
+     chunk, matmul Grams: O 3.4e-16   M_T 3.9e-16   P_T 1.8e-16
+           BL, loop mean: O 1.7e-16   M_T 1.8e-16   P_T 1.8e-16
+             BL, WY mean: O 3.6e-16   M_T 2.4e-16   P_T 1.8e-16
+    BL Triton, loop mean: O 1.6e-16   M_T 2.3e-16   P_T 1.8e-16
+      BL Triton, WY mean: O 2.3e-16   M_T 2.5e-16   P_T 1.8e-16
+          token-by-token: O 2.1e-16   M_T 3.0e-16   P_T 1.2e-16
+T < C (T = 5, C = 8)  (C = 8)
+            chunk, solve: O 2.5e-16   M_T 2.6e-16   P_T 1.9e-16
+         chunk, explicit: O 2.5e-16   M_T 1.7e-16   P_T 1.9e-16
+     chunk, matmul Grams: O 1.5e-16   M_T 1.4e-16   P_T 1.9e-16
+           BL, loop mean: O 1.8e-16   M_T 1.6e-16   P_T 1.9e-16
+             BL, WY mean: O 1.7e-16   M_T 1.9e-16   P_T 1.9e-16
+    BL Triton, loop mean: O 1.5e-16   M_T 1.2e-16   P_T 1.9e-16
+      BL Triton, WY mean: O 3.0e-16   M_T 1.9e-16   P_T 1.9e-16
+          token-by-token: O 2.9e-16   M_T 1.1e-16   P_T 2.2e-16
+chunk size 1  (C = 1)
+            chunk, solve: O 2.9e-16   M_T 2.6e-16   P_T 1.4e-16
+         chunk, explicit: O 2.9e-16   M_T 2.6e-16   P_T 1.4e-16
+     chunk, matmul Grams: O 2.9e-16   M_T 2.6e-16   P_T 1.4e-16
+           BL, loop mean: O 2.5e-16   M_T 2.8e-16   P_T 1.1e-16
+             BL, WY mean: O 2.5e-16   M_T 2.8e-16   P_T 1.1e-16
+    BL Triton, loop mean: O 2.3e-16   M_T 2.5e-16   P_T 1.1e-16
+      BL Triton, WY mean: O 2.3e-16   M_T 2.5e-16   P_T 1.1e-16
+          token-by-token: O 3.1e-16   M_T 1.7e-16   P_T 8.8e-17
+d = 4 < C = 32  (C = 32)
+            chunk, solve: O 4.6e-16   M_T 3.6e-16   P_T 1.4e-16
+         chunk, explicit: O 6.1e-16   M_T 1.9e-16   P_T 6.9e-17
+     chunk, matmul Grams: O 4.6e-16   M_T 3.6e-16   P_T 1.4e-16
+           BL, loop mean: O 2.7e-16   M_T 1.5e-16   P_T 9.0e-17
+             BL, WY mean: O 3.6e-16   M_T 2.1e-16   P_T 9.0e-17
+    BL Triton, loop mean: O 2.7e-16   M_T 1.5e-16   P_T 9.0e-17
+      BL Triton, WY mean: O 3.6e-16   M_T 2.1e-16   P_T 9.0e-17
+          token-by-token: O 2.7e-16   M_T 1.0e-16   P_T 1.1e-16
+d = 48 > C = 8  (C = 8)
+            chunk, solve: O 6.1e-16   M_T 4.9e-16   P_T 1.9e-16
+         chunk, explicit: O 7.1e-16   M_T 4.0e-16   P_T 1.9e-16
+     chunk, matmul Grams: O 6.1e-16   M_T 4.9e-16   P_T 1.9e-16
+           BL, loop mean: O 3.5e-16   M_T 2.4e-16   P_T 1.9e-16
+             BL, WY mean: O 4.5e-16   M_T 3.6e-16   P_T 1.9e-16
+    BL Triton, loop mean: O 3.5e-16   M_T 2.4e-16   P_T 1.9e-16
+      BL Triton, WY mean: O 5.3e-16   M_T 2.7e-16   P_T 1.9e-16
+          token-by-token: O 5.3e-16   M_T 7.2e-16   P_T 2.0e-16
+mixed beta 1e-3 to 50  (C = 8)
+            chunk, solve: O 3.0e-16   M_T 3.8e-16   P_T 1.8e-16
+         chunk, explicit: O 2.7e-16   M_T 1.8e-16   P_T 1.8e-16
+     chunk, matmul Grams: O 3.0e-16   M_T 3.8e-16   P_T 1.8e-16
+           BL, loop mean: O 3.6e-16   M_T 2.7e-16   P_T 1.8e-16
+             BL, WY mean: O 2.8e-16   M_T 2.6e-16   P_T 1.8e-16
+    BL Triton, loop mean: O 2.3e-16   M_T 2.7e-16   P_T 1.8e-16
+      BL Triton, WY mean: O 2.4e-16   M_T 2.6e-16   P_T 1.8e-16
+          token-by-token: O 3.8e-16   M_T 1.9e-16   P_T 2.1e-16
+mixed ridge 1e-3 to 10  (C = 8)
+            chunk, solve: O 8.9e-16   M_T 3.4e-16   P_T 1.9e-16
+         chunk, explicit: O 8.9e-16   M_T 3.6e-16   P_T 1.9e-16
+     chunk, matmul Grams: O 8.9e-16   M_T 3.4e-16   P_T 1.9e-16
+           BL, loop mean: O 5.0e-16   M_T 3.6e-16   P_T 2.0e-16
+             BL, WY mean: O 5.3e-16   M_T 2.4e-16   P_T 2.0e-16
+    BL Triton, loop mean: O 3.2e-16   M_T 1.3e-16   P_T 2.0e-16
+      BL Triton, WY mean: O 6.6e-16   M_T 2.0e-16   P_T 2.0e-16
+          token-by-token: O 3.8e-16   M_T 1.4e-16   P_T 3.2e-16
+free isotropic noise, P_init = 3I (BL)  (C = 8)
+            chunk, solve: O 5.5e-16   M_T 5.1e-16   P_T 2.0e-16
+         chunk, explicit: O 3.4e-16   M_T 5.1e-16   P_T 2.0e-16
+     chunk, matmul Grams: O 5.5e-16   M_T 5.1e-16   P_T 2.0e-16
+           BL, loop mean: O 4.0e-16   M_T 1.4e-16   P_T 2.0e-16
+             BL, WY mean: O 3.4e-16   M_T 4.0e-16   P_T 2.0e-16
+    BL Triton, loop mean: O 4.0e-16   M_T 2.5e-16   P_T 2.0e-16
+      BL Triton, WY mean: O 3.4e-16   M_T 2.4e-16   P_T 2.0e-16
+          token-by-token: O 5.3e-16   M_T 2.4e-16   P_T 1.7e-16
+free diagonal noise, dense P_init, M_0 != 0  (C = 8)
+            chunk, solve: O 3.1e-16   M_T 4.0e-16   P_T 2.1e-16
+         chunk, explicit: O 3.1e-16   M_T 4.0e-16   P_T 2.1e-16
+     chunk, matmul Grams: O 3.1e-16   M_T 4.0e-16   P_T 2.1e-16
+           BL, loop mean: O 2.0e-16   M_T 2.6e-16   P_T 2.1e-16
+             BL, WY mean: O 1.8e-16   M_T 4.0e-16   P_T 2.1e-16
+    BL Triton, loop mean: O 1.5e-16   M_T 2.9e-16   P_T 2.1e-16
+      BL Triton, WY mean: O 1.8e-16   M_T 4.0e-16   P_T 2.1e-16
+          token-by-token: O 3.0e-16   M_T 2.5e-16   P_T 1.9e-16
+long: T = 513, d = 32, C = 64  (C = 64)
+            chunk, solve: O 7.6e-16   M_T 9.1e-16   P_T 3.7e-16
+         chunk, explicit: O 5.6e-16   M_T 6.9e-16   P_T 3.5e-16
+     chunk, matmul Grams: O 7.6e-16   M_T 9.1e-16   P_T 3.7e-16
+           BL, loop mean: O 3.9e-16   M_T 4.1e-16   P_T 2.2e-16
+             BL, WY mean: O 5.3e-16   M_T 5.9e-16   P_T 2.2e-16
+    BL Triton, loop mean: O 3.8e-16   M_T 4.8e-16   P_T 2.2e-16
+      BL Triton, WY mean: O 4.5e-16   M_T 6.6e-16   P_T 2.2e-16
+          token-by-token: O 3.9e-16   M_T 5.1e-16   P_T 2.6e-16
+worst over all cases:
+            chunk, solve: O 8.9e-16   M_T 1.2e-15   P_T 9.1e-16
+         chunk, explicit: O 8.9e-16   M_T 6.9e-16   P_T 5.8e-16
+     chunk, matmul Grams: O 8.9e-16   M_T 1.2e-15   P_T 9.1e-16
+           BL, loop mean: O 7.7e-16   M_T 6.9e-16   P_T 5.8e-16
+             BL, WY mean: O 7.2e-16   M_T 5.9e-16   P_T 5.8e-16
+    BL Triton, loop mean: O 7.3e-16   M_T 6.9e-16   P_T 5.8e-16
+      BL Triton, WY mean: O 6.6e-16   M_T 6.6e-16   P_T 5.8e-16
+          token-by-token: O 6.3e-16   M_T 7.2e-16   P_T 8.7e-16
+
+Part P2. Gradients in float64: autograd through each batched form against autograd through the batched
+token-by-token filter (3 heads). Loss: random weights on O, M_T and P_T. Worst relative error per input.
+stationary, scalar gates  (C = 8)
+      chunk, solve: worst 9.1e-16   (K 3.2e-16, V 3.2e-16, Q 3.5e-16, log_beta 6.9e-16, logD 9.1e-16, log_lam 3.5e-16)
+   chunk, explicit: worst 7.3e-16   (K 3.8e-16, V 4.3e-16, Q 2.9e-16, log_beta 7.2e-16, logD 7.3e-16, log_lam 2.3e-16)
+     BL, loop mean: worst 6.9e-16   (K 3.4e-16, V 4.3e-16, Q 3.5e-16, log_beta 6.9e-16, logD 4.3e-16, log_lam 2.6e-16)
+       BL, WY mean: worst 6.7e-16   (K 3.2e-16, V 4.3e-16, Q 3.5e-16, log_beta 6.7e-16, logD 5.0e-16, log_lam 3.5e-16)
+stationary, per-channel gates  (C = 8)
+      chunk, solve: worst 6.4e-16   (K 5.3e-16, V 4.9e-16, Q 2.2e-16, log_beta 3.3e-16, logD 4.9e-16, log_lam 6.4e-16)
+   chunk, explicit: worst 6.0e-16   (K 4.3e-16, V 4.9e-16, Q 2.6e-16, log_beta 2.0e-16, logD 6.0e-16, log_lam 4.6e-16)
+     BL, loop mean: worst 4.8e-16   (K 3.2e-16, V 3.2e-16, Q 2.6e-16, log_beta 1.3e-16, logD 4.8e-16, log_lam 3.7e-16)
+       BL, WY mean: worst 7.3e-16   (K 5.3e-16, V 4.9e-16, Q 3.5e-16, log_beta 3.3e-16, logD 6.0e-16, log_lam 7.3e-16)
+free diagonal noise, M_0 and P_init = S S^T leaves  (C = 6)
+      chunk, solve: worst 7.1e-16   (K 7.1e-16, V 4.4e-16, Q 3.9e-16, log_beta 4.6e-16, logD 3.3e-16, log_Psi 3.0e-16, M_init 2.7e-16, S 5.8e-16)
+   chunk, explicit: worst 7.4e-16   (K 5.9e-16, V 4.4e-16, Q 3.9e-16, log_beta 7.4e-16, logD 2.7e-16, log_Psi 3.6e-16, M_init 2.7e-16, S 5.8e-16)
+     BL, loop mean: worst 6.5e-16   (K 6.5e-16, V 2.6e-16, Q 2.0e-16, log_beta 2.3e-16, logD 2.6e-16, log_Psi 2.4e-16, M_init 1.4e-16, S 5.8e-16)
+       BL, WY mean: worst 5.8e-16   (K 4.7e-16, V 3.5e-16, Q 2.5e-16, log_beta 2.8e-16, logD 2.2e-16, log_Psi 2.4e-16, M_init 2.7e-16, S 5.8e-16)
+ill-conditioned: gates 0.999-1, beta 50, ridge 1e-2  (C = 8)
+      chunk, solve: worst 1.2e-13   (K 1.2e-13, V 5.1e-14, Q 6.4e-14, log_beta 3.4e-14, logD 6.4e-14, log_lam 5.9e-14)
+   chunk, explicit: worst 1.1e-13   (K 1.1e-13, V 5.9e-14, Q 8.4e-14, log_beta 6.0e-14, logD 5.7e-14, log_lam 7.9e-14)
+     BL, loop mean: worst 1.6e-13   (K 1.6e-13, V 3.1e-14, Q 2.6e-14, log_beta 1.4e-14, logD 2.2e-14, log_lam 6.0e-14)
+       BL, WY mean: worst 1.3e-13   (K 1.3e-13, V 3.1e-14, Q 2.5e-14, log_beta 2.1e-14, logD 2.2e-14, log_lam 6.3e-14)
+
+Part P3. float32 against the float64 token-by-token filter: 2 heads, T = 2048, d = e = C = 64, stationary noise.
+Errors are max|o32 - o64| / max|o64| over both heads and the whole sequence; P_T is the final covariance.
+scalar gates 0.9-1
+            chunk, solve: O 5.5e-07   P_T 8.1e-08
+         chunk, explicit: O 2.9e-07   P_T 8.8e-08
+     chunk, matmul Grams: O 4.4e-07   P_T 8.8e-08
+           BL, loop mean: O 3.5e-07   P_T 8.1e-08
+             BL, WY mean: O 3.2e-07   P_T 8.1e-08
+    BL Triton, loop mean: O 2.0e-07   P_T 8.1e-08
+      BL Triton, WY mean: O 3.7e-07   P_T 8.1e-08
+          token-by-token: O 3.2e-07   P_T 2.4e-07
+per-channel gates 0.95-1
+            chunk, solve: O 3.5e-07   P_T 1.0e-07
+         chunk, explicit: O 2.8e-07   P_T 1.0e-07
+     chunk, matmul Grams: O 3.5e-07   P_T 1.0e-07
+           BL, loop mean: O 3.3e-07   P_T 1.0e-07
+             BL, WY mean: O 3.2e-07   P_T 1.0e-07
+    BL Triton, loop mean: O 2.1e-07   P_T 1.0e-07
+      BL Triton, WY mean: O 3.2e-07   P_T 1.0e-07
+          token-by-token: O 3.7e-07   P_T 4.7e-07
+strong writes: beta 50, ridge 1e-2, gates 0.999-1
+            chunk, solve: O 7.5e-06   P_T 4.5e-07
+         chunk, explicit: O 7.4e-06   P_T 5.8e-07
+     chunk, matmul Grams: O 6.4e-06   P_T 5.1e-07
+           BL, loop mean: O 5.5e-06   P_T 7.0e-07
+             BL, WY mean: O 5.3e-06   P_T 7.0e-07
+    BL Triton, loop mean: O 4.8e-06   P_T 8.2e-07
+      BL Triton, WY mean: O 4.8e-06   P_T 8.2e-07
+          token-by-token: O 2.6e-06   P_T 8.2e-07
+no forgetting (gates = 1), beta 0.5-2, ridge 1
+            chunk, solve: O 5.4e-07   P_T 2.3e-07
+         chunk, explicit: O 4.5e-07   P_T 2.6e-07
+     chunk, matmul Grams: O 5.4e-07   P_T 2.3e-07
+           BL, loop mean: O 4.5e-07   P_T 2.6e-07
+             BL, WY mean: O 3.7e-07   P_T 2.6e-07
+    BL Triton, loop mean: O 4.9e-07   P_T 2.6e-07
+      BL Triton, WY mean: O 4.0e-07   P_T 2.6e-07
+          token-by-token: O 5.3e-07   P_T 1.5e-06
+
+Part P4. float32 error and summation order: 2 heads, T = 4096, d = e = C = 64, configurations of check_float32.py (seeds 1000 + i, and 1000 + i + 7919 for the second head).
+Worst error over the eight segments of each head, against the float64 batched filter. Three float32
+token-by-token filters that differ only in how they sum: single-head reference / batched elementwise sum /
+batched matrix product; then the chunk form (triangular solves) and BL with v1's WY mean, for scale.
+scalar gates 0.99-1
+   single-head reference: head 0 5.3e-07, head 1 5.7e-07
+            batched, sum: head 0 5.9e-07, head 1 7.1e-07
+            batched, bmm: head 0 7.1e-07, head 1 6.4e-07
+            chunk, solve: head 0 4.9e-07, head 1 4.6e-07
+             BL, WY mean: head 0 5.7e-07, head 1 4.3e-07
+  largest ratio between the three token-by-token filters on one head: 1.3
+strong writes: beta 50, ridge 1e-2, gates 0.999-1
+   single-head reference: head 0 2.8e-06, head 1 2.5e-06
+            batched, sum: head 0 3.3e-06, head 1 3.2e-06
+            batched, bmm: head 0 3.6e-06, head 1 3.1e-06
+            chunk, solve: head 0 1.1e-05, head 1 8.1e-06
+             BL, WY mean: head 0 5.2e-06, head 1 5.3e-06
+  largest ratio between the three token-by-token filters on one head: 1.3
+no forgetting, strong writes: beta 50, ridge 1e-2
+   single-head reference: head 0 1.5e-04, head 1 1.4e-04
+            batched, sum: head 0 2.4e-04, head 1 1.9e-04
+            batched, bmm: head 0 2.0e-04, head 1 2.1e-04
+            chunk, solve: head 0 6.0e-04, head 1 5.5e-04
+             BL, WY mean: head 0 4.3e-04, head 1 4.4e-04
+  largest ratio between the three token-by-token filters on one head: 1.7
+no forgetting, decaying key spectrum, beta 10, ridge 1e-2
+   single-head reference: head 0 3.9e-06, head 1 6.2e-06
+            batched, sum: head 0 2.0e-05, head 1 7.0e-06
+            batched, bmm: head 0 1.2e-05, head 1 9.1e-06
+            chunk, solve: head 0 2.7e-04, head 1 2.5e-04
+             BL, WY mean: head 0 1.2e-04, head 1 2.1e-04
+  largest ratio between the three token-by-token filters on one head: 5.1
+
+saved results/check_batched_20261029_225300.json
+
+real	22m27.709s
+user	36m49.788s
+sys	0m3.495s

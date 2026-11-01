@@ -1,0 +1,104 @@
+Environment: torch 2.11.0+cu128, cpu_threads 6, triton_f32_default ieee, gpu NVIDIA GeForce RTX 5060 Ti, gpu_mem_gib 15.47637939453125, sms 36, triton 3.6.0, fla 0.6.0
+Kalman methods: ['chunk', 'chunk_magma', 'chunk_inv', 'bl_triton', 'bl_triton_wy', 'bl', 'bl_wy', 'recurrent']; references: ['mesa_carry', 'mesanet_cg30', 'mesanet_exact', 'fla_gdn', 'fla_kda', 'fla_mesanet']
+
+Part B. Timing on NVIDIA GeForce RTX 5060 Ti: float32, TF32 off, T = 2048, e = d; gates uniform on 0.9-1; unit keys, ridge 1, beta 0.5-2. Medians in ms (lab.bench; warmup 3, reps 10, or 3 reps for calls over 0.5 s). err: float32 output error against the float64 token-by-token filter on the device. mem: peak GiB above the inputs, forward (and forward + backward). Memory cap 14.0 GiB.
+
+  N=64 d=64 C=16 scalar gates  (90 s)
+            chunk  fwd     47.92 ms  graph     14.94  fwd+bwd    333.69 ms  graph fwd+bwd    269.27  err 2.8e-07  mem 0.26 / 1.02
+        chunk_inv  fwd     51.55 ms  graph     13.90  fwd+bwd    340.75 ms  graph fwd+bwd    274.05  err 3.6e-07  mem 0.26 / 1.10
+            bl_wy  fwd    393.93 ms  graph     37.89  fwd+bwd   1745.08 ms  graph fwd+bwd    524.94  err 2.7e-07  mem 0.22 / 1.67
+        recurrent  fwd    528.19 ms  graph     93.66  fwd+bwd   3992.87 ms  err 3.5e-07  mem 0.10 / 12.31  [graph forward + backward skipped: it needs 12.3 GiB]
+
+  N=64 d=64 C=32 scalar gates  (43 s)
+            chunk  fwd     23.41 ms  graph     11.27  fwd+bwd    189.37 ms  graph fwd+bwd    157.96  err 3.3e-07  mem 0.30 / 0.92
+        chunk_inv  fwd     28.78 ms  graph     10.59  fwd+bwd    192.65 ms  graph fwd+bwd    158.44  err 3.1e-07  mem 0.30 / 1.01
+            bl_wy  fwd    365.13 ms  graph     35.11  fwd+bwd   1638.82 ms  graph fwd+bwd    332.19  err 3.1e-07  mem 0.22 / 2.01
+        recurrent  fwd    528.19 ms  graph     93.66  fwd+bwd   3992.87 ms  err 3.5e-07  mem 0.10 / 12.31  [graph forward + backward skipped: it needs 12.3 GiB]
+
+  N=64 d=64 C=64 scalar gates  (37 s)
+            chunk  fwd     14.41 ms  graph     12.62  fwd+bwd    123.10 ms  graph fwd+bwd    115.31  err 5.4e-07  mem 0.38 / 0.99
+        chunk_inv  fwd     13.71 ms  graph     11.43  fwd+bwd    122.79 ms  graph fwd+bwd    113.42  err 5.0e-07  mem 0.38 / 1.11
+            bl_wy  fwd    356.42 ms  graph     45.30  fwd+bwd   1599.78 ms  graph fwd+bwd    249.22  err 4.3e-07  mem 0.23 / 2.97
+        recurrent  fwd    528.19 ms  graph     93.66  fwd+bwd   3992.87 ms  err 3.5e-07  mem 0.10 / 12.31  [graph forward + backward skipped: it needs 12.3 GiB]
+
+  N=64 d=64 C=128 scalar gates  (36 s)
+            chunk  fwd     18.75 ms  graph     17.54  fwd+bwd    109.48 ms  graph fwd+bwd    106.04  err 6.7e-07  mem 0.57 / 1.28
+        chunk_inv  fwd     17.51 ms  graph     16.29  fwd+bwd    108.01 ms  graph fwd+bwd    104.54  err 7.1e-07  mem 0.57 / 1.45
+            bl_wy  fwd    345.12 ms  graph     50.81  fwd+bwd   1527.24 ms  graph fwd+bwd    235.77  err 6.2e-07  mem 0.23 / 5.18
+        recurrent  fwd    528.19 ms  graph     93.66  fwd+bwd   3992.87 ms  err 3.5e-07  mem 0.10 / 12.31  [graph forward + backward skipped: it needs 12.3 GiB]
+
+  N=64 d=64 C=16 channel gates  (96 s)
+            chunk  fwd     48.60 ms  graph     17.18  fwd+bwd    338.28 ms  graph fwd+bwd    276.60  err 2.8e-07  mem 0.31 / 1.19
+        chunk_inv  fwd     51.19 ms  graph     16.09  fwd+bwd    348.01 ms  graph fwd+bwd    280.53  err 3.3e-07  mem 0.31 / 1.27
+            bl_wy  fwd    395.86 ms  graph     39.71  fwd+bwd   1756.85 ms  graph fwd+bwd    613.32  err 2.8e-07  mem 0.32 / 1.92
+        recurrent  fwd    528.15 ms  graph     96.53  fwd+bwd   4643.57 ms  err 2.4e-07  mem 0.10 / 12.44  [graph forward + backward skipped: it needs 12.4 GiB]
+
+  N=64 d=64 C=32 channel gates  (44 s)
+            chunk  fwd     24.08 ms  graph     13.07  fwd+bwd    190.77 ms  graph fwd+bwd    163.67  err 4.2e-07  mem 0.33 / 1.05
+        chunk_inv  fwd     26.11 ms  graph     12.38  fwd+bwd    193.30 ms  graph fwd+bwd    162.60  err 3.4e-07  mem 0.33 / 1.14
+            bl_wy  fwd    371.06 ms  graph     36.95  fwd+bwd   1623.64 ms  graph fwd+bwd    380.13  err 2.7e-07  mem 0.32 / 2.23
+        recurrent  fwd    528.15 ms  graph     96.53  fwd+bwd   4643.57 ms  err 2.4e-07  mem 0.10 / 12.44  [graph forward + backward skipped: it needs 12.4 GiB]
+
+  N=64 d=64 C=64 channel gates  (37 s)
+            chunk  fwd     15.24 ms  graph     13.54  fwd+bwd    121.43 ms  graph fwd+bwd    114.40  err 4.0e-07  mem 0.38 / 1.02
+        chunk_inv  fwd     14.22 ms  graph     12.35  fwd+bwd    121.60 ms  graph fwd+bwd    112.59  err 4.0e-07  mem 0.38 / 1.14
+            bl_wy  fwd    359.20 ms  graph     47.31  fwd+bwd   1558.47 ms  graph fwd+bwd    277.99  err 3.5e-07  mem 0.32 / 3.12
+        recurrent  fwd    528.15 ms  graph     96.53  fwd+bwd   4643.57 ms  err 2.4e-07  mem 0.10 / 12.44  [graph forward + backward skipped: it needs 12.4 GiB]
+
+  N=64 d=64 C=128 channel gates  (35 s)
+            chunk  fwd     18.23 ms  graph     17.07  fwd+bwd    101.12 ms  graph fwd+bwd     97.79  err 4.4e-07  mem 0.50 / 1.12
+        chunk_inv  fwd     17.26 ms  graph     15.79  fwd+bwd     99.01 ms  graph fwd+bwd     96.38  err 4.0e-07  mem 0.50 / 1.29
+            bl_wy  fwd    351.38 ms  graph     53.07  fwd+bwd   1554.56 ms  graph fwd+bwd    255.12  err 3.9e-07  mem 0.32 / 5.12
+        recurrent  fwd    528.15 ms  graph     96.53  fwd+bwd   4643.57 ms  err 2.4e-07  mem 0.10 / 12.44  [graph forward + backward skipped: it needs 12.4 GiB]
+
+  N=64 d=128 C=16 scalar gates  (78 s)
+            chunk  fwd     48.48 ms  graph     27.62  fwd+bwd    576.76 ms  graph fwd+bwd    525.90  err 4.9e-07  mem 0.49 / 2.73
+        chunk_inv  fwd     51.95 ms  graph     24.81  fwd+bwd    586.90 ms  graph fwd+bwd    526.00  err 5.2e-07  mem 0.49 / 2.89
+            bl_wy  fwd    395.86 ms  graph     61.14  fwd+bwd   1821.54 ms  graph fwd+bwd    960.87  err 4.8e-07  mem 0.45 / 4.02
+        recurrent  fwd    545.03 ms  graph    181.47  err 4.0e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+
+  N=64 d=128 C=32 scalar gates  (56 s)
+            chunk  fwd     25.60 ms  graph     20.05  fwd+bwd    315.33 ms  graph fwd+bwd    296.28  err 4.7e-07  mem 0.52 / 2.03
+        chunk_inv  fwd     26.00 ms  graph     17.42  fwd+bwd    316.43 ms  graph fwd+bwd    291.54  err 4.7e-07  mem 0.52 / 2.18
+            bl_wy  fwd    373.59 ms  graph     56.23  fwd+bwd   1672.78 ms  graph fwd+bwd    570.78  err 5.3e-07  mem 0.45 / 4.27
+        recurrent  fwd    545.03 ms  graph    181.47  err 4.0e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+
+  N=64 d=128 C=64 scalar gates  (33 s)
+            chunk  fwd     22.78 ms  graph     21.07  fwd+bwd    202.68 ms  graph fwd+bwd    194.54  err 5.6e-07  mem 0.60 / 1.83
+        chunk_inv  fwd     20.10 ms  graph     18.34  fwd+bwd    197.25 ms  graph fwd+bwd    190.57  err 5.7e-07  mem 0.60 / 2.01
+            bl_wy  fwd    351.73 ms  graph     59.90  fwd+bwd   1586.76 ms  err 5.2e-07  mem 0.46 / 6.03  [graph forward + backward skipped: it needs 6.0 GiB]
+        recurrent  fwd    545.03 ms  graph    181.47  err 4.0e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+
+  N=64 d=128 C=128 scalar gates  (31 s)
+            chunk  fwd     28.10 ms  graph     26.98  fwd+bwd    163.50 ms  graph fwd+bwd    160.68  err 8.1e-07  mem 0.76 / 1.95
+        chunk_inv  fwd     25.02 ms  graph     23.63  fwd+bwd    160.79 ms  graph fwd+bwd    157.69  err 8.0e-07  mem 0.76 / 2.17
+            bl_wy  fwd    355.80 ms  graph     67.56  fwd+bwd   1547.74 ms  err 7.5e-07  mem 0.46 / 10.01  [graph forward + backward skipped: it needs 10.0 GiB]
+        recurrent  fwd    545.03 ms  graph    181.47  err 4.0e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+
+  N=64 d=128 C=16 channel gates  (81 s)
+            chunk  fwd     50.46 ms  graph     32.35  fwd+bwd    592.63 ms  graph fwd+bwd    546.45  err 3.7e-07  mem 0.59 / 3.13
+        chunk_inv  fwd     52.09 ms  graph     29.53  fwd+bwd    600.19 ms  graph fwd+bwd    547.44  err 4.0e-07  mem 0.59 / 3.28
+            bl_wy  fwd    399.03 ms  graph     65.07  fwd+bwd   1753.38 ms  graph fwd+bwd   1140.62  err 3.6e-07  mem 0.64 / 4.55
+        recurrent  fwd    548.04 ms  graph    187.81  err 2.8e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+
+  N=64 d=128 C=32 channel gates  (61 s)
+            chunk  fwd     27.74 ms  graph     24.29  fwd+bwd    321.77 ms  graph fwd+bwd    308.08  err 4.5e-07  mem 0.62 / 2.37
+        chunk_inv  fwd     26.53 ms  graph     22.36  fwd+bwd    327.40 ms  graph fwd+bwd    305.20  err 4.4e-07  mem 0.62 / 2.53
+            bl_wy  fwd    392.18 ms  graph     51.24  fwd+bwd   1881.05 ms  graph fwd+bwd    667.61  err 4.2e-07  mem 0.64 / 4.76
+        recurrent  fwd    548.04 ms  graph    187.81  err 2.8e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+
+  N=64 d=128 C=64 channel gates  (36 s)
+            chunk  fwd     26.00 ms  graph     24.24  fwd+bwd    207.62 ms  graph fwd+bwd    201.95  err 4.7e-07  mem 0.66 / 2.08
+        chunk_inv  fwd     23.39 ms  graph     21.54  fwd+bwd    203.56 ms  graph fwd+bwd    197.83  err 4.3e-07  mem 0.66 / 2.25
+            bl_wy  fwd    362.34 ms  graph     64.65  fwd+bwd   1720.72 ms  err 4.3e-07  mem 0.64 / 6.45  [graph forward + backward skipped: it needs 6.5 GiB]
+        recurrent  fwd    548.04 ms  graph    187.81  err 2.8e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+
+  N=64 d=128 C=128 channel gates  (29 s)
+            chunk  fwd     29.95 ms  graph     28.84  fwd+bwd    162.71 ms  graph fwd+bwd    159.54  err 4.7e-07  mem 0.76 / 2.01
+        chunk_inv  fwd     26.86 ms  graph     25.47  fwd+bwd    158.95 ms  graph fwd+bwd    156.42  err 4.7e-07  mem 0.76 / 2.23
+            bl_wy  fwd    326.36 ms  graph     73.04  fwd+bwd   1422.60 ms  err 4.3e-07  mem 0.65 / 10.11  [graph forward + backward skipped: it needs 10.1 GiB]
+        recurrent  fwd    548.04 ms  graph    187.81  err 2.8e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+(part B: 828 s)
+
+total 828 s
+saved results/gpu_bench_20261101_103540.json

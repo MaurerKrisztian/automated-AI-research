@@ -1,0 +1,175 @@
+{
+ "env": {
+  "time": "2026-11-01T10:39:01+0100",
+  "argv": [
+   "gpu_bench.py",
+   "--parts",
+   "D",
+   "--drift-only",
+   "no forgetting (gates = 1)"
+  ],
+  "python": "3.11.15",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "tf32_matmul": false,
+  "git_commit": "bb55efb",
+  "git_dirty": true
+ },
+ "args": {
+  "quick": false,
+  "device": "cuda",
+  "parts": [
+   "D"
+  ],
+  "N": [
+   16,
+   64
+  ],
+  "T": 2048,
+  "d": [
+   64,
+   128
+  ],
+  "C": [
+   16,
+   32,
+   64,
+   128
+  ],
+  "gates": [
+   "scalar",
+   "channel"
+  ],
+  "gate_lo": 0.9,
+  "methods": [],
+  "magma": false,
+  "no_backward": false,
+  "graphs": true,
+  "warmup": 3,
+  "reps": 10,
+  "drift_T": 65536,
+  "drift_heads": 4,
+  "drift_only": "no forgetting (gates = 1)",
+  "cond_heads": 1,
+  "mem_cap": 14.0,
+  "results_dir": "/media/zero/EXTERNAL_MAIN/code/automated-AI-research/studies/0003-kalman-memory/results"
+ },
+ "info": {
+  "torch": "2.11.0+cu128",
+  "cpu_threads": 6,
+  "triton_f32_default": "ieee",
+  "gpu": "NVIDIA GeForce RTX 5060 Ti",
+  "gpu_mem_gib": 15.47637939453125,
+  "sms": 36,
+  "triton": "3.6.0",
+  "fla": "0.6.0"
+ },
+ "seconds": {
+  "D": 82.2
+ },
+ "part_d": [
+  {
+   "config": "no forgetting (gates = 1), beta 0.5-2, ridge 1",
+   "T": 65536,
+   "heads": 4,
+   "cond_max": 6.721988497247062,
+   "methods": {
+    "chunk": {
+     "status": "ok",
+     "seg": [
+      3.821457169532904e-07,
+      4.51815201970149e-07,
+      4.825762521037775e-07,
+      5.196125715599472e-07,
+      6.362396453620235e-07,
+      6.441538832453124e-07,
+      7.663011447260548e-07,
+      7.947679452912632e-07
+     ],
+     "P_err": 1.6983210007769925e-06,
+     "P_eig_ratio_min_over_boundaries": 0.1466084002486533
+    },
+    "chunk_inv": {
+     "status": "ok",
+     "seg": [
+      4.366726302813375e-07,
+      4.2270293887975103e-07,
+      5.194203936930464e-07,
+      5.584521779571238e-07,
+      7.435863316833126e-07,
+      6.103400003258636e-07,
+      7.149274591640542e-07,
+      7.800332725408109e-07
+     ],
+     "P_err": 1.6350144233313696e-06,
+     "P_eig_ratio_min_over_boundaries": 0.14660839697070654
+    },
+    "bl_triton": {
+     "status": "ok",
+     "seg": [
+      4.7165913419233647e-07,
+      1.8946674815918718e-06,
+      2.8012661984713143e-06,
+      3.3673093271852804e-06,
+      3.936959157070484e-06,
+      4.312878320357823e-06,
+      4.317483098390404e-06,
+      4.811839871709269e-06
+     ],
+     "P_err": 1.6983210007769925e-06,
+     "P_eig_ratio_min_over_boundaries": 0.14660841421135193
+    },
+    "bl": {
+     "status": "ok",
+     "seg": [
+      4.352511191584133e-07,
+      1.952112045758879e-06,
+      2.97553074041808e-06,
+      3.3673093271852804e-06,
+      3.892340167663844e-06,
+      4.218231407206781e-06,
+      4.369710939236784e-06,
+      5.11967083429937e-06
+     ],
+     "P_err": 1.6350144233313696e-06,
+     "P_eig_ratio_min_over_boundaries": 0.14660838257291384
+    },
+    "bl_wy": {
+     "status": "ok",
+     "seg": [
+      3.639573657612628e-07,
+      3.980112664099421e-07,
+      4.987836900669435e-07,
+      5.141947464847238e-07,
+      6.610824007207309e-07,
+      6.024899732185781e-07,
+      7.700506742499537e-07,
+      6.518802551620216e-07
+     ],
+     "P_err": 1.6350144233313696e-06,
+     "P_eig_ratio_min_over_boundaries": 0.14660838257291384
+    },
+    "recurrent": {
+     "status": "ok",
+     "seg": [
+      5.595099197948673e-07,
+      2.3240973668070135e-06,
+      2.93264239689426e-06,
+      3.476196601139345e-06,
+      4.36148076407206e-06,
+      5.0631418462487814e-06,
+      6.148332403060072e-06,
+      6.2954108600042e-06
+     ],
+     "P_err": 1.8551252218375287e-05,
+     "P_eig_ratio_min_over_boundaries": 0.14660841108322462
+    }
+   }
+  }
+ ],
+ "triton_autotune": {
+  "gain (64, 64, 64, 64, 4, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32')": "num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None",
+  "mean (64, 64, 65536, 16, 64, 4, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32')": "num_warps: 16, num_ctas: 1, num_stages: 3, maxnreg: None"
+ }
+}

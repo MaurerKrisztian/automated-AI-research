@@ -1,0 +1,22 @@
+Environment: torch 2.11.0+cu128, cpu_threads 6, triton_f32_default ieee, gpu NVIDIA GeForce RTX 5060 Ti, gpu_mem_gib 15.47637939453125, sms 36, triton 3.6.0, fla 0.6.0
+Kalman methods: ['chunk', 'chunk_magma', 'chunk_inv', 'bl_triton', 'bl_triton_wy', 'bl', 'bl_wy', 'recurrent']; references: ['mesa_carry', 'mesanet_cg30', 'mesanet_exact', 'fla_gdn', 'fla_kda', 'fla_mesanet']
+
+
+Part D. float32 drift on cuda: the configurations of check_float32.py, 4 heads each, d = e = C = 64, sequences up to 65536 tokens, against the float64 token-by-token filter on the device.
+Per eighth of the sequence: max|o32 - o64| / max|o64| over the heads. P: final error; smallest/largest eigenvalue of P at the worst chunk boundary (float64 eigenvalues).
+no forgetting (gates = 1), beta 0.5-2, ridge 1  (T = 65536; largest cond(K) over the chunks of 1 heads, float64: 6.72e+00)
+       chunk: 3.8e-07 4.5e-07 4.8e-07 5.2e-07 6.4e-07 6.4e-07 7.7e-07 7.9e-07   P err 1.7e-06, eig min/max (worst boundary) 1.5e-01
+   chunk_inv: 4.4e-07 4.2e-07 5.2e-07 5.6e-07 7.4e-07 6.1e-07 7.1e-07 7.8e-07   P err 1.6e-06, eig min/max (worst boundary) 1.5e-01
+   bl_triton: 4.7e-07 1.9e-06 2.8e-06 3.4e-06 3.9e-06 4.3e-06 4.3e-06 4.8e-06   P err 1.7e-06, eig min/max (worst boundary) 1.5e-01
+          bl: 4.4e-07 2.0e-06 3.0e-06 3.4e-06 3.9e-06 4.2e-06 4.4e-06 5.1e-06   P err 1.6e-06, eig min/max (worst boundary) 1.5e-01
+       bl_wy: 3.6e-07 4.0e-07 5.0e-07 5.1e-07 6.6e-07 6.0e-07 7.7e-07 6.5e-07   P err 1.6e-06, eig min/max (worst boundary) 1.5e-01
+   recurrent: 5.6e-07 2.3e-06 2.9e-06 3.5e-06 4.4e-06 5.1e-06 6.1e-06 6.3e-06   P err 1.9e-05, eig min/max (worst boundary) 1.5e-01
+  (82.1 s)
+(part D: 82 s)
+
+Triton autotuning (kernel, shape key: chosen config):
+  gain (64, 64, 64, 64, 4, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None
+  mean (64, 64, 65536, 16, 64, 4, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 16, num_ctas: 1, num_stages: 3, maxnreg: None
+
+total 82 s
+saved results/gpu_bench_20261101_103901.json

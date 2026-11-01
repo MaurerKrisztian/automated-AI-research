@@ -1,0 +1,32 @@
+Environment: torch 2.11.0+cu128, cpu_threads 6, triton_f32_default ieee, gpu NVIDIA GeForce RTX 5060 Ti, gpu_mem_gib 15.47637939453125, sms 36, triton 3.6.0, fla 0.6.0
+Kalman methods: ['chunk', 'chunk_magma', 'chunk_inv', 'bl_triton', 'bl_triton_wy', 'bl', 'bl_wy', 'recurrent']; references: ['mesa_carry', 'mesanet_cg30', 'mesanet_exact', 'fla_gdn', 'fla_kda', 'fla_mesanet']
+
+Part B. Timing on NVIDIA GeForce RTX 5060 Ti: float32, TF32 off, T = 256, e = d; gates uniform on 0.9-1; unit keys, ridge 1, beta 0.5-2. Medians in ms (lab.bench; warmup 1, reps 3, or 3 reps for calls over 0.5 s). err: float32 output error against the float64 token-by-token filter on the device. mem: peak GiB above the inputs, forward (and forward + backward). Memory cap 14.0 GiB.
+
+  N=2 d=32 C=16 scalar gates  (8 s)
+            chunk  fwd      5.39 ms  graph      0.79  fwd+bwd     22.75 ms  graph fwd+bwd      2.64  err 2.4e-07  mem 0.00 / 0.00
+        chunk_inv  fwd      5.93 ms  graph      0.86  fwd+bwd     23.61 ms  graph fwd+bwd      2.89  err 1.7e-07  mem 0.00 / 0.00
+            bl_wy  fwd     41.42 ms  graph      4.13  fwd+bwd    187.17 ms  graph fwd+bwd     18.28  err 1.6e-07  mem 0.00 / 0.00
+        recurrent  fwd     58.01 ms  graph      5.58  fwd+bwd    278.11 ms  graph fwd+bwd     23.55  err 2.2e-07  mem 0.00 / 0.01
+
+  N=2 d=32 C=32 scalar gates  (3 s)
+            chunk  fwd      2.95 ms  graph      0.57  fwd+bwd     11.75 ms  graph fwd+bwd      1.88  err 2.3e-07  mem 0.00 / 0.00
+        chunk_inv  fwd      3.22 ms  graph      0.61  fwd+bwd     12.90 ms  graph fwd+bwd      1.98  err 2.9e-07  mem 0.00 / 0.00
+            bl_wy  fwd     38.70 ms  graph      3.84  fwd+bwd    177.67 ms  graph fwd+bwd     16.59  err 1.8e-07  mem 0.00 / 0.00
+        recurrent  fwd     58.01 ms  graph      5.58  fwd+bwd    278.11 ms  graph fwd+bwd     23.55  err 2.2e-07  mem 0.00 / 0.01
+
+  N=2 d=32 C=16 channel gates  (7 s)
+            chunk  fwd      5.61 ms  graph      0.79  fwd+bwd     22.94 ms  graph fwd+bwd      2.84  err 1.9e-07  mem 0.00 / 0.00
+        chunk_inv  fwd      5.72 ms  graph      0.85  fwd+bwd     22.88 ms  graph fwd+bwd      2.86  err 1.9e-07  mem 0.00 / 0.00
+            bl_wy  fwd     41.86 ms  graph      4.10  fwd+bwd    185.92 ms  graph fwd+bwd     18.17  err 1.5e-07  mem 0.00 / 0.00
+        recurrent  fwd     58.56 ms  graph      5.59  fwd+bwd    272.84 ms  graph fwd+bwd     32.29  err 2.0e-07  mem 0.00 / 0.01
+
+  N=2 d=32 C=32 channel gates  (3 s)
+            chunk  fwd      2.94 ms  graph      0.57  fwd+bwd     11.15 ms  graph fwd+bwd      1.84  err 2.2e-07  mem 0.00 / 0.00
+        chunk_inv  fwd      3.12 ms  graph      0.61  fwd+bwd     11.76 ms  graph fwd+bwd      1.94  err 2.0e-07  mem 0.00 / 0.00
+            bl_wy  fwd     38.25 ms  graph      3.84  fwd+bwd    169.95 ms  graph fwd+bwd     16.73  err 1.9e-07  mem 0.00 / 0.00
+        recurrent  fwd     58.56 ms  graph      5.59  fwd+bwd    272.84 ms  graph fwd+bwd     32.29  err 2.0e-07  mem 0.00 / 0.01
+(part B: 22 s)
+
+total 22 s
+saved results/gpu_bench_quick_20261030_040237.json

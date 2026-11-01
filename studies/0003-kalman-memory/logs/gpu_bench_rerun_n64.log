@@ -1,0 +1,220 @@
+Environment: torch 2.11.0+cu128, cpu_threads 6, triton_f32_default ieee, gpu NVIDIA GeForce RTX 5060 Ti, gpu_mem_gib 15.47637939453125, sms 36, triton 3.6.0, fla 0.6.0
+Kalman methods: ['chunk', 'chunk_magma', 'chunk_inv', 'bl_triton', 'bl_triton_wy', 'bl', 'bl_wy', 'recurrent']; references: ['mesa_carry', 'mesanet_cg30', 'mesanet_exact', 'fla_gdn', 'fla_kda', 'fla_mesanet']
+
+Part B. Timing on NVIDIA GeForce RTX 5060 Ti: float32, TF32 off, T = 2048, e = d; gates uniform on 0.9-1; unit keys, ridge 1, beta 0.5-2. Medians in ms (lab.bench; warmup 3, reps 10, or 3 reps for calls over 0.5 s). err: float32 output error against the float64 token-by-token filter on the device. mem: peak GiB above the inputs, forward (and forward + backward). Memory cap 14.0 GiB.
+
+  N=64 d=64 C=16 scalar gates  (122 s)
+            chunk  fwd     42.67 ms  graph     14.97  fwd+bwd    327.85 ms  err 2.8e-07  mem 0.26 / 1.02
+        chunk_inv  fwd     45.20 ms  graph     13.94  fwd+bwd    333.58 ms  err 3.6e-07  mem 0.26 / 1.10
+        bl_triton  fwd     30.52 ms  graph      8.21  err 2.5e-07  mem 0.22
+     bl_triton_wy  fwd     60.70 ms  graph     15.04  err 3.1e-07  mem 0.22
+               bl  fwd    488.12 ms  graph     71.94  fwd+bwd   4595.84 ms  err 2.8e-07  mem 0.22 / 5.26
+            bl_wy  fwd    344.32 ms  graph     47.94  fwd+bwd   1519.67 ms  err 2.7e-07  mem 0.22 / 1.67
+        recurrent  fwd    468.74 ms  graph     93.23  fwd+bwd   3864.29 ms  err 3.5e-07  mem 0.10 / 12.31
+       mesa_carry  fwd     32.08 ms  fwd+bwd     51.06 ms  mem 0.41 / 1.00
+     mesanet_cg30  fwd    150.31 ms  graph    148.45  mem 0.63
+    mesanet_exact  fwd    282.65 ms  mem 1.10
+          fla_gdn  fwd      2.63 ms  fwd+bwd     68.71 ms  mem 0.19 / 0.44
+      fla_mesanet  fwd      5.95 ms  fwd+bwd     26.67 ms  mem 0.13 / 0.27
+
+  N=64 d=64 C=32 scalar gates  (72 s)
+            chunk  fwd     21.92 ms  graph     11.25  fwd+bwd    184.77 ms  err 3.3e-07  mem 0.30 / 0.92
+        chunk_inv  fwd     23.32 ms  graph     10.53  fwd+bwd    186.68 ms  err 3.1e-07  mem 0.30 / 1.01
+        bl_triton  fwd     16.14 ms  graph      7.17  err 2.3e-07  mem 0.22
+     bl_triton_wy  fwd     30.60 ms  graph     10.77  err 3.1e-07  mem 0.22
+               bl  fwd    470.41 ms  graph     71.54  fwd+bwd   4520.87 ms  err 2.3e-07  mem 0.23 / 5.65
+            bl_wy  fwd    325.33 ms  graph     44.38  fwd+bwd   1427.50 ms  err 3.1e-07  mem 0.22 / 2.01
+        recurrent  fwd    468.74 ms  graph     93.23  fwd+bwd   3864.29 ms  err 3.5e-07  mem 0.10 / 12.31
+       mesa_carry  fwd     17.28 ms  fwd+bwd     30.11 ms  mem 0.28 / 0.63
+     mesanet_cg30  fwd    113.51 ms  graph    112.31  mem 0.39
+    mesanet_exact  fwd    173.03 ms  mem 2.36
+          fla_gdn  fwd      2.63 ms  fwd+bwd     68.71 ms  mem 0.19 / 0.44
+      fla_mesanet  fwd      5.95 ms  fwd+bwd     26.67 ms  mem 0.13 / 0.27
+
+  N=64 d=64 C=64 scalar gates  (69 s)
+            chunk  fwd     14.34 ms  graph     12.56  fwd+bwd    121.29 ms  err 5.4e-07  mem 0.38 / 0.99
+        chunk_inv  fwd     13.31 ms  graph     11.38  fwd+bwd    121.37 ms  err 5.0e-07  mem 0.38 / 1.11
+        bl_triton  fwd      9.08 ms  graph      7.37  err 2.3e-07  mem 0.23
+     bl_triton_wy  fwd     15.60 ms  graph     10.09  err 3.9e-07  mem 0.23
+               bl  fwd    465.09 ms  graph     73.23  fwd+bwd   4498.61 ms  err 2.2e-07  mem 0.23 / 6.61
+            bl_wy  fwd    309.29 ms  graph     45.33  fwd+bwd   1403.01 ms  err 4.3e-07  mem 0.23 / 2.97
+        recurrent  fwd    468.74 ms  graph     93.23  fwd+bwd   3864.29 ms  err 3.5e-07  mem 0.10 / 12.31
+       mesa_carry  fwd     10.61 ms  fwd+bwd     22.04 ms  mem 0.22 / 0.44
+     mesanet_cg30  fwd    119.14 ms  graph    118.24  mem 0.32
+    mesanet_exact  fwd    195.91 ms  mem 8.31
+          fla_gdn  fwd      2.63 ms  fwd+bwd     68.71 ms  mem 0.19 / 0.44
+      fla_mesanet  fwd      5.95 ms  fwd+bwd     26.67 ms  mem 0.13 / 0.27
+
+  N=64 d=64 C=128 scalar gates  (66 s)
+            chunk  fwd     18.61 ms  graph     17.46  fwd+bwd    109.33 ms  err 6.7e-07  mem 0.57 / 1.28
+        chunk_inv  fwd     17.63 ms  graph     16.23  fwd+bwd    107.77 ms  err 7.1e-07  mem 0.57 / 1.45
+        bl_triton  fwd     11.06 ms  graph     10.64  err 2.4e-07  mem 0.23
+     bl_triton_wy  fwd     14.77 ms  graph     13.69  err 6.2e-07  mem 0.23
+               bl  fwd    462.01 ms  graph     78.45  fwd+bwd   4511.26 ms  err 2.4e-07  mem 0.23 / 8.71
+            bl_wy  fwd    300.38 ms  graph     50.96  fwd+bwd   1390.44 ms  err 6.2e-07  mem 0.23 / 5.18
+        recurrent  fwd    468.74 ms  graph     93.23  fwd+bwd   3864.29 ms  err 3.5e-07  mem 0.10 / 12.31
+       mesa_carry  fwd      9.71 ms  fwd+bwd     21.39 ms  mem 0.22 / 0.50
+     mesanet_cg30  fwd    132.10 ms  graph    131.37  mem 0.39
+          fla_gdn  fwd      2.63 ms  fwd+bwd     68.71 ms  mem 0.19 / 0.44
+      fla_mesanet  fwd      5.95 ms  fwd+bwd     26.67 ms  mem 0.13 / 0.27
+    mesanet_exact  fwd       n/a     [out of memory]
+
+  N=64 d=64 C=16 channel gates  (117 s)
+            chunk  fwd     43.97 ms  graph     17.14  fwd+bwd    332.26 ms  err 2.8e-07  mem 0.31 / 1.19
+        chunk_inv  fwd     44.93 ms  graph     16.06  fwd+bwd    334.37 ms  err 3.3e-07  mem 0.31 / 1.27
+        bl_triton  fwd     30.31 ms  graph      9.54  err 1.8e-07  mem 0.32
+     bl_triton_wy  fwd     58.04 ms  graph     16.27  err 2.7e-07  mem 0.32
+               bl  fwd    479.29 ms  graph     75.06  fwd+bwd   5204.52 ms  err 2.0e-07  mem 0.32 / 5.42
+            bl_wy  fwd    345.19 ms  graph     39.97  fwd+bwd   1544.32 ms  err 2.8e-07  mem 0.32 / 1.92
+        recurrent  fwd    473.48 ms  graph     87.18  fwd+bwd   4500.33 ms  err 2.4e-07  mem 0.10 / 12.44
+       mesa_carry  fwd     31.12 ms  fwd+bwd     50.20 ms  mem 0.41 / 1.00
+          fla_kda  fwd      3.70 ms  fwd+bwd     15.12 ms  mem 0.28 / 0.66
+
+  N=64 d=64 C=32 channel gates  (67 s)
+            chunk  fwd     21.01 ms  graph     13.01  fwd+bwd    184.60 ms  err 4.2e-07  mem 0.33 / 1.05
+        chunk_inv  fwd     22.47 ms  graph     12.32  fwd+bwd    184.92 ms  err 3.4e-07  mem 0.33 / 1.14
+        bl_triton  fwd     16.00 ms  graph      8.52  err 1.9e-07  mem 0.32
+     bl_triton_wy  fwd     28.53 ms  graph     12.16  err 2.9e-07  mem 0.32
+               bl  fwd    463.48 ms  graph     74.48  fwd+bwd   5098.73 ms  err 2.1e-07  mem 0.32 / 5.80
+            bl_wy  fwd    310.29 ms  graph     46.15  fwd+bwd   1425.34 ms  err 2.7e-07  mem 0.32 / 2.23
+        recurrent  fwd    473.48 ms  graph     87.18  fwd+bwd   4500.33 ms  err 2.4e-07  mem 0.10 / 12.44
+       mesa_carry  fwd     16.69 ms  fwd+bwd     29.42 ms  mem 0.28 / 0.63
+          fla_kda  fwd      3.70 ms  fwd+bwd     15.12 ms  mem 0.28 / 0.66
+
+  N=64 d=64 C=64 channel gates  (64 s)
+            chunk  fwd     15.13 ms  graph     13.45  fwd+bwd    119.83 ms  err 4.0e-07  mem 0.38 / 1.02
+        chunk_inv  fwd     14.11 ms  graph     12.26  fwd+bwd    117.78 ms  err 4.0e-07  mem 0.38 / 1.14
+        bl_triton  fwd      9.45 ms  graph      8.83  err 1.7e-07  mem 0.32
+     bl_triton_wy  fwd     14.08 ms  graph     11.57  err 3.3e-07  mem 0.32
+               bl  fwd    457.95 ms  graph     76.38  fwd+bwd   5107.58 ms  err 2.1e-07  mem 0.32 / 6.76
+            bl_wy  fwd    295.55 ms  graph     38.41  fwd+bwd   1350.97 ms  err 3.5e-07  mem 0.32 / 3.12
+        recurrent  fwd    473.48 ms  graph     87.18  fwd+bwd   4500.33 ms  err 2.4e-07  mem 0.10 / 12.44
+       mesa_carry  fwd     10.47 ms  fwd+bwd     22.20 ms  mem 0.22 / 0.44
+          fla_kda  fwd      3.70 ms  fwd+bwd     15.12 ms  mem 0.28 / 0.66
+
+  N=64 d=64 C=128 channel gates  (63 s)
+            chunk  fwd     18.06 ms  graph     17.00  fwd+bwd    100.82 ms  err 4.4e-07  mem 0.50 / 1.12
+        chunk_inv  fwd     17.10 ms  graph     15.74  fwd+bwd     99.33 ms  err 4.0e-07  mem 0.50 / 1.29
+        bl_triton  fwd     12.32 ms  graph     12.01  err 1.8e-07  mem 0.32
+     bl_triton_wy  fwd     15.84 ms  graph     14.91  err 3.7e-07  mem 0.32
+               bl  fwd    459.12 ms  graph     82.19  fwd+bwd   5098.58 ms  err 2.1e-07  mem 0.32 / 8.87
+            bl_wy  fwd    297.82 ms  graph     44.44  fwd+bwd   1315.31 ms  err 3.9e-07  mem 0.32 / 5.12
+        recurrent  fwd    473.48 ms  graph     87.18  fwd+bwd   4500.33 ms  err 2.4e-07  mem 0.10 / 12.44
+       mesa_carry  fwd      9.66 ms  fwd+bwd     21.32 ms  mem 0.22 / 0.50
+          fla_kda  fwd      3.70 ms  fwd+bwd     15.12 ms  mem 0.28 / 0.66
+
+  N=64 d=128 C=16 scalar gates  (92 s)
+            chunk  fwd     41.88 ms  graph     27.67  fwd+bwd    568.69 ms  err 4.9e-07  mem 0.49 / 2.73
+        chunk_inv  fwd     45.05 ms  graph     24.86  fwd+bwd    575.80 ms  err 5.2e-07  mem 0.49 / 2.89
+        bl_triton  fwd     34.18 ms  graph     18.64  err 2.9e-07  mem 0.45
+     bl_triton_wy  fwd     59.81 ms  graph     26.68  err 4.3e-07  mem 0.45
+               bl  fwd    469.30 ms  graph    114.32  err 3.4e-07  mem 0.45  [backward skipped: autograd would keep about 25 GiB]
+            bl_wy  fwd    333.87 ms  graph     51.27  fwd+bwd   1499.83 ms  err 4.8e-07  mem 0.45 / 4.02
+        recurrent  fwd    471.07 ms  graph    195.06  err 4.0e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+       mesa_carry  fwd     42.33 ms  fwd+bwd    100.90 ms  mem 1.56 / 3.50
+     mesanet_cg30  fwd    325.25 ms  graph    324.22  mem 2.26
+    mesanet_exact  fwd   2882.39 ms  mem 2.82
+          fla_gdn  fwd     12.71 ms  fwd+bwd    186.78 ms  mem 0.41 / 0.97
+      fla_mesanet  fwd       n/a     [error: OutOfResources(116236, 101376, 'shared memory')]
+
+  N=64 d=128 C=32 scalar gates  (61 s)
+            chunk  fwd     22.82 ms  graph     20.08  fwd+bwd    310.73 ms  err 4.7e-07  mem 0.52 / 2.03
+        chunk_inv  fwd     22.92 ms  graph     18.12  fwd+bwd    312.03 ms  err 4.7e-07  mem 0.52 / 2.18
+        bl_triton  fwd     22.48 ms  graph     15.01  err 3.0e-07  mem 0.45
+     bl_triton_wy  fwd     30.02 ms  graph     18.33  err 4.0e-07  mem 0.45
+               bl  fwd    456.14 ms  graph    113.90  err 3.0e-07  mem 0.45  [backward skipped: autograd would keep about 26 GiB]
+            bl_wy  fwd    304.25 ms  graph     56.23  fwd+bwd   1377.24 ms  err 5.3e-07  mem 0.45 / 4.27
+        recurrent  fwd    471.07 ms  graph    195.06  err 4.0e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+       mesa_carry  fwd     23.77 ms  fwd+bwd     59.05 ms  mem 0.82 / 2.00
+     mesanet_cg30  fwd    236.23 ms  graph    235.28  mem 1.27
+    mesanet_exact  fwd   1483.63 ms  mem 3.45
+          fla_gdn  fwd     12.71 ms  fwd+bwd    186.78 ms  mem 0.41 / 0.97
+      fla_mesanet  fwd       n/a     [error: OutOfResources(116236, 101376, 'shared memory')]
+
+  N=64 d=128 C=64 scalar gates  (52 s)
+            chunk  fwd     22.64 ms  graph     21.01  fwd+bwd    199.83 ms  err 5.6e-07  mem 0.60 / 1.83
+        chunk_inv  fwd     19.99 ms  graph     18.28  fwd+bwd    197.13 ms  err 5.7e-07  mem 0.60 / 2.01
+        bl_triton  fwd     16.71 ms  graph     15.99  err 2.9e-07  mem 0.45
+     bl_triton_wy  fwd     19.73 ms  graph     18.37  err 5.2e-07  mem 0.46
+               bl  fwd    466.79 ms  graph    118.46  err 3.0e-07  mem 0.46  [backward skipped: autograd would keep about 28 GiB]
+            bl_wy  fwd    298.38 ms  graph     59.92  fwd+bwd   1313.68 ms  err 5.2e-07  mem 0.46 / 6.03
+        recurrent  fwd    471.07 ms  graph    195.06  err 4.0e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+       mesa_carry  fwd     15.82 ms  fwd+bwd     41.67 ms  mem 0.57 / 1.25
+     mesanet_cg30  fwd    228.70 ms  graph    228.13  mem 0.79
+    mesanet_exact  fwd    853.71 ms  mem 8.72
+          fla_gdn  fwd     12.71 ms  fwd+bwd    186.78 ms  mem 0.41 / 0.97
+      fla_mesanet  fwd       n/a     [error: OutOfResources(116236, 101376, 'shared memory')]
+
+  N=64 d=128 C=128 scalar gates  (47 s)
+            chunk  fwd     27.94 ms  graph     26.58  fwd+bwd    164.08 ms  err 8.1e-07  mem 0.76 / 1.95
+        chunk_inv  fwd     24.85 ms  graph     23.51  fwd+bwd    160.82 ms  err 8.0e-07  mem 0.76 / 2.17
+        bl_triton  fwd     33.00 ms  graph     32.73  err 3.0e-07  mem 0.46
+     bl_triton_wy  fwd     37.48 ms  graph     36.42  err 7.5e-07  mem 0.46
+               bl  fwd    465.62 ms  graph    128.97  err 3.4e-07  mem 0.46  [backward skipped: autograd would keep about 32 GiB]
+            bl_wy  fwd    299.46 ms  graph     67.62  fwd+bwd   1304.87 ms  err 7.5e-07  mem 0.46 / 10.01
+        recurrent  fwd    471.07 ms  graph    195.06  err 4.0e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+       mesa_carry  fwd     16.24 ms  fwd+bwd     39.80 ms  mem 0.45 / 0.88
+     mesanet_cg30  fwd    245.55 ms  graph    244.74  mem 0.63
+          fla_gdn  fwd     12.71 ms  fwd+bwd    186.78 ms  mem 0.41 / 0.97
+    mesanet_exact  fwd       n/a     [out of memory]
+      fla_mesanet  fwd       n/a     [error: OutOfResources(116236, 101376, 'shared memory')]
+
+  N=64 d=128 C=16 channel gates  (60 s)
+            chunk  fwd     42.93 ms  graph     32.21  fwd+bwd    578.79 ms  err 3.7e-07  mem 0.59 / 3.13
+        chunk_inv  fwd     45.64 ms  graph     29.39  fwd+bwd    589.01 ms  err 4.0e-07  mem 0.59 / 3.28
+        bl_triton  fwd     34.97 ms  graph     21.74  err 2.2e-07  mem 0.63
+     bl_triton_wy  fwd     59.14 ms  graph     30.16  err 3.7e-07  mem 0.64
+               bl  fwd    474.46 ms  graph    108.86  err 2.3e-07  mem 0.64  [backward skipped: autograd would keep about 25 GiB]
+            bl_wy  fwd    337.70 ms  graph     55.18  fwd+bwd   1666.70 ms  err 3.6e-07  mem 0.64 / 4.55
+        recurrent  fwd    469.25 ms  graph    187.76  err 2.8e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+       mesa_carry  fwd     42.73 ms  fwd+bwd    100.55 ms  mem 1.56 / 3.50
+          fla_kda  fwd     32.82 ms  fwd+bwd    123.18 ms  mem 0.56 / 1.32
+
+  N=64 d=128 C=32 channel gates  (43 s)
+            chunk  fwd     27.10 ms  graph     24.18  fwd+bwd    318.37 ms  err 4.5e-07  mem 0.62 / 2.37
+        chunk_inv  fwd     25.38 ms  graph     22.25  fwd+bwd    318.32 ms  err 4.4e-07  mem 0.62 / 2.53
+        bl_triton  fwd     20.50 ms  graph     18.04  err 2.1e-07  mem 0.64
+     bl_triton_wy  fwd     28.81 ms  graph     21.84  err 4.3e-07  mem 0.64
+               bl  fwd    454.61 ms  graph    121.66  err 2.4e-07  mem 0.64  [backward skipped: autograd would keep about 26 GiB]
+            bl_wy  fwd    303.56 ms  graph     60.31  fwd+bwd   1360.01 ms  err 4.2e-07  mem 0.64 / 4.76
+        recurrent  fwd    469.25 ms  graph    187.76  err 2.8e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+       mesa_carry  fwd     23.80 ms  fwd+bwd     58.98 ms  mem 0.82 / 2.00
+          fla_kda  fwd     32.82 ms  fwd+bwd    123.18 ms  mem 0.56 / 1.32
+
+  N=64 d=128 C=64 channel gates  (38 s)
+            chunk  fwd     25.82 ms  graph     24.20  fwd+bwd    207.28 ms  err 4.7e-07  mem 0.66 / 2.08
+        chunk_inv  fwd     23.53 ms  graph     21.47  fwd+bwd    202.25 ms  err 4.3e-07  mem 0.66 / 2.25
+        bl_triton  fwd     19.59 ms  graph     19.09  err 2.2e-07  mem 0.64
+     bl_triton_wy  fwd     23.64 ms  graph     21.98  err 3.7e-07  mem 0.64
+               bl  fwd    455.00 ms  graph    121.46  err 2.3e-07  mem 0.64  [backward skipped: autograd would keep about 28 GiB]
+            bl_wy  fwd    299.14 ms  graph     55.74  fwd+bwd   1312.57 ms  err 4.3e-07  mem 0.64 / 6.45
+        recurrent  fwd    469.25 ms  graph    187.76  err 2.8e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+       mesa_carry  fwd     15.83 ms  fwd+bwd     41.62 ms  mem 0.57 / 1.25
+          fla_kda  fwd     32.82 ms  fwd+bwd    123.18 ms  mem 0.56 / 1.32
+
+  N=64 d=128 C=128 channel gates  (38 s)
+            chunk  fwd     29.73 ms  graph     28.70  fwd+bwd    162.56 ms  err 4.7e-07  mem 0.76 / 2.01
+        chunk_inv  fwd     26.71 ms  graph     25.34  fwd+bwd    158.72 ms  err 4.7e-07  mem 0.76 / 2.23
+        bl_triton  fwd     36.08 ms  graph     35.82  err 2.1e-07  mem 0.65
+     bl_triton_wy  fwd     40.63 ms  graph     39.60  err 4.3e-07  mem 0.65
+               bl  fwd    459.30 ms  graph    126.79  err 2.3e-07  mem 0.65  [backward skipped: autograd would keep about 32 GiB]
+            bl_wy  fwd    294.90 ms  graph     72.90  fwd+bwd   1282.03 ms  err 4.3e-07  mem 0.65 / 10.11
+        recurrent  fwd    469.25 ms  graph    187.76  err 2.8e-07  mem 0.20  [backward skipped: autograd would keep about 48 GiB]
+       mesa_carry  fwd     16.21 ms  fwd+bwd     39.81 ms  mem 0.45 / 0.88
+          fla_kda  fwd     32.82 ms  fwd+bwd    123.18 ms  mem 0.56 / 1.32
+(part B: 1074 s)
+
+Triton autotuning (kernel, shape key: chosen config):
+  gain (64, 16, 16, 64, 64, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 4, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (64, 32, 32, 64, 64, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 4, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (64, 64, 64, 64, 64, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 2, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (64, 128, 128, 64, 64, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (128, 16, 16, 128, 64, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 2, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (128, 32, 32, 128, 64, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 2, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (128, 64, 64, 128, 64, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 2, num_ctas: 1, num_stages: 3, maxnreg: None
+  gain (128, 128, 128, 128, 64, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None
+  mean (64, 64, 2048, 16, 64, 64, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 2, num_ctas: 1, num_stages: 3, maxnreg: None
+  mean (128, 128, 2048, 16, 128, 64, 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32', 'torch.float32'): num_warps: 2, num_ctas: 1, num_stages: 3, maxnreg: None
+
+total 1074 s
+saved results/gpu_bench_20261030_025256.json
