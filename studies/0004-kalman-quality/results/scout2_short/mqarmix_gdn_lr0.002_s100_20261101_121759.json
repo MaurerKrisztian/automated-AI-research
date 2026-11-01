@@ -1,0 +1,123 @@
+{
+ "env": {
+  "time": "2026-11-01T12:17:59+0100",
+  "argv": [
+   "train.py",
+   "--grid",
+   "scout2_short",
+   "--models",
+   "gdn",
+   "mesanet",
+   "--tasks",
+   "mqarmix",
+   "volatilemix",
+   "--lrs",
+   "2e-3",
+   "--seeds",
+   "100",
+   "--steps-scale",
+   "0.3334",
+   "--extra-evals",
+   "--no-numerics"
+  ],
+  "python": "3.11.15",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "tf32_matmul": false,
+  "git_commit": "e3a8603",
+  "git_dirty": true
+ },
+ "args": {
+  "grid": "scout2_short",
+  "models": [
+   "gdn",
+   "mesanet"
+  ],
+  "tasks": [
+   "mqarmix",
+   "volatilemix"
+  ],
+  "lrs": [
+   0.002
+  ],
+  "seeds": [
+   100
+  ],
+  "alt": false,
+  "best_from": null,
+  "opts": "{}",
+  "d": 64,
+  "heads": 2,
+  "layers": 2,
+  "chunk": 64,
+  "chunk_channel": 32,
+  "steps_scale": 0.3334,
+  "eval_every": 250,
+  "eval_batches": 16,
+  "target": 2.0,
+  "extra_evals": true,
+  "no_numerics": true,
+  "device": "cuda",
+  "quick": false
+ },
+ "run": {
+  "model": "gdn",
+  "task": "mqarmix",
+  "lr": 0.002,
+  "seed": 100,
+  "opts": {},
+  "core_options": {},
+  "d": 64,
+  "heads": 2,
+  "layers": 2,
+  "params": 232456,
+  "steps_limit": 1000,
+  "steps_run": 1000,
+  "stopped_early_at": null,
+  "batch": 64,
+  "recall": 0.0143890380859375,
+  "recall_same": null,
+  "recall_changed": null,
+  "stale_rate": null,
+  "final_loss": 5.948336334228515,
+  "ms_per_step": 20.525014000668307,
+  "peak_gb": 0.3199796676635742,
+  "nonfinite_steps": 0,
+  "cholesky_failures": 0,
+  "extra_recall": {
+   "mqar32": 0.02789306640625,
+   "mqar128": 0.00762939453125,
+   "mqar256": 0.00537109375
+  },
+  "numerics": {},
+  "curve": [
+   {
+    "step": 250,
+    "loss": 6.2526535987854,
+    "grad_norm": 0.17684032022953033,
+    "recall": 0.0020751953125
+   },
+   {
+    "step": 500,
+    "loss": 6.216534900665283,
+    "grad_norm": 0.2192164957523346,
+    "recall": 0.0058441162109375
+   },
+   {
+    "step": 750,
+    "loss": 6.01903244972229,
+    "grad_norm": 0.32738161087036133,
+    "recall": 0.0124053955078125
+   },
+   {
+    "step": 1000,
+    "loss": 5.948336334228515,
+    "grad_norm": 0.3835841119289398,
+    "recall": 0.0143890380859375
+   }
+  ],
+  "alt": false,
+  "seconds": 26.483935832977295
+ }
+}

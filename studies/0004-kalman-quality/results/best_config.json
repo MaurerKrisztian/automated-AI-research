@@ -1,0 +1,107 @@
+{
+ "gdn/mqarmix": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.4400177001953125
+ },
+ "mesanet/mqarmix": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.7606925964355469
+ },
+ "kalman_stat_scalar/mqarmix": {
+  "lr": 0.002,
+  "alt": true,
+  "score": 0.6864395141601562
+ },
+ "kalman_stat_channel/mqarmix": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.44171905517578125
+ },
+ "kalman_free_scalar/mqarmix": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.5910110473632812
+ },
+ "kalman_free_channel/mqarmix": {
+  "lr": 0.002,
+  "alt": true,
+  "score": 0.091888427734375
+ },
+ "kalman_free_identity/mqarmix": {
+  "lr": 0.002,
+  "alt": true,
+  "score": 0.14524078369140625
+ },
+ "gdn/selcopy": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.99591064453125
+ },
+ "mesanet/selcopy": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.83251953125
+ },
+ "kalman_stat_scalar/selcopy": {
+  "lr": 0.002,
+  "alt": true,
+  "score": 0.83563232421875
+ },
+ "kalman_stat_channel/selcopy": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.99871826171875
+ },
+ "kalman_free_scalar/selcopy": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.8795166015625
+ },
+ "kalman_free_channel/selcopy": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.97607421875
+ },
+ "kalman_free_identity/selcopy": {
+  "lr": 0.002,
+  "alt": true,
+  "score": 0.7608642578125
+ },
+ "gdn/volatilemix": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.7011311848958334
+ },
+ "mesanet/volatilemix": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.92974853515625
+ },
+ "kalman_stat_scalar/volatilemix": {
+  "lr": 0.002,
+  "alt": true,
+  "score": 0.3953857421875
+ },
+ "kalman_stat_channel/volatilemix": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.3788859049479167
+ },
+ "kalman_free_scalar/volatilemix": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.5621337890625
+ },
+ "kalman_free_channel/volatilemix": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.20284016927083334
+ },
+ "kalman_free_identity/volatilemix": {
+  "lr": 0.004,
+  "alt": false,
+  "score": 0.029988606770833332
+ }
+}

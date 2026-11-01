@@ -21,6 +21,7 @@ A ranked queue of testable ideas. `/research` with no argument takes the highest
 - **Runs on** GPU · **Track** A, B · **Priority** 1 · **Status** ready · **Builds on** 0001
 - **What:** review issues 2, 4, 5, 7 and 8. Give the CG baseline an implicit backward (one extra CG solve), run 3+ seeds at 64 pairs with a tuned DeltaNet, sweep learning rate and ridge at 128 pairs to tell a failure to train from a capacity limit, and time the layers at head dim 32 and at small batch.
 - **Compute:** about 2 GPU hours.
+- **Note (2026-11-01):** study 0004 partly answers the 128-pair question: not a capacity limit (claim 2, E4; MesaNet 81.9% at N = 128 with heads of dim 32, gates starting near 1, trained on N ≤ 64). Also from 0004 (claim 11, one seed per configuration): MesaNet from fla's starting gate of about 0.5 stays at chance at these sizes in same-size training, and mixed-size training leaves the loss plateau earlier. Use both in any rerun.
 
 ## I-015 · Float64 check of study 0003's chunkwise Kalman memory
 - **Runs on** CPU · **Track** A, B · **Priority** 1 · **Status** done: 0003 (claims 1–5 and 7–10 at E2; `logs/check_chunk_v4.log`, `logs/check_float32.log`) · **Builds on** 0003 (E1: Propositions 1–6)
@@ -29,7 +30,7 @@ A ranked queue of testable ideas. `/research` with no argument takes the highest
 - **Compute:** minutes on a CPU.
 
 ## I-018 · Accuracy of study 0003's chunk form on ill-conditioned chunks
-- **Runs on** CPU · **Track** B · **Priority** 2 · **Status** ready · **Builds on** 0003 (E2: claims 8–9)
+- **Runs on** CPU · **Track** B · **Priority** 2 · **Status** dropped: the Kalman line stopped with study 0004 (claim 1), and on trained inputs the chunk form's float32 error stayed ≤ 2.4e-5 at cond(𝒦) up to 4.67e4 (0004, claim 9) · **Builds on** 0003 (E2: claims 8–9)
 - **What:** the chunk form is exact, but its rounding error is about cond(𝒦)·eps. The token-by-token filter is usually more accurate: 2.1–195× in float64, depending on the keys, and 2.3–56× in float32 at cond(𝒦) 430–1.35e4, where the chunk form reached 3.7e-4. Running only the C×C stage in float64 barely helps. Forming 𝒦 itself in float64 cut the float32 error 2–10× but left one configuration 11× above the filter, so the other chunk matrices (X, Z, R) and products matter too. Try:
   - forming 𝒦, X, Z and R at higher precision, or through a Cholesky factor of P_0 (square-root form);
   - iterative refinement, which helps only if its residual uses a more accurate 𝒦;
@@ -38,7 +39,7 @@ A ranked queue of testable ideas. `/research` with no argument takes the highest
 - **Note (2026-10-30):** on the GPU, BL's chunk algorithm is about as inaccurate on these configurations. Its worst float32 error is 2.2–33× the token-by-token filter's, against 1.8–30× for the chunk form (0003, claim 16, E3), so a fix may serve both chunk algorithms.
 
 ## I-019 · Fused Triton kernel for study 0003's chunk form
-- **Runs on** GPU · **Track** B · **Priority** 2 · **Status** ready · **Builds on** 0003 (E3: claims 13–14)
+- **Runs on** GPU · **Track** B · **Priority** 2 · **Status** dropped: the Kalman line stopped with study 0004 (claim 1); a faster kernel would serve a memory that did not recall better · **Builds on** 0003 (E3: claims 13–14)
 - **What:** in plain PyTorch, the chunk-parallel Kalman memory lost the forward comparison with BL's chunk algorithm run as Triton kernels: BL took 0.66–1.08× its time, each at its fastest chunk size (0003, claim 13). Its eager time is spread over the state-dependent products, the C×C Cholesky, the triangular solve and the updates (0003, Results, part C). Write one Triton program per chunk and head that keeps P and M on chip and fuses those stages, with the Cholesky and the solve on the C×C block in registers or shared memory, as I-004 proposes for the carried inverse.
 - **Hypothesis:** fused, the chunk form's smaller order-dependent work (0003, claim 6, E1) makes its forward pass faster than BL's Triton loops at d = 128 and C = 32–64.
 - **Decisive test:** `gpu_bench.py`'s part B with the fused kernel added, against `bl_triton`, eager and as CUDA graphs, with a rerun for the spread.
@@ -71,10 +72,18 @@ A ranked queue of testable ideas. `/research` with no argument takes the highest
 - **Result (2026-11-01):** the forward-pass hypothesis is refuted at these sizes, for the plain-PyTorch chunk form against this study's Triton loops. On an RTX 5060 Ti in float32, BL took 0.73–0.92× the chunk form's forward time in the hypothesis cells eager, and 0.79–1.09× as CUDA graphs. BL is faster beyond the spread between runs in 7 of 8 and 4 of 8 cells, and the chunk form in none. With each method at its fastest chunk size, BL took 0.66–1.08× eager and 0.68–0.99× as graphs. The second part, faster than 30 + 30-step CG, holds only against CG in plain PyTorch, in the forward pass: fla's fused MesaNet kernel takes 0.04–0.25× the chunk form's forward + backward time (d = 64). Through autograd, as graphs, BL's algorithm in PyTorch loops takes 1.8–6.0× the chunk form's forward + backward time. That compares autograd paths only. BL's own fused backward is not public, and it would beat the chunk form's autograd step at every tested size if it costs under about 3.6× BL's forward, so training speed against BL is open. Follow-ups: I-019, and the closed-form backward (0003, Next steps).
 
 ## I-017 · Stationary against free process noise in the Kalman memory
-- **Runs on** GPU · **Track** A · **Priority** 3 · **Status** ready (I-015 done) · **Builds on** 0003 (E2)
+- **Runs on** GPU · **Track** A · **Priority** 3 · **Status** done: 0004 (E4, refuted at this size and budget) · **Builds on** 0003 (E2)
 - **What:** the Bayesian Layer (Dowling et al. 2026) learns its process noise freely. Study 0003's stationary choice ties it to the gates, so the prior stays N(0, Λ⁻¹), MesaNet's fixed ridge, with one fewer learned quantity per token. Both forget like Gated DeltaNet, while MesaNet's forgetting saturates (0003, Proposition 1(d)). Train MQAR and selective-copying models, 3 seeds, with both parametrizations (scalar and per-channel gates), against MesaNet (CG) and Gated DeltaNet, at equal parameters and an equal tuning budget. The chunk-parallel form computes either one exactly, so this tests the parametrization, not the algorithm.
 - **Decisive test:** recall and loss against the seed spread.
 - **Compute:** about 2 GPU hours.
+- **Result (2026-11-01):** negative. At d_model 64, 2 heads of dim 32, 3000 steps and 3 seeds, no Kalman variant beat both MesaNet with 30 CG steps and Gated DeltaNet on MQAR, Volatile MQAR or selective copying, once the one flagged cell was rerun on fresh seeds (0004, claim 1, E4). Stationary noise did as well as free noise (0004, claim 5). By the pre-registered rule and the maintainer's decision, **the Kalman line stops**: no more GPU time on it.
+
+## I-020 · Does an exact solve help MesaNet on selective copying?
+- **Runs on** GPU · **Track** A, B · **Priority** 3 · **Status** ready (no novelty check yet) · **Builds on** 0004 (E4: claims 4 and 10), 0002 (E2: the exact solver)
+- **What:** on trained selective-copying inputs, 30 CG steps differ from a dense solve by 3.6e-1, with cond(H + Λ) up to 448, and this is where MesaNet is weakest (86.1%, 84.7–87.2, against 99%+ for Gated DeltaNet). Elsewhere the error is 6.6e-3 to 2.4e-2. Train MesaNet with more CG steps, or with study 0002's exact solver through autograd, on `studies/0004-kalman-quality/tasks.py`'s selective copying.
+- **Hypothesis:** at 100 CG steps or an exact solve, recall rises beyond the seed spread.
+- **Decisive test:** recall over 3+ seeds against 30 CG steps at the same tuning budget.
+- **Compute:** under 1 GPU hour.
 
 ## I-005 · Shared tiny-LM baseline (milestone M2, infrastructure)
 - **Runs on** GPU · **Track** all · **Priority** 2 · **Status** ready
@@ -121,3 +130,4 @@ A ranked queue of testable ideas. `/research` with no argument takes the highest
 - **Runs on** GPU · **Track** A · **Priority** 5 · **Status** blocked (needs I-005, and I-002 for forgetting) · **Builds on** 0001
 - **What:** replace attention in some or all layers with `lab.layers.mesa`, and compare with Gated DeltaNet and the Transformer baseline at equal parameters and tokens.
 - **Note (2026-10-29):** study 0003's Kalman memory is another route to forgetting (exact chunk form verified at E2 in float64; quality untested, see I-017).
+- **Note (2026-11-01):** the Kalman route is closed: it did not train to better recall than MesaNet (0004, claim 1, E4). MesaNet with gates starting near 1 is the memory to use here.

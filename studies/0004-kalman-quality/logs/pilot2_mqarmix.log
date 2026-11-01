@@ -1,0 +1,200 @@
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | grid pilot2 | d 64, 2 heads, 2 layers | TF32 off
+                    gdn   mqarmix lr 0.001 s100 step   250 loss 6.252 recall   0.25%   20.5 ms/step
+                    gdn   mqarmix lr 0.001 s100 step   500 loss 6.244 recall   0.18%   20.6 ms/step
+                    gdn   mqarmix lr 0.001 s100 step   750 loss 6.208 recall   0.47%   20.4 ms/step
+                    gdn   mqarmix lr 0.001 s100 step  1000 loss 6.103 recall   0.89%   20.4 ms/step
+                    gdn   mqarmix lr 0.001 s100 step  1250 loss 6.020 recall   1.07%   20.4 ms/step
+                    gdn   mqarmix lr 0.001 s100 step  1500 loss 6.024 recall   1.10%   20.4 ms/step
+mqarmix_gdn_lr0.001_s100: recall 0.010986328125 in 37 s, 1500 steps, 20.4 ms/step, 232456 params, 0.32 GB; saved results/pilot2/mqarmix_gdn_lr0.001_s100_20261101_122019.json
+                    gdn   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.21%   20.6 ms/step
+                    gdn   mqarmix lr 0.002 s100 step   500 loss 6.203 recall   0.66%   20.6 ms/step
+                    gdn   mqarmix lr 0.002 s100 step   750 loss 5.694 recall   5.37%   20.6 ms/step
+                    gdn   mqarmix lr 0.002 s100 step  1000 loss 3.575 recall  18.69%   20.6 ms/step
+                    gdn   mqarmix lr 0.002 s100 step  1250 loss 2.173 recall  26.84%   20.6 ms/step
+                    gdn   mqarmix lr 0.002 s100 step  1500 loss 2.154 recall  28.68%   20.6 ms/step
+mqarmix_gdn_lr0.002_s100: recall 0.2867584228515625 in 35 s, 1500 steps, 20.6 ms/step, 232456 params, 0.32 GB; saved results/pilot2/mqarmix_gdn_lr0.002_s100_20261101_122054.json
+                    gdn   mqarmix lr 0.004 s100 step   250 loss 6.259 recall   0.19%   20.6 ms/step
+                    gdn   mqarmix lr 0.004 s100 step   500 loss 5.936 recall   2.38%   20.6 ms/step
+                    gdn   mqarmix lr 0.004 s100 step   750 loss 1.209 recall  42.85%   20.6 ms/step
+                    gdn   mqarmix lr 0.004 s100 step  1000 loss 0.784 recall  52.37%   20.6 ms/step
+                    gdn   mqarmix lr 0.004 s100 step  1250 loss 0.526 recall  54.42%   20.7 ms/step
+                    gdn   mqarmix lr 0.004 s100 step  1500 loss 0.700 recall  54.76%   20.7 ms/step
+mqarmix_gdn_lr0.004_s100: recall 0.547607421875 in 35 s, 1500 steps, 20.7 ms/step, 232456 params, 0.32 GB; saved results/pilot2/mqarmix_gdn_lr0.004_s100_20261101_122130.json
+                mesanet   mqarmix lr 0.001 s100 step   250 loss 6.252 recall   0.17%    8.9 ms/step | gate med 0.994, gate med 0.994
+                mesanet   mqarmix lr 0.001 s100 step   500 loss 6.242 recall   0.23%    9.2 ms/step | gate med 0.994, gate med 0.999
+                mesanet   mqarmix lr 0.001 s100 step   750 loss 5.189 recall   8.81%    9.0 ms/step | gate med 0.994, gate med 1.000
+                mesanet   mqarmix lr 0.001 s100 step  1000 loss 2.215 recall  48.11%    9.0 ms/step | gate med 0.993, gate med 1.000
+                mesanet   mqarmix lr 0.001 s100 step  1250 loss 1.042 recall  69.96%    8.9 ms/step | gate med 0.993, gate med 1.000
+                mesanet   mqarmix lr 0.001 s100 step  1500 loss 1.055 recall  72.85%    8.9 ms/step | gate med 0.993, gate med 1.000
+mqarmix_mesanet_lr0.001_s100: recall 0.728485107421875 in 15 s, 1500 steps, 8.9 ms/step, 232072 params, 0.29 GB; saved results/pilot2/mqarmix_mesanet_lr0.001_s100_20261101_122145.json
+                mesanet   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.20%    8.7 ms/step | gate med 0.993, gate med 0.994
+                mesanet   mqarmix lr 0.002 s100 step   500 loss 5.404 recall  14.20%    8.6 ms/step | gate med 0.995, gate med 1.000
+                mesanet   mqarmix lr 0.002 s100 step   750 loss 0.212 recall  94.83%    8.6 ms/step | gate med 0.993, gate med 1.000
+                mesanet   mqarmix lr 0.002 s100 step  1000 loss 0.067 recall  98.12%    8.6 ms/step | gate med 0.992, gate med 1.000
+                mesanet   mqarmix lr 0.002 s100 step  1250 loss 0.023 recall  98.73%    8.6 ms/step | gate med 0.992, gate med 1.000
+                mesanet   mqarmix lr 0.002 s100 step  1500 loss 0.038 recall  98.86%    8.6 ms/step | gate med 0.992, gate med 1.000
+mqarmix_mesanet_lr0.002_s100: recall 0.9886474609375 in 14 s, 1500 steps, 8.6 ms/step, 232072 params, 0.29 GB; saved results/pilot2/mqarmix_mesanet_lr0.002_s100_20261101_122159.json
+                mesanet   mqarmix lr 0.004 s100 step   250 loss 6.258 recall   0.21%    8.5 ms/step | gate med 0.993, gate med 0.997
+                mesanet   mqarmix lr 0.004 s100 step   500 loss 2.426 recall  63.60%    8.4 ms/step | gate med 0.995, gate med 1.000
+                mesanet   mqarmix lr 0.004 s100 step   750 loss 0.062 recall  97.11%    8.5 ms/step | gate med 0.993, gate med 1.000
+                mesanet   mqarmix lr 0.004 s100 step  1000 loss 0.027 recall  98.63%    8.4 ms/step | gate med 0.992, gate med 1.000
+                mesanet   mqarmix lr 0.004 s100 step  1250 loss 0.009 recall  99.20%    8.4 ms/step | gate med 0.992, gate med 1.000
+                mesanet   mqarmix lr 0.004 s100 step  1500 loss 0.015 recall  99.30%    8.4 ms/step | gate med 0.992, gate med 1.000
+mqarmix_mesanet_lr0.004_s100: recall 0.9929656982421875 in 14 s, 1500 steps, 8.4 ms/step, 232072 params, 0.29 GB; saved results/pilot2/mqarmix_mesanet_lr0.004_s100_20261101_122214.json
+     kalman_stat_scalar   mqarmix lr 0.001 s100 step   250 loss 6.252 recall   0.23%   16.8 ms/step | L0 cond max 7.84, gate med 0.993, L1 cond max 38.1, gate med 0.997
+     kalman_stat_scalar   mqarmix lr 0.001 s100 step   500 loss 6.240 recall   0.19%   15.9 ms/step | L0 cond max 7.59, gate med 0.993, L1 cond max 26.5, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.001 s100 step   750 loss 6.134 recall   0.72%   15.0 ms/step | L0 cond max 7.42, gate med 0.993, L1 cond max 23, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.001 s100 step  1000 loss 5.934 recall   1.21%   14.9 ms/step | L0 cond max 7.28, gate med 0.993, L1 cond max 29.7, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.001 s100 step  1250 loss 5.693 recall   1.58%   14.8 ms/step | L0 cond max 7.36, gate med 0.993, L1 cond max 34.1, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.001 s100 step  1500 loss 5.672 recall   1.67%   14.8 ms/step | L0 cond max 7.37, gate med 0.993, L1 cond max 34.5, gate med 1.000
+mqarmix_kalman_stat_scalar_lr0.001_s100: recall 0.0167083740234375 in 25 s, 1500 steps, 14.8 ms/step, 232584 params, 0.51 GB; saved results/pilot2/mqarmix_kalman_stat_scalar_lr0.001_s100_20261101_122239.json
+     kalman_stat_scalar   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.21%   14.7 ms/step | L0 cond max 7.84, gate med 0.993, L1 cond max 45.6, gate med 0.998
+     kalman_stat_scalar   mqarmix lr 0.002 s100 step   500 loss 6.083 recall   0.97%   14.7 ms/step | L0 cond max 7.66, gate med 0.993, L1 cond max 42.9, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.002 s100 step   750 loss 4.435 recall  19.79%   14.7 ms/step | L0 cond max 7.38, gate med 0.994, L1 cond max 33.1, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.002 s100 step  1000 loss 0.827 recall  67.54%   14.6 ms/step | L0 cond max 8.01, gate med 0.993, L1 cond max 200, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.002 s100 step  1250 loss 0.248 recall  83.94%   14.6 ms/step | L0 cond max 8.34, gate med 0.993, L1 cond max 463, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.002 s100 step  1500 loss 0.325 recall  86.17%   14.6 ms/step | L0 cond max 8.37, gate med 0.993, L1 cond max 499, gate med 1.000
+mqarmix_kalman_stat_scalar_lr0.002_s100: recall 0.8617095947265625 in 24 s, 1500 steps, 14.6 ms/step, 232584 params, 0.51 GB; saved results/pilot2/mqarmix_kalman_stat_scalar_lr0.002_s100_20261101_122302.json
+     kalman_stat_scalar   mqarmix lr 0.004 s100 step   250 loss 6.259 recall   0.20%   14.6 ms/step | L0 cond max 8.04, gate med 0.993, L1 cond max 73.7, gate med 0.999
+     kalman_stat_scalar   mqarmix lr 0.004 s100 step   500 loss 5.692 recall   2.21%   14.7 ms/step | L0 cond max 10.8, gate med 0.994, L1 cond max 41.2, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.004 s100 step   750 loss 0.571 recall  62.40%   14.7 ms/step | L0 cond max 12.5, gate med 0.992, L1 cond max 815, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.004 s100 step  1000 loss 0.290 recall  82.71%   14.7 ms/step | L0 cond max 13, gate med 0.991, L1 cond max 1.99e+03, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.004 s100 step  1250 loss 0.142 recall  86.49%   14.6 ms/step | L0 cond max 13.5, gate med 0.991, L1 cond max 2.28e+03, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.004 s100 step  1500 loss 0.205 recall  87.35%   14.6 ms/step | L0 cond max 13.2, gate med 0.991, L1 cond max 2.33e+03, gate med 1.000
+mqarmix_kalman_stat_scalar_lr0.004_s100: recall 0.873504638671875 in 24 s, 1500 steps, 14.6 ms/step, 232584 params, 0.51 GB; saved results/pilot2/mqarmix_kalman_stat_scalar_lr0.004_s100_20261101_122326.json
+    kalman_stat_channel   mqarmix lr 0.001 s100 step   250 loss 6.252 recall   0.18%   36.7 ms/step | L0 cond max 6.26, gate med 0.998, L1 cond max 11.4, gate med 0.998
+    kalman_stat_channel   mqarmix lr 0.001 s100 step   500 loss 6.242 recall   0.23%   36.7 ms/step | L0 cond max 6.08, gate med 0.998, L1 cond max 22.8, gate med 0.998
+    kalman_stat_channel   mqarmix lr 0.001 s100 step   750 loss 6.158 recall   0.60%   36.7 ms/step | L0 cond max 5.73, gate med 0.997, L1 cond max 20, gate med 0.998
+    kalman_stat_channel   mqarmix lr 0.001 s100 step  1000 loss 6.015 recall   0.86%   36.7 ms/step | L0 cond max 5.82, gate med 0.997, L1 cond max 20.1, gate med 0.999
+    kalman_stat_channel   mqarmix lr 0.001 s100 step  1250 loss 5.880 recall   1.16%   36.7 ms/step | L0 cond max 5.79, gate med 0.997, L1 cond max 20.9, gate med 0.999
+    kalman_stat_channel   mqarmix lr 0.001 s100 step  1500 loss 5.867 recall   1.36%   36.7 ms/step | L0 cond max 5.78, gate med 0.997, L1 cond max 21.1, gate med 0.999
+mqarmix_kalman_stat_channel_lr0.001_s100: recall 0.0136260986328125 in 52 s, 1500 steps, 36.7 ms/step, 240644 params, 1.08 GB; saved results/pilot2/mqarmix_kalman_stat_channel_lr0.001_s100_20261101_122419.json
+    kalman_stat_channel   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.21%   36.7 ms/step | L0 cond max 6.4, gate med 0.998, L1 cond max 21.7, gate med 0.997
+    kalman_stat_channel   mqarmix lr 0.002 s100 step   500 loss 6.107 recall   0.95%   36.7 ms/step | L0 cond max 5.91, gate med 0.997, L1 cond max 19.4, gate med 0.998
+    kalman_stat_channel   mqarmix lr 0.002 s100 step   750 loss 3.627 recall  32.12%   36.7 ms/step | L0 cond max 5.64, gate med 0.996, L1 cond max 484, gate med 0.999
+    kalman_stat_channel   mqarmix lr 0.002 s100 step  1000 loss 1.990 recall  38.17%   36.6 ms/step | L0 cond max 5.79, gate med 0.996, L1 cond max 621, gate med 1.000
+    kalman_stat_channel   mqarmix lr 0.002 s100 step  1250 loss 1.062 recall  36.79%   36.6 ms/step | L0 cond max 5.59, gate med 0.996, L1 cond max 613, gate med 1.000
+    kalman_stat_channel   mqarmix lr 0.002 s100 step  1500 loss 1.205 recall  37.75%   36.6 ms/step | L0 cond max 5.56, gate med 0.996, L1 cond max 633, gate med 1.000
+mqarmix_kalman_stat_channel_lr0.002_s100: recall 0.3775177001953125 in 52 s, 1500 steps, 36.6 ms/step, 240644 params, 1.08 GB; saved results/pilot2/mqarmix_kalman_stat_channel_lr0.002_s100_20261101_122511.json
+    kalman_stat_channel   mqarmix lr 0.004 s100 step   250 loss 6.259 recall   0.21%   36.7 ms/step | L0 cond max 6.52, gate med 0.997, L1 cond max 32.7, gate med 0.997
+    kalman_stat_channel   mqarmix lr 0.004 s100 step   500 loss 3.480 recall  29.52%   36.7 ms/step | L0 cond max 5.9, gate med 0.995, L1 cond max 548, gate med 0.999
+    kalman_stat_channel   mqarmix lr 0.004 s100 step   750 loss 0.840 recall  39.06%   36.7 ms/step | L0 cond max 5.79, gate med 0.994, L1 cond max 587, gate med 0.998
+    kalman_stat_channel   mqarmix lr 0.004 s100 step  1000 loss 0.658 recall  48.90%   36.7 ms/step | L0 cond max 6.41, gate med 0.992, L1 cond max 774, gate med 0.998
+    kalman_stat_channel   mqarmix lr 0.004 s100 step  1250 loss 0.320 recall  54.16%   36.6 ms/step | L0 cond max 6.46, gate med 0.992, L1 cond max 786, gate med 0.999
+    kalman_stat_channel   mqarmix lr 0.004 s100 step  1500 loss 0.538 recall  55.17%   36.6 ms/step | L0 cond max 6.52, gate med 0.992, L1 cond max 796, gate med 0.999
+mqarmix_kalman_stat_channel_lr0.004_s100: recall 0.551727294921875 in 52 s, 1500 steps, 36.6 ms/step, 240644 params, 1.08 GB; saved results/pilot2/mqarmix_kalman_stat_channel_lr0.004_s100_20261101_122603.json
+     kalman_free_scalar   mqarmix lr 0.001 s100 step   250 loss 6.252 recall   0.20%   23.2 ms/step | L0 cond max 38.3, gate med 0.993, L1 cond max 89.7, gate med 0.991
+     kalman_free_scalar   mqarmix lr 0.001 s100 step   500 loss 6.243 recall   0.19%   23.3 ms/step | L0 cond max 37.1, gate med 0.992, L1 cond max 67.6, gate med 0.998
+     kalman_free_scalar   mqarmix lr 0.001 s100 step   750 loss 6.151 recall   0.92%   23.2 ms/step | L0 cond max 36.9, gate med 0.992, L1 cond max 66.9, gate med 0.998
+     kalman_free_scalar   mqarmix lr 0.001 s100 step  1000 loss 5.980 recall   1.09%   23.1 ms/step | L0 cond max 35.4, gate med 0.992, L1 cond max 69.9, gate med 0.998
+     kalman_free_scalar   mqarmix lr 0.001 s100 step  1250 loss 5.872 recall   1.20%   23.0 ms/step | L0 cond max 34.9, gate med 0.992, L1 cond max 66.7, gate med 0.997
+     kalman_free_scalar   mqarmix lr 0.001 s100 step  1500 loss 5.884 recall   1.19%   22.9 ms/step | L0 cond max 34.8, gate med 0.992, L1 cond max 66.4, gate med 0.997
+mqarmix_kalman_free_scalar_lr0.001_s100: recall 0.0118560791015625 in 37 s, 1500 steps, 22.9 ms/step, 232720 params, 0.51 GB; saved results/pilot2/mqarmix_kalman_free_scalar_lr0.001_s100_20261101_122640.json
+     kalman_free_scalar   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.21%   23.1 ms/step | L0 cond max 38.6, gate med 0.993, L1 cond max 129, gate med 0.993
+     kalman_free_scalar   mqarmix lr 0.002 s100 step   500 loss 6.116 recall   1.04%   23.0 ms/step | L0 cond max 35.9, gate med 0.992, L1 cond max 74.5, gate med 0.998
+     kalman_free_scalar   mqarmix lr 0.002 s100 step   750 loss 5.680 recall   1.62%   23.0 ms/step | L0 cond max 36.5, gate med 0.992, L1 cond max 63.2, gate med 0.996
+     kalman_free_scalar   mqarmix lr 0.002 s100 step  1000 loss 4.360 recall  20.44%   22.8 ms/step | L0 cond max 38.8, gate med 0.993, L1 cond max 53, gate med 0.996
+     kalman_free_scalar   mqarmix lr 0.002 s100 step  1250 loss 3.397 recall  32.17%   22.8 ms/step | L0 cond max 37.6, gate med 0.993, L1 cond max 56.3, gate med 0.997
+     kalman_free_scalar   mqarmix lr 0.002 s100 step  1500 loss 3.355 recall  34.28%   22.8 ms/step | L0 cond max 37.3, gate med 0.993, L1 cond max 56.9, gate med 0.997
+mqarmix_kalman_free_scalar_lr0.002_s100: recall 0.3428192138671875 in 36 s, 1500 steps, 22.8 ms/step, 232720 params, 0.51 GB; saved results/pilot2/mqarmix_kalman_free_scalar_lr0.002_s100_20261101_122716.json
+     kalman_free_scalar   mqarmix lr 0.004 s100 step   250 loss 6.258 recall   0.20%   23.5 ms/step | L0 cond max 38.9, gate med 0.992, L1 cond max 143, gate med 0.998
+     kalman_free_scalar   mqarmix lr 0.004 s100 step   500 loss 5.603 recall   6.10%   23.3 ms/step | L0 cond max 46.9, gate med 0.994, L1 cond max 68.4, gate med 0.994
+     kalman_free_scalar   mqarmix lr 0.004 s100 step   750 loss 1.453 recall  48.38%   23.2 ms/step | L0 cond max 81.7, gate med 0.991, L1 cond max 621, gate med 0.998
+     kalman_free_scalar   mqarmix lr 0.004 s100 step  1000 loss 0.387 recall  76.03%   23.1 ms/step | L0 cond max 105, gate med 0.990, L1 cond max 249, gate med 0.999
+     kalman_free_scalar   mqarmix lr 0.004 s100 step  1250 loss 0.100 recall  86.06%   23.0 ms/step | L0 cond max 110, gate med 0.989, L1 cond max 275, gate med 0.999
+     kalman_free_scalar   mqarmix lr 0.004 s100 step  1500 loss 0.153 recall  88.03%   22.9 ms/step | L0 cond max 109, gate med 0.988, L1 cond max 309, gate med 0.999
+mqarmix_kalman_free_scalar_lr0.004_s100: recall 0.880279541015625 in 37 s, 1500 steps, 22.9 ms/step, 232720 params, 0.51 GB; saved results/pilot2/mqarmix_kalman_free_scalar_lr0.004_s100_20261101_122753.json
+    kalman_free_channel   mqarmix lr 0.001 s100 step   250 loss 6.253 recall   0.22%   39.3 ms/step | L0 cond max 25.3, gate med 0.998, L1 cond max 27.1, gate med 0.997
+    kalman_free_channel   mqarmix lr 0.001 s100 step   500 loss 6.244 recall   0.22%   39.3 ms/step | L0 cond max 25.6, gate med 0.998, L1 cond max 33.7, gate med 0.996
+    kalman_free_channel   mqarmix lr 0.001 s100 step   750 loss 6.181 recall   0.61%   39.3 ms/step | L0 cond max 25.4, gate med 0.997, L1 cond max 30.7, gate med 0.995
+    kalman_free_channel   mqarmix lr 0.001 s100 step  1000 loss 6.035 recall   1.03%   39.3 ms/step | L0 cond max 24, gate med 0.997, L1 cond max 36.7, gate med 0.994
+    kalman_free_channel   mqarmix lr 0.001 s100 step  1250 loss 5.938 recall   1.18%   39.3 ms/step | L0 cond max 23.8, gate med 0.997, L1 cond max 39.3, gate med 0.994
+    kalman_free_channel   mqarmix lr 0.001 s100 step  1500 loss 5.948 recall   1.19%   39.3 ms/step | L0 cond max 23.8, gate med 0.997, L1 cond max 39.8, gate med 0.994
+mqarmix_kalman_free_channel_lr0.001_s100: recall 0.0118865966796875 in 56 s, 1500 steps, 39.3 ms/step, 240780 params, 1.08 GB; saved results/pilot2/mqarmix_kalman_free_channel_lr0.001_s100_20261101_122849.json
+    kalman_free_channel   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.20%   39.4 ms/step | L0 cond max 26.1, gate med 0.998, L1 cond max 37, gate med 0.996
+    kalman_free_channel   mqarmix lr 0.002 s100 step   500 loss 6.154 recall   0.91%   39.4 ms/step | L0 cond max 24.6, gate med 0.997, L1 cond max 42.9, gate med 0.993
+    kalman_free_channel   mqarmix lr 0.002 s100 step   750 loss 5.740 recall   1.49%   39.4 ms/step | L0 cond max 23.1, gate med 0.996, L1 cond max 32, gate med 0.992
+    kalman_free_channel   mqarmix lr 0.002 s100 step  1000 loss 5.504 recall   1.64%   39.3 ms/step | L0 cond max 23.4, gate med 0.996, L1 cond max 18.6, gate med 0.993
+    kalman_free_channel   mqarmix lr 0.002 s100 step  1250 loss 5.331 recall   1.69%   39.3 ms/step | L0 cond max 22.7, gate med 0.996, L1 cond max 15.8, gate med 0.993
+    kalman_free_channel   mqarmix lr 0.002 s100 step  1500 loss 5.364 recall   1.76%   39.3 ms/step | L0 cond max 22.8, gate med 0.996, L1 cond max 15.2, gate med 0.993
+mqarmix_kalman_free_channel_lr0.002_s100: recall 0.017578125 in 56 s, 1500 steps, 39.3 ms/step, 240780 params, 1.08 GB; saved results/pilot2/mqarmix_kalman_free_channel_lr0.002_s100_20261101_122945.json
+    kalman_free_channel   mqarmix lr 0.004 s100 step   250 loss 6.259 recall   0.21%   39.4 ms/step | L0 cond max 27.3, gate med 0.997, L1 cond max 47.9, gate med 0.996
+    kalman_free_channel   mqarmix lr 0.004 s100 step   500 loss 5.791 recall   1.49%   39.3 ms/step | L0 cond max 28.3, gate med 0.995, L1 cond max 45, gate med 0.994
+    kalman_free_channel   mqarmix lr 0.004 s100 step   750 loss 5.382 recall   1.60%   39.3 ms/step | L0 cond max 24.1, gate med 0.994, L1 cond max 24.6, gate med 0.987
+    kalman_free_channel   mqarmix lr 0.004 s100 step  1000 loss 5.186 recall   1.75%   39.3 ms/step | L0 cond max 26.5, gate med 0.992, L1 cond max 9.52, gate med 0.992
+    kalman_free_channel   mqarmix lr 0.004 s100 step  1250 loss 5.001 recall   1.70%   39.3 ms/step | L0 cond max 27.2, gate med 0.992, L1 cond max 8.71, gate med 0.993
+    kalman_free_channel   mqarmix lr 0.004 s100 step  1500 loss 5.053 recall   1.67%   39.3 ms/step | L0 cond max 27.3, gate med 0.992, L1 cond max 8.54, gate med 0.993
+mqarmix_kalman_free_channel_lr0.004_s100: recall 0.0166778564453125 in 56 s, 1500 steps, 39.3 ms/step, 240780 params, 1.08 GB; saved results/pilot2/mqarmix_kalman_free_channel_lr0.004_s100_20261101_123041.json
+   kalman_free_identity   mqarmix lr 0.001 s100 step   250 loss 6.252 recall   0.23%   19.0 ms/step | L0 cond max 40.4, L1 cond max 82.6
+   kalman_free_identity   mqarmix lr 0.001 s100 step   500 loss 6.243 recall   0.20%   19.0 ms/step | L0 cond max 43.1, L1 cond max 67.8
+   kalman_free_identity   mqarmix lr 0.001 s100 step   750 loss 6.155 recall   0.74%   19.0 ms/step | L0 cond max 41.2, L1 cond max 56.3
+   kalman_free_identity   mqarmix lr 0.001 s100 step  1000 loss 5.983 recall   1.11%   18.9 ms/step | L0 cond max 42, L1 cond max 58.2
+   kalman_free_identity   mqarmix lr 0.001 s100 step  1250 loss 5.882 recall   1.17%   18.7 ms/step | L0 cond max 41.3, L1 cond max 55.2
+   kalman_free_identity   mqarmix lr 0.001 s100 step  1500 loss 5.892 recall   1.18%   18.8 ms/step | L0 cond max 41.3, L1 cond max 54.5
+mqarmix_kalman_free_identity_lr0.001_s100: recall 0.0117950439453125 in 30 s, 1500 steps, 18.8 ms/step, 232460 params, 0.47 GB; saved results/pilot2/mqarmix_kalman_free_identity_lr0.001_s100_20261101_123111.json
+   kalman_free_identity   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.21%   19.1 ms/step | L0 cond max 42.5, L1 cond max 104
+   kalman_free_identity   mqarmix lr 0.002 s100 step   500 loss 6.085 recall   1.07%   19.1 ms/step | L0 cond max 45.5, L1 cond max 140
+   kalman_free_identity   mqarmix lr 0.002 s100 step   750 loss 5.692 recall   1.48%   19.2 ms/step | L0 cond max 39.7, L1 cond max 99
+   kalman_free_identity   mqarmix lr 0.002 s100 step  1000 loss 5.386 recall   2.89%   19.1 ms/step | L0 cond max 39.8, L1 cond max 75.8
+   kalman_free_identity   mqarmix lr 0.002 s100 step  1250 loss 4.359 recall  13.61%   19.0 ms/step | L0 cond max 40, L1 cond max 65.2
+   kalman_free_identity   mqarmix lr 0.002 s100 step  1500 loss 4.231 recall  15.46%   19.0 ms/step | L0 cond max 39.9, L1 cond max 63
+mqarmix_kalman_free_identity_lr0.002_s100: recall 0.1545562744140625 in 31 s, 1500 steps, 19.0 ms/step, 232460 params, 0.47 GB; saved results/pilot2/mqarmix_kalman_free_identity_lr0.002_s100_20261101_123142.json
+   kalman_free_identity   mqarmix lr 0.004 s100 step   250 loss 6.259 recall   0.20%   19.2 ms/step | L0 cond max 45.6, L1 cond max 106
+   kalman_free_identity   mqarmix lr 0.004 s100 step   500 loss 5.705 recall   1.40%   19.0 ms/step | L0 cond max 46.7, L1 cond max 129
+   kalman_free_identity   mqarmix lr 0.004 s100 step   750 loss 5.327 recall   2.01%   19.0 ms/step | L0 cond max 50.9, L1 cond max 106
+   kalman_free_identity   mqarmix lr 0.004 s100 step  1000 loss 4.428 recall   4.01%   18.7 ms/step | L0 cond max 50.5, L1 cond max 80.3
+   kalman_free_identity   mqarmix lr 0.004 s100 step  1250 loss 3.780 recall   4.70%   18.5 ms/step | L0 cond max 59.3, L1 cond max 75.3
+   kalman_free_identity   mqarmix lr 0.004 s100 step  1500 loss 3.865 recall   4.79%   18.6 ms/step | L0 cond max 60.3, L1 cond max 75
+mqarmix_kalman_free_identity_lr0.004_s100: recall 0.04791259765625 in 30 s, 1500 steps, 18.6 ms/step, 232460 params, 0.47 GB; saved results/pilot2/mqarmix_kalman_free_identity_lr0.004_s100_20261101_123212.json
+grid pilot2: finished in 750 s
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | grid pilot2 | d 64, 2 heads, 2 layers | TF32 off
+                    gdn   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.19%   20.6 ms/step
+                    gdn   mqarmix lr 0.002 s100 step   500 loss 6.221 recall   0.55%   20.6 ms/step
+                    gdn   mqarmix lr 0.002 s100 step   750 loss 5.981 recall   1.04%   20.6 ms/step
+                    gdn   mqarmix lr 0.002 s100 step  1000 loss 5.837 recall   1.20%   20.6 ms/step
+                    gdn   mqarmix lr 0.002 s100 step  1250 loss 5.732 recall   1.20%   20.6 ms/step
+                    gdn   mqarmix lr 0.002 s100 step  1500 loss 5.753 recall   1.19%   20.6 ms/step
+mqarmix_gdn_lr0.002_s100_alt: recall 0.0118865966796875 in 37 s, 1500 steps, 20.6 ms/step, 240648 params, 0.34 GB; saved results/pilot2/mqarmix_gdn_lr0.002_s100_alt_20261101_123250.json
+                mesanet   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.21%    8.2 ms/step | gate med 0.497, gate med 0.678
+                mesanet   mqarmix lr 0.002 s100 step   500 loss 6.248 recall   0.18%    8.3 ms/step | gate med 0.495, gate med 0.898
+                mesanet   mqarmix lr 0.002 s100 step   750 loss 6.243 recall   0.19%    8.2 ms/step | gate med 0.490, gate med 0.995
+                mesanet   mqarmix lr 0.002 s100 step  1000 loss 6.193 recall   0.90%    8.3 ms/step | gate med 0.490, gate med 0.996
+                mesanet   mqarmix lr 0.002 s100 step  1250 loss 5.803 recall   4.11%    8.3 ms/step | gate med 0.481, gate med 0.997
+                mesanet   mqarmix lr 0.002 s100 step  1500 loss 5.668 recall   4.94%    8.3 ms/step | gate med 0.478, gate med 0.998
+mqarmix_mesanet_lr0.002_s100_alt: recall 0.04937744140625 in 14 s, 1500 steps, 8.3 ms/step, 232072 params, 0.29 GB; saved results/pilot2/mqarmix_mesanet_lr0.002_s100_alt_20261101_123304.json
+     kalman_stat_scalar   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.20%   14.6 ms/step | L0 cond max 4.22, gate med 0.993, L1 cond max 21.7, gate med 0.998
+     kalman_stat_scalar   mqarmix lr 0.002 s100 step   500 loss 6.079 recall   1.14%   14.7 ms/step | L0 cond max 4.48, gate med 0.994, L1 cond max 12.9, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.002 s100 step   750 loss 0.960 recall  71.57%   14.7 ms/step | L0 cond max 4.68, gate med 0.995, L1 cond max 23.5, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.002 s100 step  1000 loss 0.175 recall  93.34%   14.7 ms/step | L0 cond max 4.34, gate med 0.995, L1 cond max 28.4, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.002 s100 step  1250 loss 0.060 recall  95.96%   14.6 ms/step | L0 cond max 4.4, gate med 0.995, L1 cond max 29.7, gate med 1.000
+     kalman_stat_scalar   mqarmix lr 0.002 s100 step  1500 loss 0.090 recall  96.32%   14.6 ms/step | L0 cond max 4.4, gate med 0.995, L1 cond max 30, gate med 1.000
+mqarmix_kalman_stat_scalar_lr0.002_s100_alt: recall 0.963165283203125 in 24 s, 1500 steps, 14.6 ms/step, 232584 params, 0.51 GB; saved results/pilot2/mqarmix_kalman_stat_scalar_lr0.002_s100_alt_20261101_123328.json
+    kalman_stat_channel   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.21%   36.7 ms/step | L0 cond max 3.68, gate med 0.998, L1 cond max 11.3, gate med 0.997
+    kalman_stat_channel   mqarmix lr 0.002 s100 step   500 loss 6.126 recall   0.86%   36.7 ms/step | L0 cond max 3.45, gate med 0.997, L1 cond max 9.58, gate med 0.998
+    kalman_stat_channel   mqarmix lr 0.002 s100 step   750 loss 4.521 recall  22.00%   36.7 ms/step | L0 cond max 3.49, gate med 0.996, L1 cond max 5.17, gate med 0.999
+    kalman_stat_channel   mqarmix lr 0.002 s100 step  1000 loss 2.626 recall  46.85%   36.7 ms/step | L0 cond max 3.32, gate med 0.996, L1 cond max 5.6, gate med 1.000
+    kalman_stat_channel   mqarmix lr 0.002 s100 step  1250 loss 1.918 recall  52.22%   36.6 ms/step | L0 cond max 3.29, gate med 0.996, L1 cond max 5.36, gate med 1.000
+    kalman_stat_channel   mqarmix lr 0.002 s100 step  1500 loss 1.951 recall  53.28%   36.6 ms/step | L0 cond max 3.28, gate med 0.996, L1 cond max 5.24, gate med 1.000
+mqarmix_kalman_stat_channel_lr0.002_s100_alt: recall 0.5327606201171875 in 52 s, 1500 steps, 36.6 ms/step, 240644 params, 1.08 GB; saved results/pilot2/mqarmix_kalman_stat_channel_lr0.002_s100_alt_20261101_123420.json
+     kalman_free_scalar   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.21%   23.1 ms/step | L0 cond max 22.8, gate med 0.993, L1 cond max 74.1, gate med 0.994
+     kalman_free_scalar   mqarmix lr 0.002 s100 step   500 loss 6.139 recall   1.03%   22.9 ms/step | L0 cond max 24, gate med 0.992, L1 cond max 54.3, gate med 0.998
+     kalman_free_scalar   mqarmix lr 0.002 s100 step   750 loss 5.710 recall   1.49%   22.9 ms/step | L0 cond max 22.7, gate med 0.994, L1 cond max 42.3, gate med 0.995
+     kalman_free_scalar   mqarmix lr 0.002 s100 step  1000 loss 5.453 recall   1.90%   22.7 ms/step | L0 cond max 22.2, gate med 0.995, L1 cond max 41.5, gate med 0.996
+     kalman_free_scalar   mqarmix lr 0.002 s100 step  1250 loss 4.790 recall   7.77%   22.6 ms/step | L0 cond max 21.8, gate med 0.995, L1 cond max 32.9, gate med 0.995
+     kalman_free_scalar   mqarmix lr 0.002 s100 step  1500 loss 4.729 recall   8.75%   22.6 ms/step | L0 cond max 21.6, gate med 0.995, L1 cond max 32, gate med 0.995
+mqarmix_kalman_free_scalar_lr0.002_s100_alt: recall 0.0875091552734375 in 36 s, 1500 steps, 22.6 ms/step, 232720 params, 0.51 GB; saved results/pilot2/mqarmix_kalman_free_scalar_lr0.002_s100_alt_20261101_123456.json
+    kalman_free_channel   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.20%   39.4 ms/step | L0 cond max 16, gate med 0.998, L1 cond max 19, gate med 0.996
+    kalman_free_channel   mqarmix lr 0.002 s100 step   500 loss 6.176 recall   0.82%   39.4 ms/step | L0 cond max 16.1, gate med 0.997, L1 cond max 20.2, gate med 0.995
+    kalman_free_channel   mqarmix lr 0.002 s100 step   750 loss 5.780 recall   1.46%   39.4 ms/step | L0 cond max 14.2, gate med 0.996, L1 cond max 18.9, gate med 0.995
+    kalman_free_channel   mqarmix lr 0.002 s100 step  1000 loss 5.502 recall   2.32%   39.3 ms/step | L0 cond max 13.2, gate med 0.996, L1 cond max 18.8, gate med 0.995
+    kalman_free_channel   mqarmix lr 0.002 s100 step  1250 loss 4.739 recall   9.03%   39.3 ms/step | L0 cond max 12.5, gate med 0.996, L1 cond max 14.6, gate med 0.993
+    kalman_free_channel   mqarmix lr 0.002 s100 step  1500 loss 4.635 recall  10.22%   39.3 ms/step | L0 cond max 12.4, gate med 0.996, L1 cond max 14.2, gate med 0.993
+mqarmix_kalman_free_channel_lr0.002_s100_alt: recall 0.10223388671875 in 56 s, 1500 steps, 39.3 ms/step, 240780 params, 1.08 GB; saved results/pilot2/mqarmix_kalman_free_channel_lr0.002_s100_alt_20261101_123552.json
+   kalman_free_identity   mqarmix lr 0.002 s100 step   250 loss 6.254 recall   0.21%   18.8 ms/step | L0 cond max 25.1, L1 cond max 48.2
+   kalman_free_identity   mqarmix lr 0.002 s100 step   500 loss 6.095 recall   1.04%   18.9 ms/step | L0 cond max 24.3, L1 cond max 64.7
+   kalman_free_identity   mqarmix lr 0.002 s100 step   750 loss 5.699 recall   1.49%   19.0 ms/step | L0 cond max 22.6, L1 cond max 66.9
+   kalman_free_identity   mqarmix lr 0.002 s100 step  1000 loss 5.258 recall   5.26%   18.8 ms/step | L0 cond max 21.9, L1 cond max 65.8
+   kalman_free_identity   mqarmix lr 0.002 s100 step  1250 loss 4.166 recall  15.39%   18.8 ms/step | L0 cond max 21.5, L1 cond max 60.9
+   kalman_free_identity   mqarmix lr 0.002 s100 step  1500 loss 4.064 recall  17.12%   19.0 ms/step | L0 cond max 21.4, L1 cond max 59.9
+mqarmix_kalman_free_identity_lr0.002_s100_alt: recall 0.171173095703125 in 30 s, 1500 steps, 19.0 ms/step, 232460 params, 0.47 GB; saved results/pilot2/mqarmix_kalman_free_identity_lr0.002_s100_alt_20261101_123623.json
+grid pilot2: finished in 250 s

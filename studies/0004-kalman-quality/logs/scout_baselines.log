@@ -1,0 +1,56 @@
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | grid scout_baselines | d 64, 2 heads, 2 layers | TF32 off
+                    gdn    mqar64 lr 0.002 s100 step   500 loss 6.248 recall   0.19%   33.2 ms/step
+                    gdn    mqar64 lr 0.002 s100 step  1000 loss 3.624 recall  39.21%   33.2 ms/step
+                    gdn    mqar64 lr 0.002 s100 step  1500 loss 1.253 recall  69.14%   33.2 ms/step
+                    gdn    mqar64 lr 0.002 s100 step  2000 loss 0.551 recall  85.97%   33.2 ms/step
+                    gdn    mqar64 lr 0.002 s100 step  2500 loss 0.307 recall  92.07%   33.2 ms/step
+                    gdn    mqar64 lr 0.002 s100 step  3000 loss 0.279 recall  92.65%   33.2 ms/step
+mqar64_gdn_lr0.002_s100: recall 0.9264678955078125 in 103 s, 3000 steps, 33.2 ms/step, 232456 params, 0.61 GB; saved results/scout_baselines/mqar64_gdn_lr0.002_s100_20261101_115253.json
+                mesanet    mqar64 lr 0.002 s100 step   500 loss 6.248 recall   0.18%   14.0 ms/step | gate med 0.500, gate med 0.677
+                mesanet    mqar64 lr 0.002 s100 step  1000 loss 6.241 recall   0.20%   14.0 ms/step | gate med 0.516, gate med 0.646
+                mesanet    mqar64 lr 0.002 s100 step  1500 loss 6.239 recall   0.16%   14.0 ms/step | gate med 0.519, gate med 0.760
+                mesanet    mqar64 lr 0.002 s100 step  2000 loss 6.239 recall   0.24%   14.0 ms/step | gate med 0.522, gate med 0.811
+                mesanet    mqar64 lr 0.002 s100 step  2500 loss 6.239 recall   0.18%   14.0 ms/step | gate med 0.519, gate med 0.711
+                mesanet    mqar64 lr 0.002 s100 step  3000 loss 6.238 recall   0.17%   14.0 ms/step | gate med 0.520, gate med 0.698
+mqar64_mesanet_lr0.002_s100: recall 0.001739501953125 in 44 s, 3000 steps, 14.0 ms/step, 232072 params, 0.56 GB; saved results/scout_baselines/mqar64_mesanet_lr0.002_s100_20261101_115336.json
+                    gdn   mqar128 lr 0.002 s100 step   500 loss 6.248 recall   0.20%   33.1 ms/step
+                    gdn   mqar128 lr 0.002 s100 step  1000 loss 6.236 recall   0.45%   33.1 ms/step
+                    gdn   mqar128 lr 0.002 s100 step  1500 loss 4.356 recall  25.14%   33.1 ms/step
+                    gdn   mqar128 lr 0.002 s100 step  2000 loss 3.348 recall  32.25%   33.1 ms/step
+                    gdn   mqar128 lr 0.002 s100 step  2500 loss 3.166 recall  33.61%   33.1 ms/step
+                    gdn   mqar128 lr 0.002 s100 step  3000 loss 3.136 recall  33.68%   33.1 ms/step
+mqar128_gdn_lr0.002_s100: recall 0.33675384521484375 in 100 s, 3000 steps, 33.1 ms/step, 232456 params, 0.61 GB; saved results/scout_baselines/mqar128_gdn_lr0.002_s100_20261101_115517.json
+                mesanet   mqar128 lr 0.002 s100 step   500 loss 6.248 recall   0.21%   13.9 ms/step | gate med 0.495, gate med 0.712
+                mesanet   mqar128 lr 0.002 s100 step  1000 loss 6.241 recall   0.20%   13.8 ms/step | gate med 0.493, gate med 0.565
+                mesanet   mqar128 lr 0.002 s100 step  1500 loss 6.239 recall   0.19%   13.8 ms/step | gate med 0.495, gate med 0.814
+                mesanet   mqar128 lr 0.002 s100 step  2000 loss 6.239 recall   0.20%   13.8 ms/step | gate med 0.489, gate med 0.899
+                mesanet   mqar128 lr 0.002 s100 step  2500 loss 6.239 recall   0.19%   13.8 ms/step | gate med 0.489, gate med 0.892
+                mesanet   mqar128 lr 0.002 s100 step  3000 loss 6.238 recall   0.21%   13.8 ms/step | gate med 0.489, gate med 0.895
+mqar128_mesanet_lr0.002_s100: recall 0.00214385986328125 in 43 s, 3000 steps, 13.8 ms/step, 232072 params, 0.56 GB; saved results/scout_baselines/mqar128_mesanet_lr0.002_s100_20261101_115600.json
+                    gdn volatile32 lr 0.002 s100 step   500 loss 6.250 recall   0.17%   21.8 ms/step
+                    gdn volatile32 lr 0.002 s100 step  1000 loss 2.765 recall  65.09%   21.7 ms/step
+                    gdn volatile32 lr 0.002 s100 step  1500 loss 0.496 recall  89.11%   21.7 ms/step
+                    gdn volatile32 lr 0.002 s100 step  2000 loss 0.417 recall  90.71%   21.7 ms/step
+                    gdn volatile32 lr 0.002 s100 step  2500 loss 0.371 recall  91.38%   21.7 ms/step
+                    gdn volatile32 lr 0.002 s100 step  3000 loss 0.361 recall  91.59%   21.7 ms/step
+volatile32_gdn_lr0.002_s100: recall 0.9158935546875 in 68 s, 3000 steps, 21.7 ms/step, 232456 params, 0.41 GB; saved results/scout_baselines/volatile32_gdn_lr0.002_s100_20261101_115708.json
+                mesanet volatile32 lr 0.002 s100 step   500 loss 6.250 recall   0.18%    9.8 ms/step | gate med 0.506, gate med 0.665
+                mesanet volatile32 lr 0.002 s100 step  1000 loss 6.242 recall   0.20%    9.7 ms/step | gate med 0.511, gate med 0.609
+                mesanet volatile32 lr 0.002 s100 step  1500 loss 6.240 recall   0.22%    9.6 ms/step | gate med 0.507, gate med 0.637
+                mesanet volatile32 lr 0.002 s100 step  2000 loss 6.239 recall   0.17%    9.6 ms/step | gate med 0.503, gate med 0.652
+                mesanet volatile32 lr 0.002 s100 step  2500 loss 6.239 recall   0.22%    9.6 ms/step | gate med 0.503, gate med 0.695
+                mesanet volatile32 lr 0.002 s100 step  3000 loss 6.238 recall   0.16%    9.6 ms/step | gate med 0.502, gate med 0.706
+volatile32_mesanet_lr0.002_s100: recall 0.0015869140625 in 32 s, 3000 steps, 9.6 ms/step, 232072 params, 0.38 GB; saved results/scout_baselines/volatile32_mesanet_lr0.002_s100_20261101_115739.json
+                    gdn   selcopy lr 0.002 s100 step   500 loss 1.020 recall  62.65%   19.9 ms/step
+                    gdn   selcopy lr 0.002 s100 step  1000 loss 0.575 recall  83.06%   19.8 ms/step
+                    gdn   selcopy lr 0.002 s100 step  1500 loss 0.119 recall  97.96%   19.8 ms/step
+                    gdn   selcopy lr 0.002 s100 step  2000 loss 0.018 recall  99.80%   19.8 ms/step
+selcopy_gdn_lr0.002_s100: recall 0.998046875 in 40 s, 2000 steps, 19.8 ms/step, 103432 params, 0.24 GB; saved results/scout_baselines/selcopy_gdn_lr0.002_s100_20261101_115820.json
+                mesanet   selcopy lr 0.002 s100 step   500 loss 2.642 recall   7.51%    8.0 ms/step | gate med 0.450, gate med 0.404
+                mesanet   selcopy lr 0.002 s100 step  1000 loss 2.640 recall   7.34%    7.8 ms/step | gate med 0.478, gate med 0.293
+                mesanet   selcopy lr 0.002 s100 step  1500 loss 1.532 recall  39.82%    7.8 ms/step | gate med 0.964, gate med 0.731
+                mesanet   selcopy lr 0.002 s100 step  2000 loss 0.767 recall  64.67%    7.8 ms/step | gate med 0.895, gate med 0.718
+                mesanet   selcopy lr 0.002 s100 step  2500 loss 0.502 recall  78.00%    7.8 ms/step | gate med 0.891, gate med 0.687
+                mesanet   selcopy lr 0.002 s100 step  3000 loss 0.452 recall  80.30%    7.8 ms/step | gate med 0.891, gate med 0.703
+selcopy_mesanet_lr0.002_s100: recall 0.80303955078125 in 25 s, 3000 steps, 7.8 ms/step, 103048 params, 0.20 GB; saved results/scout_baselines/selcopy_mesanet_lr0.002_s100_20261101_115845.json
+grid scout_baselines: finished in 455 s

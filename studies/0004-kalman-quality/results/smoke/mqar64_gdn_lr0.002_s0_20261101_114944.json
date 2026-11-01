@@ -1,0 +1,112 @@
+{
+ "env": {
+  "time": "2026-11-01T11:49:44+0100",
+  "argv": [
+   "train.py",
+   "--quick",
+   "--grid",
+   "smoke",
+   "--tasks",
+   "mqar64",
+   "selcopy",
+   "volatile32",
+   "--lrs",
+   "2e-3",
+   "--seeds",
+   "0",
+   "--extra-evals"
+  ],
+  "python": "3.11.15",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "tf32_matmul": false,
+  "git_commit": "e3a8603",
+  "git_dirty": true
+ },
+ "args": {
+  "grid": "smoke",
+  "models": [
+   "gdn",
+   "mesanet",
+   "kalman_stat_scalar",
+   "kalman_stat_channel",
+   "kalman_free_scalar",
+   "kalman_free_channel",
+   "kalman_free_identity"
+  ],
+  "tasks": [
+   "mqar64",
+   "selcopy",
+   "volatile32"
+  ],
+  "lrs": [
+   0.002
+  ],
+  "seeds": [
+   0
+  ],
+  "alt": false,
+  "best_from": null,
+  "opts": "{}",
+  "d": 64,
+  "heads": 2,
+  "layers": 2,
+  "chunk": 64,
+  "chunk_channel": 16,
+  "steps_scale": 0.013333333333333334,
+  "eval_every": 20,
+  "eval_batches": 2,
+  "target": 0.995,
+  "extra_evals": true,
+  "no_numerics": false,
+  "device": "cuda",
+  "quick": true
+ },
+ "run": {
+  "model": "gdn",
+  "task": "mqar64",
+  "lr": 0.002,
+  "seed": 0,
+  "opts": {},
+  "core_options": {},
+  "d": 64,
+  "heads": 2,
+  "layers": 2,
+  "params": 232456,
+  "steps_limit": 40,
+  "steps_run": 40,
+  "stopped_early_at": null,
+  "batch": 128,
+  "recall": 0.0010986328125,
+  "recall_same": null,
+  "recall_changed": null,
+  "stale_rate": null,
+  "final_loss": 6.575157427787781,
+  "ms_per_step": 33.06317900023714,
+  "peak_gb": 0.6093320846557617,
+  "nonfinite_steps": 0,
+  "cholesky_failures": 0,
+  "extra_recall": {
+   "mqar128": 0.002197265625,
+   "mqar256": 0.001953125
+  },
+  "numerics": {},
+  "curve": [
+   {
+    "step": 20,
+    "loss": 6.794099283218384,
+    "grad_norm": 0.1776769608259201,
+    "recall": 0.001220703125
+   },
+   {
+    "step": 40,
+    "loss": 6.575157427787781,
+    "grad_norm": 0.1370171755552292,
+    "recall": 0.0010986328125
+   }
+  ],
+  "alt": false,
+  "seconds": 6.065464019775391
+ }
+}

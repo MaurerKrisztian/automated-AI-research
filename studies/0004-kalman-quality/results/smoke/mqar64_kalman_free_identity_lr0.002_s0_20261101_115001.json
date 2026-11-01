@@ -1,0 +1,255 @@
+{
+ "env": {
+  "time": "2026-11-01T11:50:01+0100",
+  "argv": [
+   "train.py",
+   "--quick",
+   "--grid",
+   "smoke",
+   "--tasks",
+   "mqar64",
+   "selcopy",
+   "volatile32",
+   "--lrs",
+   "2e-3",
+   "--seeds",
+   "0",
+   "--extra-evals"
+  ],
+  "python": "3.11.15",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "tf32_matmul": false,
+  "git_commit": "e3a8603",
+  "git_dirty": true
+ },
+ "args": {
+  "grid": "smoke",
+  "models": [
+   "gdn",
+   "mesanet",
+   "kalman_stat_scalar",
+   "kalman_stat_channel",
+   "kalman_free_scalar",
+   "kalman_free_channel",
+   "kalman_free_identity"
+  ],
+  "tasks": [
+   "mqar64",
+   "selcopy",
+   "volatile32"
+  ],
+  "lrs": [
+   0.002
+  ],
+  "seeds": [
+   0
+  ],
+  "alt": false,
+  "best_from": null,
+  "opts": "{}",
+  "d": 64,
+  "heads": 2,
+  "layers": 2,
+  "chunk": 64,
+  "chunk_channel": 16,
+  "steps_scale": 0.013333333333333334,
+  "eval_every": 20,
+  "eval_batches": 2,
+  "target": 0.995,
+  "extra_evals": true,
+  "no_numerics": false,
+  "device": "cuda",
+  "quick": true
+ },
+ "run": {
+  "model": "kalman_free_identity",
+  "task": "mqar64",
+  "lr": 0.002,
+  "seed": 0,
+  "opts": {},
+  "core_options": {
+   "gates": "identity",
+   "noise": "free",
+   "chunk": 64
+  },
+  "d": 64,
+  "heads": 2,
+  "layers": 2,
+  "params": 232460,
+  "steps_limit": 40,
+  "steps_run": 40,
+  "stopped_early_at": null,
+  "batch": 128,
+  "recall": 0.0013427734375,
+  "recall_same": null,
+  "recall_changed": null,
+  "stale_rate": null,
+  "final_loss": 6.579206705093384,
+  "ms_per_step": 31.92704400044022,
+  "peak_gb": 0.9045114517211914,
+  "nonfinite_steps": 0,
+  "cholesky_failures": 0,
+  "extra_recall": {
+   "mqar128": 0.0020751953125,
+   "mqar256": 0.00152587890625
+  },
+  "numerics": {
+   "L0": {
+    "chunk_f32_vs_filter_f64": 6.10291181848284e-07,
+    "filter_f32_vs_filter_f64": 2.905131971755396e-07,
+    "chunk_f64_vs_filter_f64": 1.1644115381216126e-15
+   },
+   "L1": {
+    "chunk_f32_vs_filter_f64": 3.386403036970426e-07,
+    "filter_f32_vs_filter_f64": 2.0387007136335885e-07,
+    "chunk_f64_vs_filter_f64": 6.39793077563743e-16
+   }
+  },
+  "curve": [
+   {
+    "step": 20,
+    "loss": 6.799881839752198,
+    "grad_norm": 0.18010495603084564,
+    "recall": 0.00213623046875,
+    "L0": {
+     "cond": [
+      20.676132,
+      21.097675,
+      30.973328,
+      37.48391,
+      38.754036
+     ],
+     "lam_min": 1.0985306670158859,
+     "cholesky_info": 0,
+     "beta": [
+      0.693985,
+      0.837408,
+      0.990308,
+      1.17343,
+      1.441812
+     ],
+     "psi": [
+      0.065644,
+      0.07842,
+      0.099382,
+      0.126132,
+      0.155632
+     ],
+     "prior": [
+      0.993038,
+      0.993038,
+      0.995677,
+      0.998315,
+      0.998315
+     ]
+    },
+    "L1": {
+     "cond": [
+      30.291668,
+      36.061661,
+      57.055664,
+      85.547325,
+      88.948029
+     ],
+     "lam_min": 1.0792507533115188,
+     "cholesky_info": 0,
+     "beta": [
+      0.713429,
+      0.794629,
+      0.901931,
+      1.042122,
+      1.207689
+     ],
+     "psi": [
+      0.053654,
+      0.068453,
+      0.084887,
+      0.107176,
+      0.138196
+     ],
+     "prior": [
+      1.00297,
+      1.00297,
+      1.007295,
+      1.011621,
+      1.011621
+     ]
+    }
+   },
+   {
+    "step": 40,
+    "loss": 6.579206705093384,
+    "grad_norm": 0.13914842903614044,
+    "recall": 0.0013427734375,
+    "L0": {
+     "cond": [
+      20.557199,
+      21.088135,
+      30.890282,
+      37.280376,
+      38.730705
+     ],
+     "lam_min": 1.0982447946930303,
+     "cholesky_info": 0,
+     "beta": [
+      0.691076,
+      0.836664,
+      0.989589,
+      1.173515,
+      1.453209
+     ],
+     "psi": [
+      0.065657,
+      0.078247,
+      0.099157,
+      0.125819,
+      0.155189
+     ],
+     "prior": [
+      0.992729,
+      0.992729,
+      0.995401,
+      0.998072,
+      0.998072
+     ]
+    },
+    "L1": {
+     "cond": [
+      33.01561,
+      37.509327,
+      57.871811,
+      87.009766,
+      90.310242
+     ],
+     "lam_min": 1.0596889058994103,
+     "cholesky_info": 0,
+     "beta": [
+      0.680778,
+      0.750052,
+      0.844839,
+      0.975777,
+      1.165255
+     ],
+     "psi": [
+      0.051752,
+      0.065241,
+      0.079786,
+      0.100306,
+      0.132878
+     ],
+     "prior": [
+      1.002311,
+      1.002311,
+      1.008568,
+      1.014825,
+      1.014825
+     ]
+    }
+   }
+  ],
+  "alt": false,
+  "seconds": 1.8132343292236328
+ }
+}

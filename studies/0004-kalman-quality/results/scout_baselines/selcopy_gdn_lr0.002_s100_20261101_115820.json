@@ -1,0 +1,122 @@
+{
+ "env": {
+  "time": "2026-11-01T11:58:20+0100",
+  "argv": [
+   "train.py",
+   "--grid",
+   "scout_baselines",
+   "--models",
+   "gdn",
+   "mesanet",
+   "--tasks",
+   "mqar64",
+   "mqar128",
+   "volatile32",
+   "selcopy",
+   "--lrs",
+   "2e-3",
+   "--seeds",
+   "100",
+   "--eval-every",
+   "500",
+   "--extra-evals"
+  ],
+  "python": "3.11.15",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "tf32_matmul": false,
+  "git_commit": "e3a8603",
+  "git_dirty": true
+ },
+ "args": {
+  "grid": "scout_baselines",
+  "models": [
+   "gdn",
+   "mesanet"
+  ],
+  "tasks": [
+   "mqar64",
+   "mqar128",
+   "volatile32",
+   "selcopy"
+  ],
+  "lrs": [
+   0.002
+  ],
+  "seeds": [
+   100
+  ],
+  "alt": false,
+  "best_from": null,
+  "opts": "{}",
+  "d": 64,
+  "heads": 2,
+  "layers": 2,
+  "chunk": 64,
+  "chunk_channel": 16,
+  "steps_scale": 1.0,
+  "eval_every": 500,
+  "eval_batches": 16,
+  "target": 0.995,
+  "extra_evals": true,
+  "no_numerics": false,
+  "device": "cuda",
+  "quick": false
+ },
+ "run": {
+  "model": "gdn",
+  "task": "selcopy",
+  "lr": 0.002,
+  "seed": 100,
+  "opts": {},
+  "core_options": {},
+  "d": 64,
+  "heads": 2,
+  "layers": 2,
+  "params": 103432,
+  "steps_limit": 3000,
+  "steps_run": 2000,
+  "stopped_early_at": 2000,
+  "batch": 64,
+  "recall": 0.998046875,
+  "recall_same": null,
+  "recall_changed": null,
+  "stale_rate": null,
+  "final_loss": 0.018248016964644193,
+  "ms_per_step": 19.7744529996271,
+  "peak_gb": 0.2373509407043457,
+  "nonfinite_steps": 0,
+  "cholesky_failures": 0,
+  "extra_recall": {},
+  "numerics": {},
+  "curve": [
+   {
+    "step": 500,
+    "loss": 1.0201618134975434,
+    "grad_norm": 47.842811584472656,
+    "recall": 0.62646484375
+   },
+   {
+    "step": 1000,
+    "loss": 0.5748860722780228,
+    "grad_norm": 31.856422424316406,
+    "recall": 0.83062744140625
+   },
+   {
+    "step": 1500,
+    "loss": 0.11892501305788755,
+    "grad_norm": 40.49930191040039,
+    "recall": 0.9796142578125
+   },
+   {
+    "step": 2000,
+    "loss": 0.018248016964644193,
+    "grad_norm": 10.987825393676758,
+    "recall": 0.998046875
+   }
+  ],
+  "alt": false,
+  "seconds": 40.44694495201111
+ }
+}

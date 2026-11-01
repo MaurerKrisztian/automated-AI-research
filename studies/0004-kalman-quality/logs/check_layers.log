@@ -1,0 +1,67 @@
+Part A: kalman_chunk (float64) against the extended-precision token-by-token filter, relative to max |ref|
+case                                             C         O       M_T       P_T
+scalar 0.5-1, stationary                         8   3.7e-16   4.9e-16   3.6e-16
+per-channel 0.01-1, stationary                   8   7.0e-16   1.1e-15   9.3e-17
+scalar 0.5-1, free                               8   8.1e-16   4.4e-16   3.3e-16
+per-channel 0.01-1, free                         8   6.0e-16   4.0e-16   1.2e-16
+identity, free (BL's MQAR setting)               8   9.4e-16   1.1e-15   5.7e-16
+identity, stationary (Mesa, no noise)            8   4.1e-16   7.4e-16   5.1e-16
+scalar near resets, e^-20..e^-1                  8   3.6e-16   4.3e-16   2.2e-16
+per-channel near resets, e^-20..e^-1             8   5.8e-16   1.1e-15   1.1e-16
+per-channel near resets, free                    8   3.0e-16   6.1e-16   1.5e-16
+T not a multiple of C (37, 8)                    8   3.7e-16   3.6e-16   1.7e-16
+T < C (5, 8), per-channel                        8   2.8e-16   3.2e-16   2.6e-16
+C = 1, per-channel, free                         1   2.0e-16   3.8e-16   2.6e-16
+d above C (d 32, C 8)                            8   6.8e-16   7.8e-16   1.8e-16
+d below C (d 4, C 32), free                     32   7.5e-16   1.2e-15   4.4e-16
+mixed beta 1e-3..50                              8   4.9e-16   6.4e-16   1.7e-16
+beta 1e-9..1 (a token that writes nothing)       8   4.7e-16   7.5e-16   1.1e-16
+study's size: T 96, d 32, C 64, unit keys       64   2.1e-15   7.3e-16   1.9e-16
+study's size: T 96, d 32, C 16, per-channel     16   4.1e-16   7.0e-16   2.1e-16
+study's size: T 96, d 32, C 64, per-channel     64   1.1e-15   9.4e-16   2.4e-16
+study's size: T 96, d 32, C 64, identity, free  64   1.9e-15   1.7e-15   7.1e-16
+worst of 20 cases: 2.1e-15
+
+Part B: autograd through kalman_chunk against autograd through the token-by-token filter (float64), every input
+scalar, stationary        K=3.7e-16 V=4.0e-16 Q=3.5e-16 logD=2.8e-16 lam=3.1e-16
+per-channel, stationary   K=2.1e-16 V=3.2e-16 Q=8.8e-17 logD=8.6e-16 lam=4.1e-16
+scalar, free              K=2.1e-16 V=3.0e-16 Q=5.3e-16 logD=5.5e-16 psi=4.6e-16 P_init=3.3e-16
+per-channel, free         K=1.7e-16 V=4.7e-16 Q=4.1e-16 logD=7.4e-16 psi=4.9e-16 P_init=5.9e-16
+identity, free            K=5.5e-16 V=3.0e-16 Q=5.9e-16 psi=1.1e-15 P_init=9.1e-16
+worst: 1.1e-15
+
+Part C: per-channel gates that overflow 0003's matmul Grams, float32, C = 64, d = 32 (T = 192)
+gates             min chunk log decay    matmul Grams (0003)   safe Grams  grad finite
+0.5-1                          -26.1                5.2e-07      5.3e-07         True
+0.1-0.3                       -118.4                    nan      5.9e-07         True
+0.001-0.1                     -320.5                    nan      4.2e-07         True
+1e-06-0.001                   -701.8                    nan      1.9e-07         True
+worst safe-form error: 5.9e-07
+
+Part D: one key written twice, closed forms (README, Proposition 1) against the recurrences, float64
+worst over 50 draws: 5.8e-16
+
+Part E: task generators against brute force
+MQAR: identical to study 0001's generator at N = 32, 64, 128
+Volatile MQAR: rounds, keys, final values, stale values and the change flags match a Python replay of 2000 sequences; change rate per key and round 0.2997 (expected 0.30)
+Selective copying: length, token ids and targets match a Python scan of 2000 sequences; the last data token always precedes the copy token, as in MAD's generator
+
+Part F (GPU): fla's kernels as the models call them, float32, against float64 references
+Gated DeltaNet: forward error 1.3e-04; backward, relative q=1.2e-04 k=1.3e-04 v=1.3e-04 a=1.1e-04 b=1.2e-04 A_log=1.4e-04 dt_bias=1.4e-04
+MesaNet, 30 CG steps (cond(H + Lambda) up to 2.83): forward error 1.5e-03; backward, relative q=7.4e-04 k=7.9e-04 v=7.7e-04 g=9.0e-04 beta=8.5e-04 lam=1.3e-03
+model                    options                          params    loss  gradients finite
+gdn                      {}                               232456   7.112  True
+gdn                      {'output_gate': True}            240648   7.093  True
+mesanet                  {}                               232072   7.075  True
+mesanet                  {'gate_init': 'halflife'}        232072   7.115  True
+kalman_stat_scalar       {}                               232584   7.107  True
+kalman_stat_scalar       {'beta_param': 'sigmoid'}        232584   7.109  True
+kalman_stat_channel      {}                               240644   7.120  True
+kalman_stat_channel      {'beta_param': 'sigmoid'}        240644   7.125  True
+kalman_free_scalar       {}                               232720   7.149  True
+kalman_free_scalar       {'beta_param': 'sigmoid'}        232720   7.150  True
+kalman_free_channel      {}                               240780   7.051  True
+kalman_free_channel      {'beta_param': 'sigmoid'}        240780   7.049  True
+kalman_free_identity     {}                               232460   7.109  True
+kalman_free_identity     {'beta_param': 'sigmoid'}        232460   7.107  True
+all checks passed: {'A': '2.1e-15', 'B': '1.1e-15', 'C': '5.9e-07', 'D': '5.8e-16'}

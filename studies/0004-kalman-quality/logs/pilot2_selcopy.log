@@ -1,0 +1,199 @@
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | grid pilot2 | d 64, 2 heads, 2 layers | TF32 off
+                    gdn   selcopy lr 0.001 s100 step   250 loss 1.864 recall  34.66%   20.5 ms/step
+                    gdn   selcopy lr 0.001 s100 step   500 loss 1.139 recall  55.84%   20.5 ms/step
+                    gdn   selcopy lr 0.001 s100 step   750 loss 0.760 recall  72.84%   20.5 ms/step
+                    gdn   selcopy lr 0.001 s100 step  1000 loss 0.447 recall  84.20%   20.5 ms/step
+                    gdn   selcopy lr 0.001 s100 step  1250 loss 0.316 recall  89.14%   20.5 ms/step
+                    gdn   selcopy lr 0.001 s100 step  1500 loss 0.273 recall  90.20%   20.5 ms/step
+selcopy_gdn_lr0.001_s100: recall 0.90203857421875 in 35 s, 1500 steps, 20.5 ms/step, 103432 params, 0.24 GB; saved results/pilot2/selcopy_gdn_lr0.001_s100_20261101_125316.json
+                    gdn   selcopy lr 0.002 s100 step   250 loss 1.499 recall  43.93%   20.5 ms/step
+                    gdn   selcopy lr 0.002 s100 step   500 loss 0.872 recall  62.68%   20.5 ms/step
+                    gdn   selcopy lr 0.002 s100 step   750 loss 0.488 recall  82.01%   20.6 ms/step
+                    gdn   selcopy lr 0.002 s100 step  1000 loss 0.344 recall  88.87%   20.6 ms/step
+                    gdn   selcopy lr 0.002 s100 step  1250 loss 0.157 recall  95.29%   20.6 ms/step
+                    gdn   selcopy lr 0.002 s100 step  1500 loss 0.108 recall  96.29%   20.6 ms/step
+selcopy_gdn_lr0.002_s100: recall 0.962890625 in 32 s, 1500 steps, 20.6 ms/step, 103432 params, 0.24 GB; saved results/pilot2/selcopy_gdn_lr0.002_s100_20261101_125348.json
+                    gdn   selcopy lr 0.004 s100 step   250 loss 1.383 recall  48.36%   20.6 ms/step
+                    gdn   selcopy lr 0.004 s100 step   500 loss 0.728 recall  51.34%   20.6 ms/step
+                    gdn   selcopy lr 0.004 s100 step   750 loss 0.402 recall  88.70%   20.6 ms/step
+                    gdn   selcopy lr 0.004 s100 step  1000 loss 0.158 recall  95.87%   20.4 ms/step
+                    gdn   selcopy lr 0.004 s100 step  1250 loss 0.038 recall  99.08%   20.3 ms/step
+                    gdn   selcopy lr 0.004 s100 step  1500 loss 0.014 recall  99.59%   20.2 ms/step
+selcopy_gdn_lr0.004_s100: recall 0.99591064453125 in 31 s, 1500 steps, 20.2 ms/step, 103432 params, 0.24 GB; saved results/pilot2/selcopy_gdn_lr0.004_s100_20261101_125419.json
+                mesanet   selcopy lr 0.001 s100 step   250 loss 1.582 recall  41.69%    7.8 ms/step | gate med 0.996, gate med 1.000
+                mesanet   selcopy lr 0.001 s100 step   500 loss 1.202 recall  55.76%    7.8 ms/step | gate med 0.995, gate med 1.000
+                mesanet   selcopy lr 0.001 s100 step   750 loss 1.018 recall  58.74%    7.8 ms/step | gate med 0.995, gate med 1.000
+                mesanet   selcopy lr 0.001 s100 step  1000 loss 0.909 recall  61.04%    7.8 ms/step | gate med 0.994, gate med 1.000
+                mesanet   selcopy lr 0.001 s100 step  1250 loss 0.858 recall  62.25%    7.8 ms/step | gate med 0.994, gate med 1.000
+                mesanet   selcopy lr 0.001 s100 step  1500 loss 0.846 recall  62.46%    7.8 ms/step | gate med 0.994, gate med 1.000
+selcopy_mesanet_lr0.001_s100: recall 0.62457275390625 in 12 s, 1500 steps, 7.8 ms/step, 103048 params, 0.20 GB; saved results/pilot2/selcopy_mesanet_lr0.001_s100_20261101_125432.json
+                mesanet   selcopy lr 0.002 s100 step   250 loss 1.370 recall  49.69%    7.8 ms/step | gate med 0.995, gate med 1.000
+                mesanet   selcopy lr 0.002 s100 step   500 loss 0.908 recall  63.27%    7.8 ms/step | gate med 0.994, gate med 1.000
+                mesanet   selcopy lr 0.002 s100 step   750 loss 0.637 recall  72.52%    7.8 ms/step | gate med 0.995, gate med 1.000
+                mesanet   selcopy lr 0.002 s100 step  1000 loss 0.525 recall  77.78%    7.8 ms/step | gate med 0.994, gate med 1.000
+                mesanet   selcopy lr 0.002 s100 step  1250 loss 0.458 recall  80.47%    7.8 ms/step | gate med 0.994, gate med 1.000
+                mesanet   selcopy lr 0.002 s100 step  1500 loss 0.440 recall  81.60%    7.8 ms/step | gate med 0.994, gate med 1.000
+selcopy_mesanet_lr0.002_s100: recall 0.8160400390625 in 12 s, 1500 steps, 7.8 ms/step, 103048 params, 0.20 GB; saved results/pilot2/selcopy_mesanet_lr0.002_s100_20261101_125444.json
+                mesanet   selcopy lr 0.004 s100 step   250 loss 1.235 recall  54.60%    7.7 ms/step | gate med 0.995, gate med 1.000
+                mesanet   selcopy lr 0.004 s100 step   500 loss 0.777 recall  66.88%    7.7 ms/step | gate med 0.997, gate med 1.000
+                mesanet   selcopy lr 0.004 s100 step   750 loss 0.637 recall  74.37%    7.8 ms/step | gate med 0.997, gate med 1.000
+                mesanet   selcopy lr 0.004 s100 step  1000 loss 0.503 recall  78.13%    7.8 ms/step | gate med 0.997, gate med 1.000
+                mesanet   selcopy lr 0.004 s100 step  1250 loss 0.429 recall  82.04%    7.8 ms/step | gate med 0.996, gate med 1.000
+                mesanet   selcopy lr 0.004 s100 step  1500 loss 0.407 recall  83.25%    7.8 ms/step | gate med 0.996, gate med 1.000
+selcopy_mesanet_lr0.004_s100: recall 0.83251953125 in 12 s, 1500 steps, 7.8 ms/step, 103048 params, 0.20 GB; saved results/pilot2/selcopy_mesanet_lr0.004_s100_20261101_125457.json
+     kalman_stat_scalar   selcopy lr 0.001 s100 step   250 loss 1.702 recall  40.00%   21.0 ms/step | L0 cond max 75.7, gate med 0.998, L1 cond max 125, gate med 0.999
+     kalman_stat_scalar   selcopy lr 0.001 s100 step   500 loss 1.137 recall  56.72%   21.0 ms/step | L0 cond max 71.7, gate med 0.997, L1 cond max 368, gate med 0.999
+     kalman_stat_scalar   selcopy lr 0.001 s100 step   750 loss 0.980 recall  60.60%   21.1 ms/step | L0 cond max 68.9, gate med 0.995, L1 cond max 795, gate med 0.999
+     kalman_stat_scalar   selcopy lr 0.001 s100 step  1000 loss 0.883 recall  62.38%   21.0 ms/step | L0 cond max 65.2, gate med 0.994, L1 cond max 908, gate med 0.999
+     kalman_stat_scalar   selcopy lr 0.001 s100 step  1250 loss 0.846 recall  63.25%   21.1 ms/step | L0 cond max 65.1, gate med 0.993, L1 cond max 948, gate med 0.999
+     kalman_stat_scalar   selcopy lr 0.001 s100 step  1500 loss 0.835 recall  63.62%   21.1 ms/step | L0 cond max 65.4, gate med 0.993, L1 cond max 950, gate med 0.999
+selcopy_kalman_stat_scalar_lr0.001_s100: recall 0.63616943359375 in 34 s, 1500 steps, 21.1 ms/step, 103560 params, 0.49 GB; saved results/pilot2/selcopy_kalman_stat_scalar_lr0.001_s100_20261101_125530.json
+     kalman_stat_scalar   selcopy lr 0.002 s100 step   250 loss 1.531 recall  47.52%   21.2 ms/step | L0 cond max 86.3, gate med 0.999, L1 cond max 153, gate med 0.999
+     kalman_stat_scalar   selcopy lr 0.002 s100 step   500 loss 1.086 recall  59.70%   21.2 ms/step | L0 cond max 73.7, gate med 0.995, L1 cond max 494, gate med 0.999
+     kalman_stat_scalar   selcopy lr 0.002 s100 step   750 loss 0.787 recall  63.91%   21.1 ms/step | L0 cond max 78.1, gate med 0.994, L1 cond max 154, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.002 s100 step  1000 loss 0.684 recall  69.91%   21.1 ms/step | L0 cond max 77.5, gate med 0.994, L1 cond max 134, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.002 s100 step  1250 loss 0.566 recall  76.70%   21.1 ms/step | L0 cond max 78.1, gate med 0.993, L1 cond max 139, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.002 s100 step  1500 loss 0.526 recall  78.69%   21.1 ms/step | L0 cond max 78.5, gate med 0.993, L1 cond max 140, gate med 1.000
+selcopy_kalman_stat_scalar_lr0.002_s100: recall 0.78692626953125 in 34 s, 1500 steps, 21.1 ms/step, 103560 params, 0.49 GB; saved results/pilot2/selcopy_kalman_stat_scalar_lr0.002_s100_20261101_125604.json
+     kalman_stat_scalar   selcopy lr 0.004 s100 step   250 loss 1.331 recall  52.75%   20.9 ms/step | L0 cond max 94.1, gate med 0.998, L1 cond max 112, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.004 s100 step   500 loss 0.886 recall  61.79%   21.0 ms/step | L0 cond max 86.9, gate med 0.996, L1 cond max 354, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.004 s100 step   750 loss 0.734 recall  66.56%   21.0 ms/step | L0 cond max 86.7, gate med 0.995, L1 cond max 220, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.004 s100 step  1000 loss 0.531 recall  76.52%   21.0 ms/step | L0 cond max 86.9, gate med 0.995, L1 cond max 511, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.004 s100 step  1250 loss 0.443 recall  81.15%   21.0 ms/step | L0 cond max 86.9, gate med 0.995, L1 cond max 657, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.004 s100 step  1500 loss 0.411 recall  82.38%   21.0 ms/step | L0 cond max 87, gate med 0.995, L1 cond max 685, gate med 1.000
+selcopy_kalman_stat_scalar_lr0.004_s100: recall 0.82379150390625 in 34 s, 1500 steps, 21.0 ms/step, 103560 params, 0.49 GB; saved results/pilot2/selcopy_kalman_stat_scalar_lr0.004_s100_20261101_125638.json
+    kalman_stat_channel   selcopy lr 0.001 s100 step   250 loss 1.619 recall  41.97%   50.7 ms/step | L0 cond max 44.1, gate med 0.998, L1 cond max 37.6, gate med 0.998
+    kalman_stat_channel   selcopy lr 0.001 s100 step   500 loss 1.178 recall  54.79%   50.7 ms/step | L0 cond max 41.4, gate med 0.997, L1 cond max 76.5, gate med 0.997
+    kalman_stat_channel   selcopy lr 0.001 s100 step   750 loss 1.015 recall  60.20%   50.7 ms/step | L0 cond max 40.2, gate med 0.996, L1 cond max 125, gate med 0.996
+    kalman_stat_channel   selcopy lr 0.001 s100 step  1000 loss 0.795 recall  66.59%   50.7 ms/step | L0 cond max 37.2, gate med 0.994, L1 cond max 219, gate med 0.996
+    kalman_stat_channel   selcopy lr 0.001 s100 step  1250 loss 0.702 recall  69.27%   50.7 ms/step | L0 cond max 35.5, gate med 0.994, L1 cond max 270, gate med 0.995
+    kalman_stat_channel   selcopy lr 0.001 s100 step  1500 loss 0.684 recall  69.81%   50.7 ms/step | L0 cond max 35.2, gate med 0.994, L1 cond max 278, gate med 0.995
+selcopy_kalman_stat_channel_lr0.001_s100: recall 0.69805908203125 in 78 s, 1500 steps, 50.7 ms/step, 111620 params, 1.44 GB; saved results/pilot2/selcopy_kalman_stat_channel_lr0.001_s100_20261101_125756.json
+    kalman_stat_channel   selcopy lr 0.002 s100 step   250 loss 1.457 recall  47.67%   50.7 ms/step | L0 cond max 41.6, gate med 0.998, L1 cond max 45.4, gate med 0.997
+    kalman_stat_channel   selcopy lr 0.002 s100 step   500 loss 0.980 recall  60.00%   50.7 ms/step | L0 cond max 49.3, gate med 0.995, L1 cond max 375, gate med 0.996
+    kalman_stat_channel   selcopy lr 0.002 s100 step   750 loss 0.654 recall  71.47%   50.7 ms/step | L0 cond max 41.6, gate med 0.994, L1 cond max 549, gate med 0.994
+    kalman_stat_channel   selcopy lr 0.002 s100 step  1000 loss 0.371 recall  86.21%   50.7 ms/step | L0 cond max 40.1, gate med 0.994, L1 cond max 587, gate med 0.993
+    kalman_stat_channel   selcopy lr 0.002 s100 step  1250 loss 0.222 recall  92.18%   50.7 ms/step | L0 cond max 38.9, gate med 0.993, L1 cond max 663, gate med 0.992
+    kalman_stat_channel   selcopy lr 0.002 s100 step  1500 loss 0.190 recall  93.33%   50.7 ms/step | L0 cond max 38.5, gate med 0.993, L1 cond max 637, gate med 0.992
+selcopy_kalman_stat_channel_lr0.002_s100: recall 0.93328857421875 in 78 s, 1500 steps, 50.7 ms/step, 111620 params, 1.44 GB; saved results/pilot2/selcopy_kalman_stat_channel_lr0.002_s100_20261101_125915.json
+    kalman_stat_channel   selcopy lr 0.004 s100 step   250 loss 1.344 recall  53.85%   50.7 ms/step | L0 cond max 52.3, gate med 0.998, L1 cond max 77.9, gate med 0.997
+    kalman_stat_channel   selcopy lr 0.004 s100 step   500 loss 0.481 recall  84.82%   50.7 ms/step | L0 cond max 49.1, gate med 0.995, L1 cond max 471, gate med 0.992
+    kalman_stat_channel   selcopy lr 0.004 s100 step   750 loss 0.120 recall  96.36%   50.7 ms/step | L0 cond max 40.4, gate med 0.991, L1 cond max 1.15e+03, gate med 0.989
+    kalman_stat_channel   selcopy lr 0.004 s100 step  1000 loss 0.033 recall  99.26%   50.7 ms/step | L0 cond max 37.8, gate med 0.988, L1 cond max 1.47e+03, gate med 0.990
+    kalman_stat_channel   selcopy lr 0.004 s100 step  1250 loss 0.006 recall  99.87%   50.7 ms/step | L0 cond max 36.8, gate med 0.987, L1 cond max 1.44e+03, gate med 0.989
+selcopy_kalman_stat_channel_lr0.004_s100: recall 0.99871826171875 in 65 s, 1250 steps, 50.7 ms/step, 111620 params, 1.44 GB; saved results/pilot2/selcopy_kalman_stat_channel_lr0.004_s100_20261101_130020.json
+     kalman_free_scalar   selcopy lr 0.001 s100 step   250 loss 1.859 recall  35.13%   32.0 ms/step | L0 cond max 58.3, gate med 0.992, L1 cond max 1.59e+03, gate med 0.999
+     kalman_free_scalar   selcopy lr 0.001 s100 step   500 loss 1.278 recall  51.87%   32.0 ms/step | L0 cond max 53.6, gate med 0.989, L1 cond max 2.31e+03, gate med 0.997
+     kalman_free_scalar   selcopy lr 0.001 s100 step   750 loss 0.843 recall  63.65%   31.9 ms/step | L0 cond max 49.7, gate med 0.989, L1 cond max 1.88e+03, gate med 0.992
+     kalman_free_scalar   selcopy lr 0.001 s100 step  1000 loss 0.651 recall  71.00%   31.9 ms/step | L0 cond max 48.9, gate med 0.989, L1 cond max 1.8e+03, gate med 0.990
+     kalman_free_scalar   selcopy lr 0.001 s100 step  1250 loss 0.491 recall  79.44%   31.8 ms/step | L0 cond max 47.8, gate med 0.989, L1 cond max 2e+03, gate med 0.990
+     kalman_free_scalar   selcopy lr 0.001 s100 step  1500 loss 0.448 recall  80.74%   31.8 ms/step | L0 cond max 47.5, gate med 0.989, L1 cond max 1.98e+03, gate med 0.990
+selcopy_kalman_free_scalar_lr0.001_s100: recall 0.807373046875 in 50 s, 1500 steps, 31.8 ms/step, 103696 params, 0.48 GB; saved results/pilot2/selcopy_kalman_free_scalar_lr0.001_s100_20261101_130110.json
+     kalman_free_scalar   selcopy lr 0.002 s100 step   250 loss 1.682 recall  40.42%   31.4 ms/step | L0 cond max 83.2, gate med 0.998, L1 cond max 2.54e+03, gate med 0.999
+     kalman_free_scalar   selcopy lr 0.002 s100 step   500 loss 1.268 recall  54.86%   31.7 ms/step | L0 cond max 90.6, gate med 0.999, L1 cond max 3.27e+03, gate med 0.999
+     kalman_free_scalar   selcopy lr 0.002 s100 step   750 loss 0.908 recall  61.88%   31.7 ms/step | L0 cond max 72.4, gate med 0.999, L1 cond max 2.88e+03, gate med 1.000
+     kalman_free_scalar   selcopy lr 0.002 s100 step  1000 loss 0.740 recall  66.70%   31.8 ms/step | L0 cond max 65.6, gate med 0.999, L1 cond max 2.33e+03, gate med 0.999
+     kalman_free_scalar   selcopy lr 0.002 s100 step  1250 loss 0.656 recall  70.09%   31.8 ms/step | L0 cond max 62.9, gate med 0.999, L1 cond max 2.74e+03, gate med 0.999
+     kalman_free_scalar   selcopy lr 0.002 s100 step  1500 loss 0.628 recall  71.11%   31.8 ms/step | L0 cond max 62.5, gate med 0.999, L1 cond max 2.77e+03, gate med 1.000
+selcopy_kalman_free_scalar_lr0.002_s100: recall 0.71112060546875 in 50 s, 1500 steps, 31.8 ms/step, 103696 params, 0.48 GB; saved results/pilot2/selcopy_kalman_free_scalar_lr0.002_s100_20261101_130200.json
+     kalman_free_scalar   selcopy lr 0.004 s100 step   250 loss 1.488 recall  46.63%   31.8 ms/step | L0 cond max 115, gate med 0.999, L1 cond max 2.51e+03, gate med 1.000
+     kalman_free_scalar   selcopy lr 0.004 s100 step   500 loss 1.163 recall  55.02%   31.8 ms/step | L0 cond max 72, gate med 0.999, L1 cond max 6.27e+03, gate med 1.000
+     kalman_free_scalar   selcopy lr 0.004 s100 step   750 loss 0.807 recall  69.05%   31.9 ms/step | L0 cond max 60.8, gate med 0.999, L1 cond max 1.36e+04, gate med 0.998
+     kalman_free_scalar   selcopy lr 0.004 s100 step  1000 loss 0.536 recall  81.92%   31.9 ms/step | L0 cond max 55.9, gate med 0.998, L1 cond max 1.88e+04, gate med 0.997
+     kalman_free_scalar   selcopy lr 0.004 s100 step  1250 loss 0.384 recall  86.80%   31.9 ms/step | L0 cond max 55.1, gate med 0.998, L1 cond max 1.8e+04, gate med 0.997
+     kalman_free_scalar   selcopy lr 0.004 s100 step  1500 loss 0.339 recall  87.95%   31.9 ms/step | L0 cond max 54.9, gate med 0.998, L1 cond max 1.8e+04, gate med 0.997
+selcopy_kalman_free_scalar_lr0.004_s100: recall 0.8795166015625 in 51 s, 1500 steps, 31.9 ms/step, 103696 params, 0.48 GB; saved results/pilot2/selcopy_kalman_free_scalar_lr0.004_s100_20261101_130251.json
+    kalman_free_channel   selcopy lr 0.001 s100 step   250 loss 1.750 recall  38.70%   53.5 ms/step | L0 cond max 29.6, gate med 0.999, L1 cond max 326, gate med 0.998
+    kalman_free_channel   selcopy lr 0.001 s100 step   500 loss 1.197 recall  56.10%   53.5 ms/step | L0 cond max 32.6, gate med 0.999, L1 cond max 477, gate med 0.997
+    kalman_free_channel   selcopy lr 0.001 s100 step   750 loss 0.879 recall  64.03%   53.5 ms/step | L0 cond max 34.8, gate med 0.998, L1 cond max 1.13e+03, gate med 0.996
+    kalman_free_channel   selcopy lr 0.001 s100 step  1000 loss 0.735 recall  69.74%   53.5 ms/step | L0 cond max 36.4, gate med 0.998, L1 cond max 1.25e+03, gate med 0.995
+    kalman_free_channel   selcopy lr 0.001 s100 step  1250 loss 0.681 recall  71.50%   53.5 ms/step | L0 cond max 38, gate med 0.998, L1 cond max 1.23e+03, gate med 0.995
+    kalman_free_channel   selcopy lr 0.001 s100 step  1500 loss 0.662 recall  72.44%   53.5 ms/step | L0 cond max 38.4, gate med 0.998, L1 cond max 1.2e+03, gate med 0.995
+selcopy_kalman_free_channel_lr0.001_s100: recall 0.724365234375 in 83 s, 1500 steps, 53.5 ms/step, 111756 params, 1.44 GB; saved results/pilot2/selcopy_kalman_free_channel_lr0.001_s100_20261101_130413.json
+    kalman_free_channel   selcopy lr 0.002 s100 step   250 loss 1.577 recall  44.48%   53.5 ms/step | L0 cond max 32.1, gate med 0.999, L1 cond max 778, gate med 0.997
+    kalman_free_channel   selcopy lr 0.002 s100 step   500 loss 1.100 recall  59.34%   53.6 ms/step | L0 cond max 35.5, gate med 0.999, L1 cond max 596, gate med 0.995
+    kalman_free_channel   selcopy lr 0.002 s100 step   750 loss 0.706 recall  69.05%   53.6 ms/step | L0 cond max 40.4, gate med 0.998, L1 cond max 532, gate med 0.995
+    kalman_free_channel   selcopy lr 0.002 s100 step  1000 loss 0.475 recall  81.72%   53.6 ms/step | L0 cond max 50.7, gate med 0.997, L1 cond max 1.19e+03, gate med 0.995
+    kalman_free_channel   selcopy lr 0.002 s100 step  1250 loss 0.363 recall  87.04%   53.6 ms/step | L0 cond max 58.8, gate med 0.996, L1 cond max 1.49e+03, gate med 0.995
+    kalman_free_channel   selcopy lr 0.002 s100 step  1500 loss 0.325 recall  88.35%   53.6 ms/step | L0 cond max 60.8, gate med 0.996, L1 cond max 1.56e+03, gate med 0.995
+selcopy_kalman_free_channel_lr0.002_s100: recall 0.883544921875 in 83 s, 1500 steps, 53.6 ms/step, 111756 params, 1.44 GB; saved results/pilot2/selcopy_kalman_free_channel_lr0.002_s100_20261101_130536.json
+    kalman_free_channel   selcopy lr 0.004 s100 step   250 loss 1.448 recall  51.79%   53.6 ms/step | L0 cond max 34.9, gate med 0.999, L1 cond max 640, gate med 0.997
+    kalman_free_channel   selcopy lr 0.004 s100 step   500 loss 0.745 recall  66.58%   53.6 ms/step | L0 cond max 32.1, gate med 0.997, L1 cond max 4e+03, gate med 0.992
+    kalman_free_channel   selcopy lr 0.004 s100 step   750 loss 0.469 recall  79.74%   53.6 ms/step | L0 cond max 62.3, gate med 0.996, L1 cond max 1.29e+03, gate med 0.988
+    kalman_free_channel   selcopy lr 0.004 s100 step  1000 loss 0.229 recall  90.49%   53.6 ms/step | L0 cond max 65.7, gate med 0.993, L1 cond max 1.56e+03, gate med 0.987
+    kalman_free_channel   selcopy lr 0.004 s100 step  1250 loss 0.100 recall  96.82%   53.6 ms/step | L0 cond max 68.5, gate med 0.993, L1 cond max 2.39e+03, gate med 0.986
+    kalman_free_channel   selcopy lr 0.004 s100 step  1500 loss 0.069 recall  97.61%   53.6 ms/step | L0 cond max 68.7, gate med 0.994, L1 cond max 2.63e+03, gate med 0.987
+selcopy_kalman_free_channel_lr0.004_s100: recall 0.97607421875 in 83 s, 1500 steps, 53.6 ms/step, 111756 params, 1.44 GB; saved results/pilot2/selcopy_kalman_free_channel_lr0.004_s100_20261101_130659.json
+   kalman_free_identity   selcopy lr 0.001 s100 step   250 loss 1.814 recall  36.61%   26.6 ms/step | L0 cond max 193, L1 cond max 1.8e+03
+   kalman_free_identity   selcopy lr 0.001 s100 step   500 loss 1.235 recall  54.90%   26.5 ms/step | L0 cond max 188, L1 cond max 2.16e+03
+   kalman_free_identity   selcopy lr 0.001 s100 step   750 loss 1.035 recall  58.83%   26.4 ms/step | L0 cond max 207, L1 cond max 3.05e+03
+   kalman_free_identity   selcopy lr 0.001 s100 step  1000 loss 0.941 recall  61.07%   26.5 ms/step | L0 cond max 243, L1 cond max 5.23e+03
+   kalman_free_identity   selcopy lr 0.001 s100 step  1250 loss 0.852 recall  64.52%   26.6 ms/step | L0 cond max 304, L1 cond max 7.8e+03
+   kalman_free_identity   selcopy lr 0.001 s100 step  1500 loss 0.824 recall  64.90%   26.6 ms/step | L0 cond max 319, L1 cond max 8.62e+03
+selcopy_kalman_free_identity_lr0.001_s100: recall 0.6490478515625 in 42 s, 1500 steps, 26.6 ms/step, 103436 params, 0.43 GB; saved results/pilot2/selcopy_kalman_free_identity_lr0.001_s100_20261101_130741.json
+   kalman_free_identity   selcopy lr 0.002 s100 step   250 loss 1.540 recall  46.51%   27.1 ms/step | L0 cond max 177, L1 cond max 1.5e+03
+   kalman_free_identity   selcopy lr 0.002 s100 step   500 loss 1.073 recall  58.87%   26.6 ms/step | L0 cond max 177, L1 cond max 2.51e+03
+   kalman_free_identity   selcopy lr 0.002 s100 step   750 loss 0.915 recall  61.15%   26.5 ms/step | L0 cond max 186, L1 cond max 2.27e+03
+   kalman_free_identity   selcopy lr 0.002 s100 step  1000 loss 0.749 recall  66.51%   26.5 ms/step | L0 cond max 194, L1 cond max 2.46e+03
+   kalman_free_identity   selcopy lr 0.002 s100 step  1250 loss 0.677 recall  69.36%   26.5 ms/step | L0 cond max 198, L1 cond max 2.29e+03
+   kalman_free_identity   selcopy lr 0.002 s100 step  1500 loss 0.654 recall  70.34%   26.6 ms/step | L0 cond max 199, L1 cond max 2.31e+03
+selcopy_kalman_free_identity_lr0.002_s100: recall 0.70343017578125 in 42 s, 1500 steps, 26.6 ms/step, 103436 params, 0.43 GB; saved results/pilot2/selcopy_kalman_free_identity_lr0.002_s100_20261101_130824.json
+   kalman_free_identity   selcopy lr 0.004 s100 step   250 loss 1.404 recall  49.36%   26.3 ms/step | L0 cond max 164, L1 cond max 3.73e+03
+   kalman_free_identity   selcopy lr 0.004 s100 step   500 loss 0.993 recall  58.91%   26.5 ms/step | L0 cond max 162, L1 cond max 9.31e+03
+   kalman_free_identity   selcopy lr 0.004 s100 step   750 loss 0.773 recall  64.79%   26.6 ms/step | L0 cond max 157, L1 cond max 1.41e+04
+   kalman_free_identity   selcopy lr 0.004 s100 step  1000 loss 0.685 recall  68.10%   26.5 ms/step | L0 cond max 157, L1 cond max 1.56e+04
+   kalman_free_identity   selcopy lr 0.004 s100 step  1250 loss 0.620 recall  71.83%   26.5 ms/step | L0 cond max 160, L1 cond max 1.72e+04
+   kalman_free_identity   selcopy lr 0.004 s100 step  1500 loss 0.587 recall  74.06%   26.5 ms/step | L0 cond max 161, L1 cond max 1.57e+04
+selcopy_kalman_free_identity_lr0.004_s100: recall 0.7406005859375 in 42 s, 1500 steps, 26.5 ms/step, 103436 params, 0.43 GB; saved results/pilot2/selcopy_kalman_free_identity_lr0.004_s100_20261101_130906.json
+grid pilot2: finished in 984 s
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | grid pilot2 | d 64, 2 heads, 2 layers | TF32 off
+                    gdn   selcopy lr 0.002 s100 step   250 loss 1.690 recall  42.93%   20.4 ms/step
+                    gdn   selcopy lr 0.002 s100 step   500 loss 0.956 recall  61.56%   20.4 ms/step
+                    gdn   selcopy lr 0.002 s100 step   750 loss 0.512 recall  81.01%   20.4 ms/step
+                    gdn   selcopy lr 0.002 s100 step  1000 loss 0.286 recall  87.64%   20.4 ms/step
+                    gdn   selcopy lr 0.002 s100 step  1250 loss 0.218 recall  91.93%   20.4 ms/step
+                    gdn   selcopy lr 0.002 s100 step  1500 loss 0.186 recall  92.63%   20.4 ms/step
+selcopy_gdn_lr0.002_s100_alt: recall 0.92633056640625 in 34 s, 1500 steps, 20.4 ms/step, 111624 params, 0.26 GB; saved results/pilot2/selcopy_gdn_lr0.002_s100_alt_20261101_130941.json
+                mesanet   selcopy lr 0.002 s100 step   250 loss 2.644 recall   7.28%    7.7 ms/step | gate med 0.463, gate med 0.420
+                mesanet   selcopy lr 0.002 s100 step   500 loss 2.642 recall   7.51%    7.7 ms/step | gate med 0.482, gate med 0.371
+                mesanet   selcopy lr 0.002 s100 step   750 loss 2.641 recall   7.11%    7.7 ms/step | gate med 0.495, gate med 0.333
+                mesanet   selcopy lr 0.002 s100 step  1000 loss 2.640 recall   7.46%    7.7 ms/step | gate med 0.499, gate med 0.300
+                mesanet   selcopy lr 0.002 s100 step  1250 loss 2.639 recall   7.18%    7.7 ms/step | gate med 0.506, gate med 0.248
+                mesanet   selcopy lr 0.002 s100 step  1500 loss 2.639 recall   7.23%    7.7 ms/step | gate med 0.515, gate med 0.254
+selcopy_mesanet_lr0.002_s100_alt: recall 0.072265625 in 12 s, 1500 steps, 7.7 ms/step, 103048 params, 0.20 GB; saved results/pilot2/selcopy_mesanet_lr0.002_s100_alt_20261101_130953.json
+     kalman_stat_scalar   selcopy lr 0.002 s100 step   250 loss 1.512 recall  40.95%   21.1 ms/step | L0 cond max 46.3, gate med 0.998, L1 cond max 38.3, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.002 s100 step   500 loss 1.034 recall  60.62%   21.1 ms/step | L0 cond max 41.4, gate med 0.996, L1 cond max 35.9, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.002 s100 step   750 loss 0.772 recall  67.54%   21.1 ms/step | L0 cond max 38.9, gate med 0.993, L1 cond max 44.6, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.002 s100 step  1000 loss 0.561 recall  77.59%   21.1 ms/step | L0 cond max 39, gate med 0.992, L1 cond max 40.7, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.002 s100 step  1250 loss 0.468 recall  82.42%   21.1 ms/step | L0 cond max 39, gate med 0.992, L1 cond max 36.1, gate med 1.000
+     kalman_stat_scalar   selcopy lr 0.002 s100 step  1500 loss 0.429 recall  83.56%   21.1 ms/step | L0 cond max 39, gate med 0.992, L1 cond max 36, gate med 1.000
+selcopy_kalman_stat_scalar_lr0.002_s100_alt: recall 0.83563232421875 in 34 s, 1500 steps, 21.1 ms/step, 103560 params, 0.49 GB; saved results/pilot2/selcopy_kalman_stat_scalar_lr0.002_s100_alt_20261101_131027.json
+    kalman_stat_channel   selcopy lr 0.002 s100 step   250 loss 1.436 recall  50.66%   50.8 ms/step | L0 cond max 24.8, gate med 0.998, L1 cond max 21.4, gate med 0.998
+    kalman_stat_channel   selcopy lr 0.002 s100 step   500 loss 0.965 recall  60.36%   50.7 ms/step | L0 cond max 24.6, gate med 0.995, L1 cond max 21.3, gate med 0.997
+    kalman_stat_channel   selcopy lr 0.002 s100 step   750 loss 0.544 recall  72.96%   50.7 ms/step | L0 cond max 24.7, gate med 0.992, L1 cond max 22.2, gate med 0.994
+    kalman_stat_channel   selcopy lr 0.002 s100 step  1000 loss 0.376 recall  85.75%   50.7 ms/step | L0 cond max 23.6, gate med 0.991, L1 cond max 21.7, gate med 0.993
+    kalman_stat_channel   selcopy lr 0.002 s100 step  1250 loss 0.216 recall  92.11%   50.7 ms/step | L0 cond max 23.5, gate med 0.991, L1 cond max 21.4, gate med 0.993
+    kalman_stat_channel   selcopy lr 0.002 s100 step  1500 loss 0.181 recall  93.65%   50.7 ms/step | L0 cond max 23.6, gate med 0.991, L1 cond max 21.7, gate med 0.993
+selcopy_kalman_stat_channel_lr0.002_s100_alt: recall 0.9365234375 in 79 s, 1500 steps, 50.7 ms/step, 111620 params, 1.44 GB; saved results/pilot2/selcopy_kalman_stat_channel_lr0.002_s100_alt_20261101_131146.json
+     kalman_free_scalar   selcopy lr 0.002 s100 step   250 loss 1.651 recall  41.08%   32.1 ms/step | L0 cond max 57.8, gate med 0.998, L1 cond max 235, gate med 1.000
+     kalman_free_scalar   selcopy lr 0.002 s100 step   500 loss 1.113 recall  57.90%   32.0 ms/step | L0 cond max 55.8, gate med 0.999, L1 cond max 609, gate med 1.000
+     kalman_free_scalar   selcopy lr 0.002 s100 step   750 loss 0.940 recall  60.03%   31.9 ms/step | L0 cond max 53.4, gate med 0.999, L1 cond max 944, gate med 1.000
+     kalman_free_scalar   selcopy lr 0.002 s100 step  1000 loss 0.823 recall  62.84%   32.0 ms/step | L0 cond max 49.8, gate med 0.999, L1 cond max 1.37e+03, gate med 0.999
+     kalman_free_scalar   selcopy lr 0.002 s100 step  1250 loss 0.751 recall  65.11%   32.0 ms/step | L0 cond max 46.9, gate med 0.999, L1 cond max 1.25e+03, gate med 0.999
+     kalman_free_scalar   selcopy lr 0.002 s100 step  1500 loss 0.733 recall  66.01%   32.0 ms/step | L0 cond max 46.7, gate med 0.999, L1 cond max 1.21e+03, gate med 0.999
+selcopy_kalman_free_scalar_lr0.002_s100_alt: recall 0.66009521484375 in 50 s, 1500 steps, 32.0 ms/step, 103696 params, 0.48 GB; saved results/pilot2/selcopy_kalman_free_scalar_lr0.002_s100_alt_20261101_131236.json
+    kalman_free_channel   selcopy lr 0.002 s100 step   250 loss 1.488 recall  46.66%   53.5 ms/step | L0 cond max 21.9, gate med 0.999, L1 cond max 51.4, gate med 0.997
+    kalman_free_channel   selcopy lr 0.002 s100 step   500 loss 0.967 recall  62.26%   53.6 ms/step | L0 cond max 20.1, gate med 0.999, L1 cond max 52.8, gate med 0.996
+    kalman_free_channel   selcopy lr 0.002 s100 step   750 loss 0.680 recall  71.36%   53.6 ms/step | L0 cond max 18.8, gate med 0.997, L1 cond max 97.6, gate med 0.995
+    kalman_free_channel   selcopy lr 0.002 s100 step  1000 loss 0.521 recall  77.05%   53.6 ms/step | L0 cond max 16.4, gate med 0.996, L1 cond max 124, gate med 0.995
+    kalman_free_channel   selcopy lr 0.002 s100 step  1250 loss 0.469 recall  79.85%   53.6 ms/step | L0 cond max 15.7, gate med 0.996, L1 cond max 124, gate med 0.995
+    kalman_free_channel   selcopy lr 0.002 s100 step  1500 loss 0.450 recall  80.62%   53.6 ms/step | L0 cond max 15.6, gate med 0.996, L1 cond max 121, gate med 0.995
+selcopy_kalman_free_channel_lr0.002_s100_alt: recall 0.80615234375 in 83 s, 1500 steps, 53.6 ms/step, 111756 params, 1.44 GB; saved results/pilot2/selcopy_kalman_free_channel_lr0.002_s100_alt_20261101_131359.json
+   kalman_free_identity   selcopy lr 0.002 s100 step   250 loss 1.597 recall  37.31%   26.9 ms/step | L0 cond max 102, L1 cond max 233
+   kalman_free_identity   selcopy lr 0.002 s100 step   500 loss 1.109 recall  57.28%   26.9 ms/step | L0 cond max 97.4, L1 cond max 325
+   kalman_free_identity   selcopy lr 0.002 s100 step   750 loss 0.800 recall  66.03%   26.9 ms/step | L0 cond max 86, L1 cond max 571
+   kalman_free_identity   selcopy lr 0.002 s100 step  1000 loss 0.659 recall  70.94%   26.9 ms/step | L0 cond max 79.2, L1 cond max 809
+   kalman_free_identity   selcopy lr 0.002 s100 step  1250 loss 0.563 recall  75.04%   26.9 ms/step | L0 cond max 75.7, L1 cond max 849
+   kalman_free_identity   selcopy lr 0.002 s100 step  1500 loss 0.535 recall  76.09%   26.9 ms/step | L0 cond max 74.9, L1 cond max 859
+selcopy_kalman_free_identity_lr0.002_s100_alt: recall 0.7608642578125 in 43 s, 1500 steps, 26.9 ms/step, 103436 params, 0.43 GB; saved results/pilot2/selcopy_kalman_free_identity_lr0.002_s100_alt_20261101_131441.json
+grid pilot2: finished in 334 s

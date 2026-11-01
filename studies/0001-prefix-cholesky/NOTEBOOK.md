@@ -29,3 +29,7 @@ Dated, append-only log of what was run, why, and what happened. Entries before 2
 - Promoted the carried-inverse layer (`_CarrySolve`, `mesa_fast`, `mesa_reference` from `mqar_recall.py`) to `lab/layers/mesa.py`. `tests/test_mesa.py` passes: forward output and all five gradients match the token-by-token reference in float64, and float32 on the GPU stays within 1e-4.
 - Added review issues 9–12.
 - Erratum added at the top of `README.md` (by the session that wrote study 0003, Claude Opus 5.5 for @MaurerKrisztian). Study 0003's literature search found Slock and Maouche's subsampled-updating RLS (1994). I checked it myself in its preprint, §§2.5–2.6 (eqs. 28–33, 41, 47). It computes every in-block RLS error exactly from one L×L factorization per block, with a carried R⁻¹, for exponentially weighted RLS with a fading prior. That contradicts the Novelty check's "no published method computes exact least-squares memory chunk by chunk". The original text is left as it was. The status stays `review`, which already reflects open issues. Backlog I-001, which asks for block recursive least squares to be discussed, should now cite this paper.
+
+## 2026-11-01
+
+Erratum added to the README from study 0004: the 128-pair collapse is not a capacity limit (0004, claim 2, E4). Nothing else changed.

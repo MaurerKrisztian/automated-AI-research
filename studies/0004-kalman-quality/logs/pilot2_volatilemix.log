@@ -1,0 +1,200 @@
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | grid pilot2 | d 64, 2 heads, 2 layers | TF32 off
+                    gdn volatilemix lr 0.001 s100 step   250 loss 6.256 recall   0.20%   12.8 ms/step
+                    gdn volatilemix lr 0.001 s100 step   500 loss 6.248 recall   0.24%   12.8 ms/step
+                    gdn volatilemix lr 0.001 s100 step   750 loss 6.239 recall   0.29%   12.8 ms/step
+                    gdn volatilemix lr 0.001 s100 step  1000 loss 6.207 recall   0.56%   12.8 ms/step
+                    gdn volatilemix lr 0.001 s100 step  1250 loss 6.164 recall   0.81%   12.8 ms/step
+                    gdn volatilemix lr 0.001 s100 step  1500 loss 6.161 recall   0.85%   12.8 ms/step
+volatilemix_gdn_lr0.001_s100: recall 0.00848388671875 in 23 s, 1500 steps, 12.8 ms/step, 232456 params, 0.22 GB; saved results/pilot2/volatilemix_gdn_lr0.001_s100_20261101_123647.json
+                    gdn volatilemix lr 0.002 s100 step   250 loss 6.260 recall   0.20%   12.7 ms/step
+                    gdn volatilemix lr 0.002 s100 step   500 loss 6.248 recall   0.28%   12.7 ms/step
+                    gdn volatilemix lr 0.002 s100 step   750 loss 6.055 recall   1.40%   12.7 ms/step
+                    gdn volatilemix lr 0.002 s100 step  1000 loss 5.444 recall  10.31%   12.7 ms/step
+                    gdn volatilemix lr 0.002 s100 step  1250 loss 4.486 recall  15.91%   12.7 ms/step
+                    gdn volatilemix lr 0.002 s100 step  1500 loss 4.362 recall  17.55%   12.7 ms/step
+volatilemix_gdn_lr0.002_s100: recall 0.17547607421875 in 21 s, 1500 steps, 12.7 ms/step, 232456 params, 0.22 GB; saved results/pilot2/volatilemix_gdn_lr0.002_s100_20261101_123708.json
+                    gdn volatilemix lr 0.004 s100 step   250 loss 6.266 recall   0.18%   12.7 ms/step
+                    gdn volatilemix lr 0.004 s100 step   500 loss 6.175 recall   1.20%   12.7 ms/step
+                    gdn volatilemix lr 0.004 s100 step   750 loss 3.882 recall  26.95%   12.7 ms/step
+                    gdn volatilemix lr 0.004 s100 step  1000 loss 0.754 recall  73.74%   12.7 ms/step
+                    gdn volatilemix lr 0.004 s100 step  1250 loss 0.382 recall  78.21%   12.7 ms/step
+                    gdn volatilemix lr 0.004 s100 step  1500 loss 0.425 recall  79.97%   12.7 ms/step
+volatilemix_gdn_lr0.004_s100: recall 0.7996826171875 in 21 s, 1500 steps, 12.7 ms/step, 232456 params, 0.22 GB; saved results/pilot2/volatilemix_gdn_lr0.004_s100_20261101_123729.json
+                mesanet volatilemix lr 0.001 s100 step   250 loss 6.257 recall   0.16%    6.3 ms/step | gate med 0.993, gate med 0.991
+                mesanet volatilemix lr 0.001 s100 step   500 loss 6.248 recall   0.31%    6.3 ms/step | gate med 0.992, gate med 0.995
+                mesanet volatilemix lr 0.001 s100 step   750 loss 6.202 recall   0.80%    6.3 ms/step | gate med 0.992, gate med 0.994
+                mesanet volatilemix lr 0.001 s100 step  1000 loss 5.735 recall   6.49%    6.4 ms/step | gate med 0.992, gate med 0.993
+                mesanet volatilemix lr 0.001 s100 step  1250 loss 5.094 recall  12.90%    6.4 ms/step | gate med 0.993, gate med 0.993
+                mesanet volatilemix lr 0.001 s100 step  1500 loss 4.991 recall  14.10%    6.3 ms/step | gate med 0.993, gate med 0.993
+volatilemix_mesanet_lr0.001_s100: recall 0.1409912109375 in 11 s, 1500 steps, 6.3 ms/step, 232072 params, 0.20 GB; saved results/pilot2/volatilemix_mesanet_lr0.001_s100_20261101_123740.json
+                mesanet volatilemix lr 0.002 s100 step   250 loss 6.261 recall   0.18%    7.3 ms/step | gate med 0.992, gate med 0.991
+                mesanet volatilemix lr 0.002 s100 step   500 loss 6.220 recall   0.73%    6.6 ms/step | gate med 0.993, gate med 0.994
+                mesanet volatilemix lr 0.002 s100 step   750 loss 3.693 recall  38.31%    6.4 ms/step | gate med 0.993, gate med 0.992
+                mesanet volatilemix lr 0.002 s100 step  1000 loss 1.238 recall  78.33%    6.3 ms/step | gate med 0.994, gate med 0.992
+                mesanet volatilemix lr 0.002 s100 step  1250 loss 0.469 recall  84.77%    6.3 ms/step | gate med 0.994, gate med 0.994
+                mesanet volatilemix lr 0.002 s100 step  1500 loss 0.473 recall  85.77%    6.3 ms/step | gate med 0.994, gate med 0.994
+volatilemix_mesanet_lr0.002_s100: recall 0.857666015625 in 11 s, 1500 steps, 6.3 ms/step, 232072 params, 0.20 GB; saved results/pilot2/volatilemix_mesanet_lr0.002_s100_20261101_123751.json
+                mesanet volatilemix lr 0.004 s100 step   250 loss 6.266 recall   0.18%    6.3 ms/step | gate med 0.992, gate med 0.992
+                mesanet volatilemix lr 0.004 s100 step   500 loss 4.170 recall  43.25%    6.3 ms/step | gate med 0.990, gate med 0.995
+                mesanet volatilemix lr 0.004 s100 step   750 loss 0.170 recall  92.48%    6.3 ms/step | gate med 0.995, gate med 0.996
+                mesanet volatilemix lr 0.004 s100 step  1000 loss 0.088 recall  96.87%    6.3 ms/step | gate med 0.994, gate med 0.995
+                mesanet volatilemix lr 0.004 s100 step  1250 loss 0.049 recall  97.41%    6.3 ms/step | gate med 0.994, gate med 0.995
+                mesanet volatilemix lr 0.004 s100 step  1500 loss 0.048 recall  97.67%    6.3 ms/step | gate med 0.994, gate med 0.995
+volatilemix_mesanet_lr0.004_s100: recall 0.97674560546875 in 11 s, 1500 steps, 6.3 ms/step, 232072 params, 0.20 GB; saved results/pilot2/volatilemix_mesanet_lr0.004_s100_20261101_123802.json
+     kalman_stat_scalar volatilemix lr 0.001 s100 step   250 loss 6.256 recall   0.21%   14.0 ms/step | L0 cond max 8.8, gate med 0.993, L1 cond max 32.3, gate med 0.997
+     kalman_stat_scalar volatilemix lr 0.001 s100 step   500 loss 6.247 recall   0.26%   14.2 ms/step | L0 cond max 8.67, gate med 0.993, L1 cond max 47.5, gate med 0.999
+     kalman_stat_scalar volatilemix lr 0.001 s100 step   750 loss 6.215 recall   0.52%   14.1 ms/step | L0 cond max 8.61, gate med 0.992, L1 cond max 40.2, gate med 0.999
+     kalman_stat_scalar volatilemix lr 0.001 s100 step  1000 loss 6.137 recall   0.98%   14.0 ms/step | L0 cond max 8.69, gate med 0.992, L1 cond max 41.4, gate med 0.998
+     kalman_stat_scalar volatilemix lr 0.001 s100 step  1250 loss 6.067 recall   1.20%   14.0 ms/step | L0 cond max 8.68, gate med 0.991, L1 cond max 39, gate med 0.996
+     kalman_stat_scalar volatilemix lr 0.001 s100 step  1500 loss 6.065 recall   1.23%   14.0 ms/step | L0 cond max 8.68, gate med 0.991, L1 cond max 38.5, gate med 0.996
+volatilemix_kalman_stat_scalar_lr0.001_s100: recall 0.0123291015625 in 25 s, 1500 steps, 14.0 ms/step, 232584 params, 0.34 GB; saved results/pilot2/volatilemix_kalman_stat_scalar_lr0.001_s100_20261101_123828.json
+     kalman_stat_scalar volatilemix lr 0.002 s100 step   250 loss 6.260 recall   0.19%   14.1 ms/step | L0 cond max 8.88, gate med 0.992, L1 cond max 38.9, gate med 0.998
+     kalman_stat_scalar volatilemix lr 0.002 s100 step   500 loss 6.210 recall   0.76%   14.9 ms/step | L0 cond max 8.19, gate med 0.992, L1 cond max 58.6, gate med 0.997
+     kalman_stat_scalar volatilemix lr 0.002 s100 step   750 loss 5.889 recall   1.78%   14.5 ms/step | L0 cond max 8.05, gate med 0.992, L1 cond max 49.2, gate med 0.993
+     kalman_stat_scalar volatilemix lr 0.002 s100 step  1000 loss 5.111 recall  10.82%   14.3 ms/step | L0 cond max 8.46, gate med 0.990, L1 cond max 39, gate med 0.995
+     kalman_stat_scalar volatilemix lr 0.002 s100 step  1250 loss 3.698 recall  20.18%   14.1 ms/step | L0 cond max 8.92, gate med 0.990, L1 cond max 32.5, gate med 0.994
+     kalman_stat_scalar volatilemix lr 0.002 s100 step  1500 loss 3.525 recall  22.97%   14.0 ms/step | L0 cond max 9.05, gate med 0.990, L1 cond max 36.6, gate med 0.994
+volatilemix_kalman_stat_scalar_lr0.002_s100: recall 0.229736328125 in 26 s, 1500 steps, 14.0 ms/step, 232584 params, 0.34 GB; saved results/pilot2/volatilemix_kalman_stat_scalar_lr0.002_s100_20261101_123853.json
+     kalman_stat_scalar volatilemix lr 0.004 s100 step   250 loss 6.266 recall   0.18%   14.3 ms/step | L0 cond max 8.76, gate med 0.991, L1 cond max 48.6, gate med 0.997
+     kalman_stat_scalar volatilemix lr 0.004 s100 step   500 loss 5.973 recall   1.66%   14.1 ms/step | L0 cond max 8.61, gate med 0.994, L1 cond max 73.2, gate med 0.996
+     kalman_stat_scalar volatilemix lr 0.004 s100 step   750 loss 5.488 recall   2.19%   14.1 ms/step | L0 cond max 16.1, gate med 0.990, L1 cond max 30.6, gate med 0.992
+     kalman_stat_scalar volatilemix lr 0.004 s100 step  1000 loss 5.140 recall   4.57%   14.1 ms/step | L0 cond max 42.3, gate med 0.994, L1 cond max 18.1, gate med 0.992
+     kalman_stat_scalar volatilemix lr 0.004 s100 step  1250 loss 4.315 recall  11.94%   14.1 ms/step | L0 cond max 46.8, gate med 0.993, L1 cond max 14.4, gate med 0.991
+     kalman_stat_scalar volatilemix lr 0.004 s100 step  1500 loss 4.154 recall  15.76%   14.1 ms/step | L0 cond max 47.4, gate med 0.993, L1 cond max 14.3, gate med 0.991
+volatilemix_kalman_stat_scalar_lr0.004_s100: recall 0.1575927734375 in 26 s, 1500 steps, 14.1 ms/step, 232584 params, 0.34 GB; saved results/pilot2/volatilemix_kalman_stat_scalar_lr0.004_s100_20261101_123919.json
+    kalman_stat_channel volatilemix lr 0.001 s100 step   250 loss 6.257 recall   0.12%   26.6 ms/step | L0 cond max 5.92, gate med 0.998, L1 cond max 11.8, gate med 0.998
+    kalman_stat_channel volatilemix lr 0.001 s100 step   500 loss 6.248 recall   0.20%   26.5 ms/step | L0 cond max 5.95, gate med 0.998, L1 cond max 22.3, gate med 0.998
+    kalman_stat_channel volatilemix lr 0.001 s100 step   750 loss 6.228 recall   0.40%   26.5 ms/step | L0 cond max 6.2, gate med 0.997, L1 cond max 24.7, gate med 0.997
+    kalman_stat_channel volatilemix lr 0.001 s100 step  1000 loss 6.172 recall   0.76%   26.5 ms/step | L0 cond max 6.05, gate med 0.997, L1 cond max 22.1, gate med 0.997
+    kalman_stat_channel volatilemix lr 0.001 s100 step  1250 loss 6.113 recall   0.98%   26.5 ms/step | L0 cond max 6.08, gate med 0.997, L1 cond max 21.6, gate med 0.997
+    kalman_stat_channel volatilemix lr 0.001 s100 step  1500 loss 6.106 recall   1.03%   26.5 ms/step | L0 cond max 6.07, gate med 0.997, L1 cond max 21.6, gate med 0.997
+volatilemix_kalman_stat_channel_lr0.001_s100: recall 0.01031494140625 in 46 s, 1500 steps, 26.5 ms/step, 240644 params, 0.73 GB; saved results/pilot2/volatilemix_kalman_stat_channel_lr0.001_s100_20261101_124005.json
+    kalman_stat_channel volatilemix lr 0.002 s100 step   250 loss 6.261 recall   0.18%   27.0 ms/step | L0 cond max 5.99, gate med 0.998, L1 cond max 16.6, gate med 0.998
+    kalman_stat_channel volatilemix lr 0.002 s100 step   500 loss 6.234 recall   0.45%   26.6 ms/step | L0 cond max 6.06, gate med 0.997, L1 cond max 21.3, gate med 0.996
+    kalman_stat_channel volatilemix lr 0.002 s100 step   750 loss 5.951 recall   1.58%   26.6 ms/step | L0 cond max 5.91, gate med 0.996, L1 cond max 21.1, gate med 0.994
+    kalman_stat_channel volatilemix lr 0.002 s100 step  1000 loss 5.744 recall   2.02%   26.6 ms/step | L0 cond max 5.58, gate med 0.996, L1 cond max 23.1, gate med 0.994
+    kalman_stat_channel volatilemix lr 0.002 s100 step  1250 loss 5.455 recall   4.11%   26.6 ms/step | L0 cond max 5.65, gate med 0.996, L1 cond max 40.1, gate med 0.993
+    kalman_stat_channel volatilemix lr 0.002 s100 step  1500 loss 5.376 recall   5.31%   26.5 ms/step | L0 cond max 5.66, gate med 0.996, L1 cond max 49.7, gate med 0.993
+volatilemix_kalman_stat_channel_lr0.002_s100: recall 0.0531005859375 in 46 s, 1500 steps, 26.5 ms/step, 240644 params, 0.73 GB; saved results/pilot2/volatilemix_kalman_stat_channel_lr0.002_s100_20261101_124051.json
+    kalman_stat_channel volatilemix lr 0.004 s100 step   250 loss 6.266 recall   0.19%   26.5 ms/step | L0 cond max 5.89, gate med 0.997, L1 cond max 22.9, gate med 0.997
+    kalman_stat_channel volatilemix lr 0.004 s100 step   500 loss 6.067 recall   1.67%   26.5 ms/step | L0 cond max 7.51, gate med 0.995, L1 cond max 86.7, gate med 0.990
+    kalman_stat_channel volatilemix lr 0.004 s100 step   750 loss 5.517 recall   5.76%   26.5 ms/step | L0 cond max 6.37, gate med 0.994, L1 cond max 23, gate med 0.980
+    kalman_stat_channel volatilemix lr 0.004 s100 step  1000 loss 3.327 recall  33.59%   26.5 ms/step | L0 cond max 6.48, gate med 0.992, L1 cond max 120, gate med 0.973
+    kalman_stat_channel volatilemix lr 0.004 s100 step  1250 loss 2.551 recall  34.81%   26.5 ms/step | L0 cond max 7.01, gate med 0.992, L1 cond max 179, gate med 0.978
+    kalman_stat_channel volatilemix lr 0.004 s100 step  1500 loss 2.588 recall  37.69%   26.5 ms/step | L0 cond max 7.14, gate med 0.992, L1 cond max 186, gate med 0.978
+volatilemix_kalman_stat_channel_lr0.004_s100: recall 0.37689208984375 in 46 s, 1500 steps, 26.5 ms/step, 240644 params, 0.73 GB; saved results/pilot2/volatilemix_kalman_stat_channel_lr0.004_s100_20261101_124137.json
+     kalman_free_scalar volatilemix lr 0.001 s100 step   250 loss 6.257 recall   0.16%   26.6 ms/step | L0 cond max 35.6, gate med 0.993, L1 cond max 92.7, gate med 0.990
+     kalman_free_scalar volatilemix lr 0.001 s100 step   500 loss 6.247 recall   0.27%   26.5 ms/step | L0 cond max 35.4, gate med 0.992, L1 cond max 84.7, gate med 0.997
+     kalman_free_scalar volatilemix lr 0.001 s100 step   750 loss 6.222 recall   0.42%   26.4 ms/step | L0 cond max 35.1, gate med 0.993, L1 cond max 65.1, gate med 0.999
+     kalman_free_scalar volatilemix lr 0.001 s100 step  1000 loss 6.140 recall   1.14%   26.3 ms/step | L0 cond max 34.2, gate med 0.993, L1 cond max 78.4, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.001 s100 step  1250 loss 6.060 recall   1.13%   26.2 ms/step | L0 cond max 34.2, gate med 0.992, L1 cond max 91.2, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.001 s100 step  1500 loss 6.059 recall   1.18%   26.1 ms/step | L0 cond max 34.2, gate med 0.992, L1 cond max 92.4, gate med 1.000
+volatilemix_kalman_free_scalar_lr0.001_s100: recall 0.01177978515625 in 44 s, 1500 steps, 26.1 ms/step, 232720 params, 0.34 GB; saved results/pilot2/volatilemix_kalman_free_scalar_lr0.001_s100_20261101_124221.json
+     kalman_free_scalar volatilemix lr 0.002 s100 step   250 loss 6.261 recall   0.18%   26.8 ms/step | L0 cond max 36.7, gate med 0.992, L1 cond max 103, gate med 0.994
+     kalman_free_scalar volatilemix lr 0.002 s100 step   500 loss 6.218 recall   0.77%   26.9 ms/step | L0 cond max 37.4, gate med 0.993, L1 cond max 82.7, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.002 s100 step   750 loss 5.871 recall   1.98%   26.6 ms/step | L0 cond max 38.5, gate med 0.993, L1 cond max 120, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.002 s100 step  1000 loss 5.577 recall   4.60%   26.3 ms/step | L0 cond max 38.5, gate med 0.992, L1 cond max 117, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.002 s100 step  1250 loss 4.856 recall  12.79%   26.1 ms/step | L0 cond max 36.4, gate med 0.991, L1 cond max 480, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.002 s100 step  1500 loss 4.772 recall  15.31%   26.0 ms/step | L0 cond max 36.2, gate med 0.991, L1 cond max 535, gate med 1.000
+volatilemix_kalman_free_scalar_lr0.002_s100: recall 0.153076171875 in 44 s, 1500 steps, 26.0 ms/step, 232720 params, 0.34 GB; saved results/pilot2/volatilemix_kalman_free_scalar_lr0.002_s100_20261101_124305.json
+     kalman_free_scalar volatilemix lr 0.004 s100 step   250 loss 6.266 recall   0.24%   26.1 ms/step | L0 cond max 39, gate med 0.991, L1 cond max 107, gate med 0.997
+     kalman_free_scalar volatilemix lr 0.004 s100 step   500 loss 5.981 recall   1.95%   25.9 ms/step | L0 cond max 50.6, gate med 0.993, L1 cond max 139, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.004 s100 step   750 loss 4.235 recall  26.55%   26.0 ms/step | L0 cond max 45.7, gate med 0.992, L1 cond max 826, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.004 s100 step  1000 loss 1.956 recall  56.75%   26.1 ms/step | L0 cond max 46.9, gate med 0.990, L1 cond max 722, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.004 s100 step  1250 loss 1.139 recall  57.37%   26.0 ms/step | L0 cond max 50.7, gate med 0.988, L1 cond max 308, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.004 s100 step  1500 loss 1.064 recall  61.80%   25.9 ms/step | L0 cond max 51.3, gate med 0.988, L1 cond max 210, gate med 1.000
+volatilemix_kalman_free_scalar_lr0.004_s100: recall 0.6180419921875 in 44 s, 1500 steps, 25.9 ms/step, 232720 params, 0.34 GB; saved results/pilot2/volatilemix_kalman_free_scalar_lr0.004_s100_20261101_124349.json
+    kalman_free_channel volatilemix lr 0.001 s100 step   250 loss 6.257 recall   0.20%   29.2 ms/step | L0 cond max 20.1, gate med 0.998, L1 cond max 36.3, gate med 0.997
+    kalman_free_channel volatilemix lr 0.001 s100 step   500 loss 6.247 recall   0.22%   29.3 ms/step | L0 cond max 22.2, gate med 0.998, L1 cond max 35.6, gate med 0.995
+    kalman_free_channel volatilemix lr 0.001 s100 step   750 loss 6.215 recall   0.54%   29.2 ms/step | L0 cond max 22.5, gate med 0.997, L1 cond max 25.5, gate med 0.994
+    kalman_free_channel volatilemix lr 0.001 s100 step  1000 loss 6.128 recall   1.00%   29.2 ms/step | L0 cond max 22.5, gate med 0.997, L1 cond max 28.1, gate med 0.994
+    kalman_free_channel volatilemix lr 0.001 s100 step  1250 loss 6.057 recall   1.27%   29.1 ms/step | L0 cond max 22.8, gate med 0.997, L1 cond max 30.2, gate med 0.993
+    kalman_free_channel volatilemix lr 0.001 s100 step  1500 loss 6.058 recall   1.26%   29.1 ms/step | L0 cond max 22.8, gate med 0.997, L1 cond max 30.4, gate med 0.993
+volatilemix_kalman_free_channel_lr0.001_s100: recall 0.01263427734375 in 51 s, 1500 steps, 29.1 ms/step, 240780 params, 0.73 GB; saved results/pilot2/volatilemix_kalman_free_channel_lr0.001_s100_20261101_124440.json
+    kalman_free_channel volatilemix lr 0.002 s100 step   250 loss 6.260 recall   0.17%   29.2 ms/step | L0 cond max 19.5, gate med 0.998, L1 cond max 40.3, gate med 0.997
+    kalman_free_channel volatilemix lr 0.002 s100 step   500 loss 6.219 recall   0.72%   29.2 ms/step | L0 cond max 25.3, gate med 0.997, L1 cond max 32, gate med 0.994
+    kalman_free_channel volatilemix lr 0.002 s100 step   750 loss 5.887 recall   1.88%   29.2 ms/step | L0 cond max 27.2, gate med 0.996, L1 cond max 29, gate med 0.994
+    kalman_free_channel volatilemix lr 0.002 s100 step  1000 loss 5.654 recall   2.05%   29.1 ms/step | L0 cond max 26.4, gate med 0.996, L1 cond max 25.6, gate med 0.993
+    kalman_free_channel volatilemix lr 0.002 s100 step  1250 loss 5.474 recall   2.22%   29.1 ms/step | L0 cond max 26.9, gate med 0.996, L1 cond max 24.8, gate med 0.992
+    kalman_free_channel volatilemix lr 0.002 s100 step  1500 loss 5.491 recall   2.19%   29.1 ms/step | L0 cond max 26.7, gate med 0.996, L1 cond max 24.6, gate med 0.992
+volatilemix_kalman_free_channel_lr0.002_s100: recall 0.0218505859375 in 51 s, 1500 steps, 29.1 ms/step, 240780 params, 0.73 GB; saved results/pilot2/volatilemix_kalman_free_channel_lr0.002_s100_20261101_124531.json
+    kalman_free_channel volatilemix lr 0.004 s100 step   250 loss 6.265 recall   0.18%   29.2 ms/step | L0 cond max 19.6, gate med 0.997, L1 cond max 45.3, gate med 0.995
+    kalman_free_channel volatilemix lr 0.004 s100 step   500 loss 6.008 recall   1.69%   29.2 ms/step | L0 cond max 24.2, gate med 0.995, L1 cond max 76.6, gate med 0.991
+    kalman_free_channel volatilemix lr 0.004 s100 step   750 loss 5.444 recall   2.36%   29.1 ms/step | L0 cond max 24.9, gate med 0.993, L1 cond max 64.9, gate med 0.981
+    kalman_free_channel volatilemix lr 0.004 s100 step  1000 loss 4.338 recall  11.11%   29.1 ms/step | L0 cond max 28.2, gate med 0.991, L1 cond max 179, gate med 0.978
+    kalman_free_channel volatilemix lr 0.004 s100 step  1250 loss 3.200 recall  15.34%   29.1 ms/step | L0 cond max 29.6, gate med 0.990, L1 cond max 173, gate med 0.979
+    kalman_free_channel volatilemix lr 0.004 s100 step  1500 loss 3.195 recall  16.47%   29.1 ms/step | L0 cond max 29.5, gate med 0.990, L1 cond max 171, gate med 0.979
+volatilemix_kalman_free_channel_lr0.004_s100: recall 0.1646728515625 in 51 s, 1500 steps, 29.1 ms/step, 240780 params, 0.73 GB; saved results/pilot2/volatilemix_kalman_free_channel_lr0.004_s100_20261101_124622.json
+   kalman_free_identity volatilemix lr 0.001 s100 step   250 loss 6.256 recall   0.23%   21.5 ms/step | L0 cond max 37.1, L1 cond max 73.1
+   kalman_free_identity volatilemix lr 0.001 s100 step   500 loss 6.247 recall   0.27%   21.3 ms/step | L0 cond max 37.3, L1 cond max 91
+   kalman_free_identity volatilemix lr 0.001 s100 step   750 loss 6.221 recall   0.41%   21.3 ms/step | L0 cond max 37.7, L1 cond max 78.2
+   kalman_free_identity volatilemix lr 0.001 s100 step  1000 loss 6.143 recall   0.90%   21.3 ms/step | L0 cond max 38.7, L1 cond max 67.7
+   kalman_free_identity volatilemix lr 0.001 s100 step  1250 loss 6.071 recall   1.17%   21.3 ms/step | L0 cond max 38.8, L1 cond max 68.3
+   kalman_free_identity volatilemix lr 0.001 s100 step  1500 loss 6.072 recall   1.20%   21.2 ms/step | L0 cond max 38.7, L1 cond max 68.8
+volatilemix_kalman_free_identity_lr0.001_s100: recall 0.011962890625 in 36 s, 1500 steps, 21.2 ms/step, 232460 params, 0.31 GB; saved results/pilot2/volatilemix_kalman_free_identity_lr0.001_s100_20261101_124659.json
+   kalman_free_identity volatilemix lr 0.002 s100 step   250 loss 6.260 recall   0.18%   21.4 ms/step | L0 cond max 37.5, L1 cond max 82.4
+   kalman_free_identity volatilemix lr 0.002 s100 step   500 loss 6.217 recall   0.62%   21.5 ms/step | L0 cond max 38.9, L1 cond max 73.1
+   kalman_free_identity volatilemix lr 0.002 s100 step   750 loss 5.925 recall   1.54%   21.4 ms/step | L0 cond max 44.2, L1 cond max 124
+   kalman_free_identity volatilemix lr 0.002 s100 step  1000 loss 5.723 recall   1.89%   21.3 ms/step | L0 cond max 42.2, L1 cond max 129
+   kalman_free_identity volatilemix lr 0.002 s100 step  1250 loss 5.545 recall   2.03%   21.2 ms/step | L0 cond max 43.3, L1 cond max 125
+   kalman_free_identity volatilemix lr 0.002 s100 step  1500 loss 5.560 recall   2.04%   21.2 ms/step | L0 cond max 43.1, L1 cond max 124
+volatilemix_kalman_free_identity_lr0.002_s100: recall 0.0203857421875 in 36 s, 1500 steps, 21.2 ms/step, 232460 params, 0.31 GB; saved results/pilot2/volatilemix_kalman_free_identity_lr0.002_s100_20261101_124735.json
+   kalman_free_identity volatilemix lr 0.004 s100 step   250 loss 6.266 recall   0.18%   21.7 ms/step | L0 cond max 39.3, L1 cond max 117
+   kalman_free_identity volatilemix lr 0.004 s100 step   500 loss 6.013 recall   1.64%   22.0 ms/step | L0 cond max 56, L1 cond max 148
+   kalman_free_identity volatilemix lr 0.004 s100 step   750 loss 5.523 recall   2.26%   22.0 ms/step | L0 cond max 50.5, L1 cond max 189
+   kalman_free_identity volatilemix lr 0.004 s100 step  1000 loss 5.307 recall   2.37%   21.8 ms/step | L0 cond max 56.3, L1 cond max 290
+   kalman_free_identity volatilemix lr 0.004 s100 step  1250 loss 5.026 recall   2.33%   21.7 ms/step | L0 cond max 64.9, L1 cond max 377
+   kalman_free_identity volatilemix lr 0.004 s100 step  1500 loss 5.077 recall   2.36%   21.6 ms/step | L0 cond max 68, L1 cond max 394
+volatilemix_kalman_free_identity_lr0.004_s100: recall 0.0235595703125 in 37 s, 1500 steps, 21.6 ms/step, 232460 params, 0.31 GB; saved results/pilot2/volatilemix_kalman_free_identity_lr0.004_s100_20261101_124812.json
+grid pilot2: finished in 708 s
+torch 2.11.0+cu128 | NVIDIA GeForce RTX 5060 Ti | grid pilot2 | d 64, 2 heads, 2 layers | TF32 off
+                    gdn volatilemix lr 0.002 s100 step   250 loss 6.260 recall   0.15%   13.9 ms/step
+                    gdn volatilemix lr 0.002 s100 step   500 loss 6.215 recall   0.78%   13.8 ms/step
+                    gdn volatilemix lr 0.002 s100 step   750 loss 6.075 recall   1.45%   13.7 ms/step
+                    gdn volatilemix lr 0.002 s100 step  1000 loss 5.986 recall   1.87%   13.7 ms/step
+                    gdn volatilemix lr 0.002 s100 step  1250 loss 5.893 recall   2.00%   13.7 ms/step
+                    gdn volatilemix lr 0.002 s100 step  1500 loss 5.901 recall   2.00%   13.7 ms/step
+volatilemix_gdn_lr0.002_s100_alt: recall 0.02001953125 in 25 s, 1500 steps, 13.7 ms/step, 240648 params, 0.23 GB; saved results/pilot2/volatilemix_gdn_lr0.002_s100_alt_20261101_124839.json
+                mesanet volatilemix lr 0.002 s100 step   250 loss 6.260 recall   0.20%    7.5 ms/step | gate med 0.499, gate med 0.619
+                mesanet volatilemix lr 0.002 s100 step   500 loss 6.251 recall   0.20%    7.5 ms/step | gate med 0.496, gate med 0.690
+                mesanet volatilemix lr 0.002 s100 step   750 loss 6.245 recall   0.20%    7.4 ms/step | gate med 0.491, gate med 0.688
+                mesanet volatilemix lr 0.002 s100 step  1000 loss 6.242 recall   0.17%    7.4 ms/step | gate med 0.492, gate med 0.707
+                mesanet volatilemix lr 0.002 s100 step  1250 loss 6.240 recall   0.22%    7.4 ms/step | gate med 0.493, gate med 0.741
+                mesanet volatilemix lr 0.002 s100 step  1500 loss 6.239 recall   0.23%    7.4 ms/step | gate med 0.494, gate med 0.730
+volatilemix_mesanet_lr0.002_s100_alt: recall 0.0023193359375 in 13 s, 1500 steps, 7.4 ms/step, 232072 params, 0.20 GB; saved results/pilot2/volatilemix_mesanet_lr0.002_s100_alt_20261101_124852.json
+     kalman_stat_scalar volatilemix lr 0.002 s100 step   250 loss 6.260 recall   0.20%   16.6 ms/step | L0 cond max 4.82, gate med 0.993, L1 cond max 20.1, gate med 0.998
+     kalman_stat_scalar volatilemix lr 0.002 s100 step   500 loss 6.220 recall   0.52%   16.4 ms/step | L0 cond max 4.69, gate med 0.993, L1 cond max 32.7, gate med 0.998
+     kalman_stat_scalar volatilemix lr 0.002 s100 step   750 loss 5.894 recall   2.20%   16.5 ms/step | L0 cond max 4.53, gate med 0.992, L1 cond max 21.8, gate med 0.994
+     kalman_stat_scalar volatilemix lr 0.002 s100 step  1000 loss 4.384 recall  19.21%   16.4 ms/step | L0 cond max 4.69, gate med 0.991, L1 cond max 14.9, gate med 0.995
+     kalman_stat_scalar volatilemix lr 0.002 s100 step  1250 loss 2.772 recall  32.73%   16.3 ms/step | L0 cond max 5.71, gate med 0.991, L1 cond max 15.4, gate med 0.993
+     kalman_stat_scalar volatilemix lr 0.002 s100 step  1500 loss 2.635 recall  37.54%   16.3 ms/step | L0 cond max 6.02, gate med 0.991, L1 cond max 15.3, gate med 0.992
+volatilemix_kalman_stat_scalar_lr0.002_s100_alt: recall 0.3753662109375 in 29 s, 1500 steps, 16.3 ms/step, 232584 params, 0.34 GB; saved results/pilot2/volatilemix_kalman_stat_scalar_lr0.002_s100_alt_20261101_124922.json
+    kalman_stat_channel volatilemix lr 0.002 s100 step   250 loss 6.261 recall   0.20%   27.9 ms/step | L0 cond max 3.45, gate med 0.998, L1 cond max 8.07, gate med 0.998
+    kalman_stat_channel volatilemix lr 0.002 s100 step   500 loss 6.235 recall   0.56%   27.9 ms/step | L0 cond max 3.35, gate med 0.997, L1 cond max 10.8, gate med 0.996
+    kalman_stat_channel volatilemix lr 0.002 s100 step   750 loss 5.959 recall   1.62%   27.8 ms/step | L0 cond max 3.35, gate med 0.996, L1 cond max 13, gate med 0.995
+    kalman_stat_channel volatilemix lr 0.002 s100 step  1000 loss 5.746 recall   2.12%   27.7 ms/step | L0 cond max 3.19, gate med 0.996, L1 cond max 9.08, gate med 0.994
+    kalman_stat_channel volatilemix lr 0.002 s100 step  1250 loss 5.310 recall   6.64%   27.6 ms/step | L0 cond max 3.16, gate med 0.996, L1 cond max 6.7, gate med 0.992
+    kalman_stat_channel volatilemix lr 0.002 s100 step  1500 loss 5.231 recall   7.86%   27.6 ms/step | L0 cond max 3.15, gate med 0.996, L1 cond max 6.57, gate med 0.992
+volatilemix_kalman_stat_channel_lr0.002_s100_alt: recall 0.07861328125 in 49 s, 1500 steps, 27.6 ms/step, 240644 params, 0.73 GB; saved results/pilot2/volatilemix_kalman_stat_channel_lr0.002_s100_alt_20261101_125011.json
+     kalman_free_scalar volatilemix lr 0.002 s100 step   250 loss 6.261 recall   0.18%   30.0 ms/step | L0 cond max 21.3, gate med 0.992, L1 cond max 60.9, gate med 0.995
+     kalman_free_scalar volatilemix lr 0.002 s100 step   500 loss 6.221 recall   0.74%   30.2 ms/step | L0 cond max 23, gate med 0.993, L1 cond max 74.9, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.002 s100 step   750 loss 5.880 recall   1.90%   30.2 ms/step | L0 cond max 21.6, gate med 0.992, L1 cond max 115, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.002 s100 step  1000 loss 5.544 recall   6.02%   30.1 ms/step | L0 cond max 21.1, gate med 0.991, L1 cond max 75.8, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.002 s100 step  1250 loss 4.820 recall  14.04%   30.0 ms/step | L0 cond max 20.9, gate med 0.991, L1 cond max 66.5, gate med 1.000
+     kalman_free_scalar volatilemix lr 0.002 s100 step  1500 loss 4.732 recall  16.19%   30.1 ms/step | L0 cond max 20.7, gate med 0.991, L1 cond max 66.1, gate med 1.000
+volatilemix_kalman_free_scalar_lr0.002_s100_alt: recall 0.16192626953125 in 51 s, 1500 steps, 30.1 ms/step, 232720 params, 0.34 GB; saved results/pilot2/volatilemix_kalman_free_scalar_lr0.002_s100_alt_20261101_125101.json
+    kalman_free_channel volatilemix lr 0.002 s100 step   250 loss 6.260 recall   0.18%   32.1 ms/step | L0 cond max 12.3, gate med 0.998, L1 cond max 24.3, gate med 0.997
+    kalman_free_channel volatilemix lr 0.002 s100 step   500 loss 6.219 recall   0.65%   32.0 ms/step | L0 cond max 15.1, gate med 0.997, L1 cond max 21.7, gate med 0.994
+    kalman_free_channel volatilemix lr 0.002 s100 step   750 loss 5.886 recall   1.81%   32.0 ms/step | L0 cond max 16.7, gate med 0.996, L1 cond max 20.5, gate med 0.992
+    kalman_free_channel volatilemix lr 0.002 s100 step  1000 loss 5.657 recall   1.92%   32.0 ms/step | L0 cond max 16.8, gate med 0.996, L1 cond max 16.1, gate med 0.992
+    kalman_free_channel volatilemix lr 0.002 s100 step  1250 loss 5.475 recall   2.17%   31.9 ms/step | L0 cond max 16.7, gate med 0.996, L1 cond max 14.8, gate med 0.991
+    kalman_free_channel volatilemix lr 0.002 s100 step  1500 loss 5.494 recall   2.17%   31.9 ms/step | L0 cond max 16.7, gate med 0.996, L1 cond max 14.6, gate med 0.991
+volatilemix_kalman_free_channel_lr0.002_s100_alt: recall 0.021728515625 in 56 s, 1500 steps, 31.9 ms/step, 240780 params, 0.73 GB; saved results/pilot2/volatilemix_kalman_free_channel_lr0.002_s100_alt_20261101_125157.json
+   kalman_free_identity volatilemix lr 0.002 s100 step   250 loss 6.260 recall   0.19%   25.5 ms/step | L0 cond max 22.7, L1 cond max 41.8
+   kalman_free_identity volatilemix lr 0.002 s100 step   500 loss 6.211 recall   0.73%   25.2 ms/step | L0 cond max 25, L1 cond max 45
+   kalman_free_identity volatilemix lr 0.002 s100 step   750 loss 5.914 recall   1.62%   24.9 ms/step | L0 cond max 24.9, L1 cond max 78.4
+   kalman_free_identity volatilemix lr 0.002 s100 step  1000 loss 5.710 recall   1.80%   25.0 ms/step | L0 cond max 26.1, L1 cond max 79.6
+   kalman_free_identity volatilemix lr 0.002 s100 step  1250 loss 5.529 recall   2.06%   24.9 ms/step | L0 cond max 26.3, L1 cond max 75.6
+   kalman_free_identity volatilemix lr 0.002 s100 step  1500 loss 5.545 recall   2.02%   24.8 ms/step | L0 cond max 26.4, L1 cond max 74.4
+volatilemix_kalman_free_identity_lr0.002_s100_alt: recall 0.02020263671875 in 43 s, 1500 steps, 24.8 ms/step, 232460 params, 0.31 GB; saved results/pilot2/volatilemix_kalman_free_identity_lr0.002_s100_alt_20261101_125240.json
+grid pilot2: finished in 266 s

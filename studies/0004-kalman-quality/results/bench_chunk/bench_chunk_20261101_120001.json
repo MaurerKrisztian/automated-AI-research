@@ -1,0 +1,453 @@
+{
+ "env": {
+  "time": "2026-11-01T12:00:01+0100",
+  "argv": [
+   "bench_chunk.py",
+   "--tasks",
+   "mqar64",
+   "mqar128",
+   "volatile32",
+   "--batches",
+   "64",
+   "--chunks",
+   "16",
+   "32",
+   "64",
+   "--steps",
+   "25"
+  ],
+  "python": "3.11.15",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "tf32_matmul": false,
+  "git_commit": "e3a8603",
+  "git_dirty": true
+ },
+ "args": {
+  "batches": [
+   64
+  ],
+  "chunks": [
+   16,
+   32,
+   64
+  ],
+  "tasks": [
+   "mqar64",
+   "mqar128",
+   "volatile32"
+  ],
+  "steps": 25
+ },
+ "rows": [
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "gdn",
+   "chunk": null,
+   "ms": 16.71319599972776,
+   "peak_gb": 0.315248966217041
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "mesanet",
+   "chunk": null,
+   "ms": 7.100549999449868,
+   "peak_gb": 0.2894902229309082
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_stat_scalar",
+   "chunk": 16,
+   "ms": 43.436043999463436,
+   "peak_gb": 0.45644235610961914
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_stat_scalar",
+   "chunk": 32,
+   "ms": 25.24882150009944,
+   "peak_gb": 0.46620798110961914
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_stat_scalar",
+   "chunk": 64,
+   "ms": 16.641845500089403,
+   "peak_gb": 0.5096650123596191
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_stat_channel",
+   "chunk": 16,
+   "ms": 45.5908490002912,
+   "peak_gb": 0.7277255058288574
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_stat_channel",
+   "chunk": 32,
+   "ms": 38.61935300028563,
+   "peak_gb": 1.0847229957580566
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_stat_channel",
+   "chunk": 64,
+   "ms": 59.78422800126282,
+   "peak_gb": 1.9372620582580566
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_free_scalar",
+   "chunk": 16,
+   "ms": 47.518342500552535,
+   "peak_gb": 0.45087194442749023
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_free_scalar",
+   "chunk": 32,
+   "ms": 31.728434501019365,
+   "peak_gb": 0.46063756942749023
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_free_scalar",
+   "chunk": 64,
+   "ms": 28.819465499509533,
+   "peak_gb": 0.5059256553649902
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_free_channel",
+   "chunk": 16,
+   "ms": 48.310647499420156,
+   "peak_gb": 0.7278313636779785
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_free_channel",
+   "chunk": 32,
+   "ms": 41.26487550092861,
+   "peak_gb": 1.0848288536071777
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_free_channel",
+   "chunk": 64,
+   "ms": 64.89460299962957,
+   "peak_gb": 1.9384818077087402
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_free_identity",
+   "chunk": 16,
+   "ms": 42.16780299975653,
+   "peak_gb": 0.4207148551940918
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_free_identity",
+   "chunk": 32,
+   "ms": 27.546696499484824,
+   "peak_gb": 0.4319453239440918
+  },
+  {
+   "task": "mqar64",
+   "batch": 64,
+   "model": "kalman_free_identity",
+   "chunk": 64,
+   "ms": 23.049327500302752,
+   "peak_gb": 0.4687924385070801
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "gdn",
+   "chunk": null,
+   "ms": 32.49158100061322,
+   "peak_gb": 0.6099114418029785
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "mesanet",
+   "chunk": null,
+   "ms": 13.357624499803933,
+   "peak_gb": 0.5567173957824707
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_stat_scalar",
+   "chunk": 16,
+   "ms": 82.38423799957673,
+   "peak_gb": 0.8866181373596191
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_stat_scalar",
+   "chunk": 32,
+   "ms": 43.58126250008354,
+   "peak_gb": 0.9118714332580566
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_stat_scalar",
+   "chunk": 64,
+   "ms": 34.31204899970908,
+   "peak_gb": 0.9930634498596191
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_stat_channel",
+   "chunk": 16,
+   "ms": 89.62147900092532,
+   "peak_gb": 1.435657024383545
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_stat_channel",
+   "chunk": 32,
+   "ms": 79.72794200031785,
+   "peak_gb": 2.1485657691955566
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_stat_channel",
+   "chunk": 64,
+   "ms": 121.76167050074582,
+   "peak_gb": 3.8477845191955566
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_free_scalar",
+   "chunk": 16,
+   "ms": 83.17328799967072,
+   "peak_gb": 0.8755545616149902
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_free_scalar",
+   "chunk": 32,
+   "ms": 49.92080100055318,
+   "peak_gb": 0.9006705284118652
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_free_scalar",
+   "chunk": 64,
+   "ms": 39.09104149988707,
+   "peak_gb": 0.9819998741149902
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_free_channel",
+   "chunk": 16,
+   "ms": 91.51389749968075,
+   "peak_gb": 1.435945987701416
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_free_channel",
+   "chunk": 32,
+   "ms": 83.03016999889223,
+   "peak_gb": 2.1488547325134277
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_free_channel",
+   "chunk": 64,
+   "ms": 127.70990799981519,
+   "peak_gb": 3.8490500450134277
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_free_identity",
+   "chunk": 16,
+   "ms": 75.57849300064845,
+   "peak_gb": 0.8171992301940918
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_free_identity",
+   "chunk": 32,
+   "ms": 44.078930499381386,
+   "peak_gb": 0.8423151969909668
+  },
+  {
+   "task": "mqar128",
+   "batch": 64,
+   "model": "kalman_free_identity",
+   "chunk": 64,
+   "ms": 36.16976800003613,
+   "peak_gb": 0.9060664176940918
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "gdn",
+   "chunk": null,
+   "ms": 21.31023750098393,
+   "peak_gb": 0.41350221633911133
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "mesanet",
+   "chunk": null,
+   "ms": 9.245146499779366,
+   "peak_gb": 0.3789849281311035
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_stat_scalar",
+   "chunk": 16,
+   "ms": 56.250058999467,
+   "peak_gb": 0.598656177520752
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_stat_scalar",
+   "chunk": 32,
+   "ms": 31.30191000036575,
+   "peak_gb": 0.615837574005127
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_stat_scalar",
+   "chunk": 64,
+   "ms": 22.017877499820315,
+   "peak_gb": 0.668968677520752
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_stat_channel",
+   "chunk": 16,
+   "ms": 59.77263050044712,
+   "peak_gb": 0.9637351036071777
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_stat_channel",
+   "chunk": 32,
+   "ms": 51.99597099999664,
+   "peak_gb": 1.440666675567627
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_stat_channel",
+   "chunk": 64,
+   "ms": 79.82531800007564,
+   "peak_gb": 2.5722737312316895
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_free_scalar",
+   "chunk": 16,
+   "ms": 59.82864099860308,
+   "peak_gb": 0.591254711151123
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_free_scalar",
+   "chunk": 32,
+   "ms": 37.57482000037271,
+   "peak_gb": 0.608436107635498
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_free_scalar",
+   "chunk": 64,
+   "ms": 31.855838499723177,
+   "peak_gb": 0.661567211151123
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_free_channel",
+   "chunk": 16,
+   "ms": 62.87056900055177,
+   "peak_gb": 0.9639019966125488
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_free_channel",
+   "chunk": 32,
+   "ms": 54.771621999861964,
+   "peak_gb": 1.440833568572998
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_free_channel",
+   "chunk": 64,
+   "ms": 85.24408600078459,
+   "peak_gb": 2.5724406242370605
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_free_identity",
+   "chunk": 16,
+   "ms": 52.97450950001803,
+   "peak_gb": 0.5526747703552246
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_free_identity",
+   "chunk": 32,
+   "ms": 32.7887749990623,
+   "peak_gb": 0.5698561668395996
+  },
+  {
+   "task": "volatile32",
+   "batch": 64,
+   "model": "kalman_free_identity",
+   "chunk": 64,
+   "ms": 26.19949800100585,
+   "peak_gb": 0.6112685203552246
+  }
+ ]
+}

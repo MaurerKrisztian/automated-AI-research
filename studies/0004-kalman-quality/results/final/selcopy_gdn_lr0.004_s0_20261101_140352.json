@@ -1,0 +1,138 @@
+{
+ "env": {
+  "time": "2026-11-01T14:03:52+0100",
+  "argv": [
+   "train.py",
+   "--grid",
+   "final",
+   "--tasks",
+   "selcopy",
+   "--best-from",
+   "results/best_config.json",
+   "--seeds",
+   "0",
+   "1",
+   "2",
+   "--extra-evals"
+  ],
+  "python": "3.11.15",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "tf32_matmul": false,
+  "git_commit": "e3a8603",
+  "git_dirty": true
+ },
+ "args": {
+  "grid": "final",
+  "models": [
+   "gdn",
+   "mesanet",
+   "kalman_stat_scalar",
+   "kalman_stat_channel",
+   "kalman_free_scalar",
+   "kalman_free_channel",
+   "kalman_free_identity"
+  ],
+  "tasks": [
+   "selcopy"
+  ],
+  "lrs": [
+   0.002
+  ],
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "alt": false,
+  "best_from": "results/best_config.json",
+  "opts": "{}",
+  "d": 64,
+  "heads": 2,
+  "layers": 2,
+  "chunk": 64,
+  "chunk_channel": 32,
+  "steps_scale": 1.0,
+  "eval_every": 250,
+  "eval_batches": 16,
+  "target": 2.0,
+  "extra_evals": true,
+  "no_numerics": false,
+  "device": "cuda",
+  "quick": false
+ },
+ "run": {
+  "model": "gdn",
+  "task": "selcopy",
+  "lr": 0.004,
+  "seed": 0,
+  "opts": {},
+  "core_options": {},
+  "d": 64,
+  "heads": 2,
+  "layers": 2,
+  "params": 103432,
+  "steps_limit": 3000,
+  "steps_run": 1750,
+  "stopped_early_at": 1750,
+  "batch": 64,
+  "recall": 0.99554443359375,
+  "recall_same": null,
+  "recall_changed": null,
+  "stale_rate": null,
+  "final_loss": 0.019142544702626763,
+  "ms_per_step": 19.665063999127597,
+  "peak_gb": 0.2373509407043457,
+  "nonfinite_steps": 0,
+  "cholesky_failures": 0,
+  "extra_recall": {},
+  "numerics": {},
+  "curve": [
+   {
+    "step": 250,
+    "loss": 1.5981334114074708,
+    "grad_norm": 10.642647743225098,
+    "recall": 0.4439697265625
+   },
+   {
+    "step": 500,
+    "loss": 0.6557264482975006,
+    "grad_norm": 33.73796081542969,
+    "recall": 0.75860595703125
+   },
+   {
+    "step": 750,
+    "loss": 0.3240322196483612,
+    "grad_norm": 41.90705108642578,
+    "recall": 0.8543701171875
+   },
+   {
+    "step": 1000,
+    "loss": 0.2831863182783127,
+    "grad_norm": 70.82984161376953,
+    "recall": 0.8233642578125
+   },
+   {
+    "step": 1250,
+    "loss": 0.24558235123753547,
+    "grad_norm": 12.97944450378418,
+    "recall": 0.92327880859375
+   },
+   {
+    "step": 1500,
+    "loss": 0.21526120020076633,
+    "grad_norm": 14.902718544006348,
+    "recall": 0.97698974609375
+   },
+   {
+    "step": 1750,
+    "loss": 0.019142544702626763,
+    "grad_norm": 10.319972038269043,
+    "recall": 0.99554443359375
+   }
+  ],
+  "alt": false,
+  "seconds": 37.62171506881714
+ }
+}
